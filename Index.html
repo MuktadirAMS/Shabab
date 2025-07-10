@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="Muktadir Shabab - Artist, Author, Classic Artworks, Vintage UI.">
+  <meta name="keywords" content="Muktadir Shabab, classic art, vintage, artist, author, exhibition, gallery, novel">
+  <meta name="author" content="Muktadir Shabab">
+  <title>Muktadir Shabab — Classic Artist & Author</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: EB Garamond & DM Serif -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><text x=%2210%22 y=%2248%22 font-size=%2240%22 font-family=%22EB Garamond, serif%22>MS</text></svg>">
+  <style>
+    html {
+      font-family: 'EB Garamond', 'DM Serif Display', serif;
+      background: #191919;
+      color: #ede8df;
+    }
+    body {
+      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(48,48,48)" stroke-opacity="0.15" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#232526 0%,#1a1919 100%);
+      background-blend-mode: multiply;
+      position:relative;
+      overflow-x:hidden;
+    }
+    body::after {
+      content:'';
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:100;
+      opacity:.17;
+      mix-blend-mode:soft-light;
+      background:url('https://grainy-gradients.vercel.app/noise.svg');
+    }
+    ::selection { background: #6e5d46; color: #ede8df; }
+    /* Glassmorphic effect */
+    .glass {
+      background: rgba(32,32,32,0.37);
+      backdrop-filter: blur(10px) saturate(135%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 2px 32px 0 rgba(0,0,0,0.08);
+    }
+    /* Header glass (more simple, semi transparent) */
+    .header-glass {
+      background: rgba(26,26,26,0.74);
+      backdrop-filter: blur(10px);
+      border-bottom: 1.5px solid rgba(255,255,255,0.06);
+      box-shadow: 0 2px 32px 0 rgba(0,0,0,0.04);
+    }
+    /* Preloader */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: #181818;
+      transition: opacity 0.6s cubic-bezier(.7,.1,.2,1);
+    }
+    #preloader.done { opacity:0; pointer-events:none; }
+    .ms-icon {
+      font-family: 'EB Garamond', 'DM Serif Display', serif;
+      font-size: 3rem; font-weight: bold;
+      color: #ede8df;
+      letter-spacing: 0.09em;
+      animation: msIconPulse 1.2s infinite alternate cubic-bezier(.5,0,.4,1.1);
+    }
+    @keyframes msIconPulse {
+      0%   { text-shadow: 0 0 7px #b3a68e44, 0 0 0 #fff0; }
+      40%  { text-shadow: 0 0 16px #e0d7c788, 0 0 7px #fff2; }
+      80%  { text-shadow: 0 0 5px #e3d9c9; }
+      100% { text-shadow: 0 0 13px #b3a68e66, 0 0 0 #fff0; }
+    }
+    /* Hamburger Apple original design + micro animation */
+    .hamburger {
+      width: 36px; height: 36px;
+      position: sticky;
+      top: 16px;
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(28,28,28,0.20);
+      border-radius: 50%;
+      border: 1.3px solid #ad977944;
+      box-shadow: 0 1px 8px #0003;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .hamburger:active, .hamburger:focus { background: rgba(60,60,60,0.32);}
+    .hamburger-inner {
+      width: 26px; height: 26px; position: relative;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center;
+    }
+    .hamburger-bar {
+      display: block;
+      height: 2.1px;
+      width: 100%;
+      background: #ede8df;
+      border-radius: 2px;
+      transition: all .35s cubic-bezier(.62,.05,.61,1.15);
+      position: absolute;
+      left: 0;
+      will-change: transform,background;
+    }
+    .hamburger-bar.top   { top: 6px; }
+    .hamburger-bar.mid   { top: 12px;}
+    .hamburger-bar.bot   { top: 18px;}
+    .hamburger.active .hamburger-bar.top {
+      transform: translateY(6px) rotate(45deg);
+      background: #dab48a;
+    }
+    .hamburger.active .hamburger-bar.mid {
+      opacity: 0; width:0;
+    }
+    .hamburger.active .hamburger-bar.bot {
+      transform: translateY(-6px) rotate(-45deg);
+      background: #dab48a;
+    }
+    /* Micro animation on hover */
+    .hamburger:hover .hamburger-bar.top { width: 94%; }
+    .hamburger:hover .hamburger-bar.mid { width: 82%; }
+    .hamburger:hover .hamburger-bar.bot { width: 94%; }
+    /* Responsive logo size */
+    .logo-text {
+      font-family:'DM Serif Display',serif;
+      letter-spacing:.06em;
+      font-weight:400;
+      font-size:1.7rem;
+      transition: font-size .28s;
+    }
+    @media (max-width: 640px) {
+      .logo-text { font-size:1.1rem;}
+    }
+    /* Hero fullwidth after header */
+    .hero-img-full {
+      width: 100vw;
+      min-height: 300px;
+      max-height: 56vw;
+      aspect-ratio: 16/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-img-full img {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(.13) contrast(1.14) brightness(.99) grayscale(.11) saturate(1.02);
+      animation: nosing 14s cubic-bezier(.5,0,.5,1) infinite alternate;
+      pointer-events: none;
+      user-drag: none;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    @keyframes nosing {
+      0% { transform: scale(1) translateY(0); filter: brightness(1) }
+      20% { transform: scale(1.02) translateY(-4px); filter: brightness(.97) }
+      40% { transform: scale(1.035) translateY(2px); filter: brightness(1.03) }
+      60% { transform: scale(1.01) translateY(-6px); filter: brightness(.96) }
+      100% { transform: scale(1.04) translateY(0); filter: brightness(1.03) }
+    }
+    .hero-img-full .vintage-noise {
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      opacity:.08;
+      z-index:2;
+      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+    }
+    .hero-typewriter {
+      font-size: 2.2rem;
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: .09em solid #e6d6b6;
+      letter-spacing: .08em;
+      animation: typing 2.2s steps(36, end), blink-caret .65s step-end infinite;
+      margin-bottom: .7rem;
+      min-height: 2.7em;
+      max-width: 98vw;
+    }
+    @keyframes typing {from{width:0} to{width:100%}}
+    @keyframes blink-caret {from, to{border-color: #e6d6b6;} 50%{border-color:transparent}}
+    @media (max-width: 900px) {
+      .hero-img-full { max-height: 43vw;}
+      .hero-typewriter { font-size: 1.3rem;}
+    }
+    @media (max-width: 640px) {
+      .hero-img-full { min-height: 152px; max-height: 40vw;}
+    }
+    /* Glassmorphic Buttons (all) */
+    .btn-glass {
+      background: rgba(44,44,44,0.36);
+      color: #e6d6b6;
+      border: 1.5px solid #ad977944;
+      border-radius: 1000px;
+      box-shadow: 0 1px 8px #0003;
+      backdrop-filter: blur(9px) saturate(120%);
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: .55em 1.35em;
+      transition: all .18s cubic-bezier(.7,.2,.5,1.1);
+      text-shadow: 0 1px 7px #1112;
+      cursor:pointer;
+      outline:none;
+      display: inline-block;
+    }
+    .btn-glass:active { scale: .96; }
+    .btn-glass-vintage {
+      background: linear-gradient(90deg,rgba(163,142,92,0.08) 0%,rgba(44,44,44,0.37) 100%);
+      color: #d8c7a8;
+      border: 1.5px solid #f2e3c044;
+      box-shadow: 0 2px 18px #231a0f22;
+    }
+    /* Book mockup thumbnail */
+    .book-mockup-thumb {
+      width: 60px;
+      height: 84px;
+      min-width:60px;
+      margin-right: 1.5rem;
+      background: linear-gradient(120deg, #f3ede3 70%, #d7c7b6 100%);
+      border: 1.5px solid #b7a89144;
+      box-shadow: 0 4px 18px #0002, 0 2px 4px #b7a89144;
+      border-radius: 7px;
+      position:relative;
+      overflow:hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .book-mockup-thumb::after {
+      content:'';
+      position:absolute; inset:0;
+      border-radius:7px;
+      pointer-events:none;
+      background: linear-gradient(0deg, #fff7 0%, #fff0 60%);
+      mix-blend-mode:soft-light;
+    }
+    .book-title-on-thumb {
+      font-family:'EB Garamond',serif;
+      font-size:.83em;
+      color:#816c53;
+      font-weight:600;
+      text-align:center;
+      padding:8px 0 7px 0;
+      z-index:1;
+      width:100%;
+      word-break:break-word;
+      text-shadow: 0 1px 3px #fff9, 0 2px 6px #fff2;
+      background:rgba(230,227,217,0.56);
+      border-bottom-left-radius:7px;
+      border-bottom-right-radius:7px;
+      box-shadow:0 2px 6px #b7a89122;
+    }
+    /* Footer + social + disables */
+    .mode-toggle {
+      display:flex;align-items:center;justify-content:center;
+      padding:0.6em;width:2.1em;height:2.1em;
+      border-radius:50%;
+      background: rgba(52,52,52,0.23);
+      border: 1.5px solid #ad977944;
+      color: #c2a374;
+      box-shadow: 0 2px 12px #322a1f22;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+      margin-left: 0;
+      margin-right: 0;
+      align-self: center;
+      transition:background .18s,color .18s,border .18s;
+    }
+    .mode-toggle.active {
+      background: rgba(221,222,221,0.11);
+      color: #705828;
+      border-color: #e8d6b644;
+    }
+    /* Prevent text copying and image dragging/downloading */
+    body, body * {
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      -webkit-touch-callout: none !important;
+    }
+    img, .no-download {
+      pointer-events: none;
+      -webkit-user-drag: none;
+      user-drag: none;
+    }
+    /* Social icon hover */
+    .social-icon {
+      transition: color .18s, filter .2s;
+      filter: drop-shadow(0 0 2px #ad977944);
+    }
+    .social-icon:hover { color: #c2a374; filter: drop-shadow(0 0 8px #a58d5844);}
+    .footer-social {
+      filter: drop-shadow(0 0 2px #ad977944);
+      transition: color .16s, filter .2s;
+    }
+    .footer-social:hover { color: #c2a374; filter: drop-shadow(0 0 8px #a58d5844);}
+    @media (max-width: 640px) {
+      .logo-text { font-size:1.1rem;}
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <span class="ms-icon">MS</span>
+  </div>
+  <!-- Header -->
+  <header class="header-glass w-full fixed top-0 left-0 z-50 backdrop-blur-md">
+    <div class="flex justify-between items-center px-6 md:px-14 h-[58px]">
+      <span class="logo-text font-serif font-thin select-none">Muktadir Shabab</span>
+      <nav class="hidden md:flex gap-8 text-lg font-serif font-semibold tracking-wide">
+        <a href="#about" class="micro-anim hover:text-[#c2a374]">About</a>
+        <a href="#cv" class="micro-anim hover:text-[#c2a374]">CV</a>
+        <a href="#artworks" class="micro-anim hover:text-[#c2a374]">Artworks</a>
+        <a href="#blogs" class="micro-anim hover:text-[#c2a374]">Blogs</a>
+        <a href="#community" class="micro-anim hover:text-[#c2a374]">Community</a>
+        <a href="#booking" class="micro-anim hover:text-[#c2a374]">Booking</a>
+      </nav>
+      <!-- Hamburger sticky + micro-animated -->
+      <div class="hamburger md:hidden" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+        <div class="hamburger-inner">
+          <span class="hamburger-bar top"></span>
+          <span class="hamburger-bar mid"></span>
+          <span class="hamburger-bar bot"></span>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="menu mobile flex-col gap-6 px-7 pt-4 pb-2 font-serif text-xl" id="mobile-menu" style="display:none;">
+      <a href="#about" class="micro-anim hover:text-[#c2a374]">About</a>
+      <a href="#cv" class="micro-anim hover:text-[#c2a374]">CV</a>
+      <a href="#artworks" class="micro-anim hover:text-[#c2a374]">Artworks</a>
+      <a href="#blogs" class="micro-anim hover:text-[#c2a374]">Blogs</a>
+      <a href="#community" class="micro-anim hover:text-[#c2a374]">Community</a>
+      <a href="#booking" class="micro-anim hover:text-[#c2a374]">Booking</a>
+      <button id="mode-toggle-mobile" class="mode-toggle mt-3 mb-0" title="Toggle dark/light mode">
+        <svg id="mode-sun-mobile" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none;"><use href="#lucide-sun"></use></svg>
+        <svg id="mode-moon-mobile" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-moon"></use></svg>
+      </button>
+    </div>
+  </header>
+  <!-- Hero Section -->
+  <section id="hero" class="relative w-full z-10 mb-1 pt-[58px]">
+    <div class="hero-img-full select-none">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80" alt="Muktadir Shabab Art Hero" class="no-download" draggable="false">
+      <div class="vintage-noise"></div>
+    </div>
+    <div class="w-full flex flex-col items-center justify-center text-center px-4 md:px-0 -mt-10 md:-mt-20 relative z-10" style="pointer-events:auto;">
+      <h2 class="hero-typewriter font-serif font-thin tracking-wide" id="hero-typewriter"></h2>
+      <p class="text-base md:text-lg font-serif max-w-xl mb-6">Welcome to the world of <b>Muktadir Shabab</b>—artist, author, and visionary. Explore classic artistry, exhibitions, and literary works in a premium, vintage-inspired web experience.</p>
+      <div class="flex gap-2 mt-2 justify-center">
+        <a href="https://facebook.com/" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-facebook"></use></svg>
+        </a>
+        <a href="https://instagram.com/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-instagram"></use></svg>
+        </a>
+        <a href="https://behance.net/" class="social-icon" aria-label="Behance" target="_blank" rel="noopener">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-behance"></use></svg>
+        </a>
+        <a href="https://youtube.com/" class="social-icon" aria-label="YouTube" target="_blank" rel="noopener">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-youtube"></use></svg>
+        </a>
+        <a href="https://x.com/" class="social-icon" aria-label="X" target="_blank" rel="noopener">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-twitter"></use></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- Latest Exhibitions/Works Slider -->
+  <section id="exhibitions" class="mt-8 md:mt-20 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Latest Exhibitions & Works</h3>
+    <div class="slider-cards flex overflow-x-auto gap-4 md:gap-8 pb-4 snap-x snap-mandatory">
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Vintage Visions</h4>
+          <p class="text-sm mb-3">Solo Exhibition, Paris. A journey through classic forms in a modern lens.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Eternal Canvases</h4>
+          <p class="text-sm mb-3">Group Show, Rome. Exploring time and memory through classical artistry.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Shadows & Silhouettes</h4>
+          <p class="text-sm mb-3">Art Festival, Vienna. The dance of light in classic portraiture.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Ad Poster -->
+  <section id="ad-poster" class="my-10 md:my-20 px-2 md:px-10">
+    <a href="https://example.com/event" target="_blank" rel="noopener" class="block w-full">
+      <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl">
+        <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
+        <div class="vintage-noise absolute inset-0"></div>
+      </div>
+    </a>
+  </section>
+  <!-- Programmes -->
+  <section id="programmes" class="mt-10 md:mt-20 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Upcoming Programmes</h3>
+    <div class="programme-list flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto pb-2">
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Classic Art Workshop">Classic Art Workshop</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">July 21, 2025 — 17:00</div>
+        <div class="mt-2 mb-3 text-sm">A hands-on journey through vintage painting techniques.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-07-21T17:00:00Z"></span>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Literary Reading Night">Literary Reading Night</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">August 4, 2025 — 19:00</div>
+        <div class="mt-2 mb-3 text-sm">Experience the latest works read live with classic ambience.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-08-04T19:00:00Z"></span>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Art & Community Meetup">Art & Community Meetup</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">September 14, 2025 — 18:30</div>
+        <div class="mt-2 mb-3 text-sm">Join fellow art lovers for a vintage-inspired night of networking.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-09-14T18:30:00Z"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Painting Gallery -->
+  <section id="artworks" class="mt-10 md:mt-24 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Painting Gallery</h3>
+    <div class="gallery-list flex gap-2 pb-3 overflow-x-auto">
+      <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
+    </div>
+    <a href="/gallery" class="btn-glass btn-glass-vintage mt-3 inline-block">More</a>
+  </section>
+  <!-- Published Novels -->
+  <section id="novels" class="mt-10 md:mt-24 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Published Novels</h3>
+    <div class="flex flex-col gap-6 md:gap-10">
+      <div class="flex items-start fade-in">
+        <div class="book-mockup-thumb relative mr-4">
+          <div class="book-title-on-thumb">The Timeless<br>Brush</div>
+        </div>
+        <div>
+          <h4 class="font-serif text-lg mb-1">The Timeless Brush</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2023</div>
+          <p class="text-sm mb-2 max-w-xl">A painter’s odyssey through eras—where every brushstroke preserves a memory, every page an artwork.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+      <div class="flex items-start fade-in">
+        <div class="book-mockup-thumb relative mr-4">
+          <div class="book-title-on-thumb">Shadows<br>Under Gold</div>
+        </div>
+        <div>
+          <h4 class="font-serif text-lg mb-1">Shadows Under Gold</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2021</div>
+          <p class="text-sm mb-2 max-w-xl">A classic tale of dreams, struggle, and hope painted on the vintage canvas of old city life.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+      <div class="flex items-start fade-in">
+        <div class="book-mockup-thumb relative mr-4">
+          <div class="book-title-on-thumb">Letters<br>From The Easel</div>
+        </div>
+        <div>
+          <h4 class="font-serif text-lg mb-1">Letters From The Easel</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2019</div>
+          <p class="text-sm mb-2 max-w-xl">A collection of heartfelt letters from an artist to their muse—timeless, poetic, and evocative.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="mt-16 md:mt-28 px-6 py-8 md:px-20 bg-[#191919] bg-opacity-90 glass text-xs text-[#c2a374] flex flex-col md:flex-row items-center justify-between">
+    <div class="flex gap-2 mb-3 md:mb-0">
+      <a href="https://facebook.com/" class="footer-social" aria-label="Facebook" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#lucide-facebook"></use>
+        </svg>
+      </a>
+      <a href="https://instagram.com/" class="footer-social" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#lucide-instagram"></use>
+        </svg>
+      </a>
+      <a href="https://behance.net/" class="footer-social" aria-label="Behance" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#lucide-behance"></use>
+        </svg>
+      </a>
+      <a href="https://youtube.com/" class="footer-social" aria-label="YouTube" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#lucide-youtube"></use>
+        </svg>
+      </a>
+      <a href="https://x.com/" class="footer-social" aria-label="X" target="_blank" rel="noopener">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <use href="#lucide-twitter"></use>
+        </svg>
+      </a>
+    </div>
+    <div class="flex gap-4 mb-3 md:mb-0">
+      <a href="#about" class="hover:text-[#ede8df]">About</a>
+      <a href="#cv" class="hover:text-[#ede8df]">CV</a>
+      <a href="#artworks" class="hover:text-[#ede8df]">Artworks</a>
+      <a href="#blogs" class="hover:text-[#ede8df]">Blogs</a>
+      <a href="#community" class="hover:text-[#ede8df]">Community</a>
+      <a href="#booking" class="hover:text-[#ede8df]">Booking</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <span>&copy; <span id="year"></span> Muktadir Shabab</span>
+      <button id="mode-toggle" class="mode-toggle ml-3" title="Toggle dark/light mode">
+        <svg id="mode-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none;"><use href="#lucide-sun"></use></svg>
+        <svg id="mode-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-moon"></use></svg>
+      </button>
+    </div>
+  </footer>
+  <!-- Lucide SVG Symbol Definitions (for inline icon use) -->
+  <svg style="display:none;">
+    <symbol id="lucide-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></symbol>
+    <symbol id="lucide-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></symbol>
+    <symbol id="lucide-behance" viewBox="0 0 24 24"><path d="M8.5 11.5h-4v-4h4a2 2 0 1 1 0 4z"/><path d="M10.5 17.5v-5h-6v5"/><path d="M17.5 11.5h2.5v2.5a3 3 0 1 1-3-3v0"/><rect x="14.5" y="8.5" width="7" height="7" rx="3.5"/><line x1="11.5" x2="11.5" y1="12.5" y2="17.5"/></symbol>
+    <symbol id="lucide-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></symbol>
+    <symbol id="lucide-twitter" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9.09 9.09 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.35 0c-2.51 0-4.52 2.01-4.52 4.5 0 .35.04.7.1 1.03-3.76-.19-7.1-1.99-9.34-4.73a4.48 4.48 0 0 0-.61 2.25c0 1.55.8 2.91 2.03 3.72A4.48 4.48 0 0 1 .96 6.1v.06c0 2.16 1.55 3.97 3.62 4.38a4.52 4.52 0 0 1-2.04.08c.57 1.78 2.21 3.08 4.16 3.12A9.05 9.05 0 0 1 0 19.54a12.82 12.82 0 0 0 6.94 2.03c8.33 0 12.89-6.91 12.89-12.89 0-.2-.01-.41-.02-.61A9.18 9.18 0 0 0 23 3z"/></symbol>
+    <symbol id="lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></symbol>
+    <symbol id="lucide-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
+  </svg>
+  <script>
+    window.addEventListener('DOMContentLoaded',()=> {
+      setTimeout(()=>document.getElementById('preloader').classList.add('done'), 800);
+      document.getElementById('year').textContent = (new Date()).getFullYear();
+    });
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click',()=>{
+      hamburger.classList.toggle('active');
+      const open = hamburger.classList.contains('active');
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mobileMenu.style.display = open ? 'flex' : 'none';
+    });
+    // Hide menu on nav click
+    mobileMenu.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click',()=> {
+        hamburger.classList.remove('active');
+        mobileMenu.style.display = 'none';
+      });
+    });
+    // Dark/Light mode
+    function setMode(mode) {
+      document.documentElement.classList.toggle('dark', mode === 'dark');
+      document.documentElement.classList.toggle('light', mode === 'light');
+      document.getElementById('mode-sun').style.display = mode==='light' ? 'none' : '';
+      document.getElementById('mode-moon').style.display = mode==='dark' ? 'none' : '';
+      document.getElementById('mode-toggle').classList.toggle('active', mode==='light');
+      document.getElementById('mode-sun-mobile').style.display = mode==='light' ? 'none' : '';
+      document.getElementById('mode-moon-mobile').style.display = mode==='dark' ? 'none' : '';
+      document.getElementById('mode-toggle-mobile').classList.toggle('active', mode==='light');
+    }
+    function getPrefMode() {
+      return localStorage.getItem('theme') || 'dark';
+    }
+    setMode(getPrefMode());
+    document.getElementById('mode-toggle').addEventListener('click',()=>{
+      const curr = document.documentElement.classList.contains('dark') ? 'dark':'light';
+      const next = curr === 'dark' ? 'light' : 'dark';
+      setMode(next); localStorage.setItem('theme', next);
+    });
+    document.getElementById('mode-toggle-mobile').addEventListener('click',(e)=>{
+      e.stopPropagation();
+      const curr = document.documentElement.classList.contains('dark') ? 'dark':'light';
+      const next = curr === 'dark' ? 'light' : 'dark';
+      setMode(next); localStorage.setItem('theme', next);
+    });
+    // Hero typewriter text
+    let heroType = "Classic Art, Timeless Stories";
+    let i = 0;
+    function heroTypewriter() {
+      const el = document.getElementById('hero-typewriter');
+      if(!el) return;
+      if(i<=heroType.length) {
+        el.textContent = heroType.slice(0,i);
+        i++; setTimeout(heroTypewriter,32);
+      }
+    }
+    window.addEventListener('DOMContentLoaded',heroTypewriter);
+    // Glitch effect on slider card on scroll/snap
+    document.querySelectorAll('.slider-card').forEach(card => {
+      card.addEventListener('mouseenter',()=> {
+        card.classList.add('glitch');
+        setTimeout(()=>card.classList.remove('glitch'), 400);
+      });
+    });
+    // Ad poster zoom on scroll into view
+    function inView(el) {
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight*.82 && rect.bottom > 0;
+    }
+    const adPoster = document.querySelector('.ad-poster');
+    function checkAdPoster() {
+      if (inView(adPoster)) adPoster.classList.add('inview');
+      else adPoster.classList.remove('inview');
+    }
+    window.addEventListener('scroll',checkAdPoster);
+    window.addEventListener('resize',checkAdPoster);
+    setTimeout(checkAdPoster,200);
+    // Programmes timeline fade-in & typewriter on in-view
+    function fadeInTimeline() {
+      document.querySelectorAll('.timeline-in').forEach((el,i)=>{
+        if (inView(el)) {
+          setTimeout(()=>el.classList.add('visible'), i*160);
+          const tw = el.querySelector('.typewriter');
+          if (tw && !tw.classList.contains('typed')) {
+            tw.classList.add('typed');
+            const text = tw.getAttribute('data-type') || tw.textContent;
+            tw.textContent = '';
+            let idx = 0;
+            function type() {
+              if (idx <= text.length) {
+                tw.textContent = text.slice(0,idx);
+                idx++; setTimeout(type, 23);
+              }
+            }
+            type();
+          }
+        }
+      });
+    }
+    window.addEventListener('scroll', fadeInTimeline);
+    window.addEventListener('resize', fadeInTimeline);
+    setTimeout(fadeInTimeline,600);
+    // Fade-in animations for novels
+    function fadeInElements() {
+      document.querySelectorAll('.fade-in').forEach((el,i)=>{
+        if (inView(el)) setTimeout(()=>el.classList.add('visible'), i*85);
+      });
+    }
+    window.addEventListener('scroll', fadeInElements);
+    window.addEventListener('resize', fadeInElements);
+    setTimeout(fadeInElements,700);
+    // Network-synced countdown for events
+    function updateCountdowns() {
+      document.querySelectorAll('.countdown').forEach(span=>{
+        const end = new Date(span.dataset.date);
+        const now = Date.now();
+        let diff = (end - now) / 1000;
+        if (diff < 0) {
+          span.textContent = "Started";
+          return;
+        }
+        const d = Math.floor(diff/86400);
+        diff -= d*86400;
+        const h = Math.floor(diff/3600);
+        diff -= h*3600;
+        const m = Math.floor(diff/60);
+        const s = Math.floor(diff%60);
+        span.textContent = d>0 ? `${d}d ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}` : `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+      });
+    }
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns();
+    // Prevent text copying & right click context menu for images
+    document.addEventListener('copy', e=>e.preventDefault());
+    document.querySelectorAll('img,no-download,.no-download').forEach(img=>{
+      img.addEventListener('contextmenu',e=>e.preventDefault());
+      img.addEventListener('dragstart',e=>e.preventDefault());
+    });
+  </script>
+</body>
+</html>
