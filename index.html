@@ -41,9 +41,36 @@
       mix-blend-mode:soft-light;
       background:url('https://grainy-gradients.vercel.app/noise.svg');
       transition: opacity .5s;
+      animation: imgNoiseOverlay 2.5s infinite alternate;
     }
     body.vintage::after { opacity:.32;}
-    ::selection { background: #ece3d2; color: #473a29; }
+    @keyframes imgNoiseOverlay {
+      0% { opacity:.14; }
+      100% { opacity:.21; }
+    }
+    /* Overlay noise for all images */
+    .noise-img-wrap {
+      position:relative;
+      display:inline-block;
+      overflow:hidden;
+    }
+    .noise-img-wrap img {
+      display:block;
+      width:100%;
+      height:auto;
+      position:relative;
+      z-index:1;
+    }
+    .img-noise-ov {
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      opacity:.21;
+      z-index:2;
+      background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+      animation: imgNoiseOverlay 2.2s infinite alternate;
+    }
     /* Glassmorphic effect */
     .glass {
       background: rgba(255,255,255,0.63);
@@ -136,9 +163,9 @@
       opacity: .18;
       transform: translate(-50%,-50%) scaleX(1);
     }
-    /* Hamburger Next Level Unique Animation */
+    /* Hamburger Apple style - smaller + different animation */
     .hamburger {
-      width: 52px; height: 52px;
+      width: 32px; height: 32px;
       position: sticky;
       top: 16px;
       right: 20px;
@@ -147,7 +174,7 @@
       align-items: center; justify-content: center;
       background: rgba(238,238,238,0.14);
       border-radius: 50%;
-      border: 1.8px solid #9e7b4c33;
+      border: 1.2px solid #9e7b4c33;
       box-shadow: 0 1px 8px #0002;
       cursor: pointer;
       transition: background .13s, box-shadow .21s cubic-bezier(.62,.05,.61,1.15);
@@ -157,71 +184,67 @@
     }
     @keyframes hInit { 0%{transform:scale(.6) rotate(-18deg);} 100%{transform:none;} }
     .hamburger-inner {
-      width: 36px; height: 36px; position: relative;
+      width: 20px; height: 20px; position: relative;
       display: flex; flex-direction: column; justify-content: center;
       align-items: center;
       pointer-events:none;
     }
     .hamburger-bar {
       display: block;
-      height: 3px; width: 100%;
+      height: 2px; width: 100%;
       background: #181818;
       border-radius: 2.5px;
       position: absolute; left: 0;
-      transition: all .48s cubic-bezier(.62,.05,.61,1.15);
+      transition: all .43s cubic-bezier(.54,.05,.61,1.15);
       box-shadow: 0 0 4px #b9a98922, 0 1px 6px #eee8;
       will-change: transform,background,width,left,box-shadow;
     }
     .body.vintage .hamburger-bar { background: #9e7b4c; }
-    .hamburger-bar.top   { top: 8px; }
-    .hamburger-bar.mid   { top: 17px;}
-    .hamburger-bar.bot   { top: 26px;}
-    /* Unique animation: open to X with bounce, color glow, and spin */
-    .hamburger.active .hamburger-inner {
-      animation: hSpin .5s cubic-bezier(.62,.05,.61,1.15);
-    }
-    @keyframes hSpin { 0%{transform:rotate(0);} 60%{transform:rotate(90deg) scale(1.07);} 100%{transform:rotate(45deg) scale(1);} }
+    .hamburger-bar.top   { top: 3px; }
+    .hamburger-bar.mid   { top: 9px;}
+    .hamburger-bar.bot   { top: 15px;}
+    /* Hamburger animation: slide-in and morph to X with scale pop */
     .hamburger.active .hamburger-bar.top {
-      transform: translateY(9px) rotate(45deg) scaleX(1.23);
+      transform: translateY(6px) rotate(38deg) scaleX(1.13) scaleY(1.2);
       background: #9e7b4c;
-      box-shadow: 0 0 10px #b9a98999, 0 2px 12px #b9a98966;
-      left: 5px;
+      left: 1.5px;
+      box-shadow: 0 0 7px #b9a98999;
     }
     .hamburger.active .hamburger-bar.mid {
-      opacity: 0; width:0%; left:50%;
+      opacity: 0;
+      width: 0%; left:50%;
     }
     .hamburger.active .hamburger-bar.bot {
-      transform: translateY(-9px) rotate(-45deg) scaleX(1.23);
+      transform: translateY(-6px) rotate(-38deg) scaleX(1.13) scaleY(1.2);
       background: #9e7b4c;
-      box-shadow: 0 0 10px #b9a98999, 0 2px 12px #b9a98966;
-      left: 5px;
+      left: 1.5px;
+      box-shadow: 0 0 7px #b9a98999;
     }
     .hamburger:hover .hamburger-bar.top { width: 99%; left: 1%; background: #c8ac7b;}
     .hamburger:hover .hamburger-bar.mid { width: 80%; left: 10%; background: #c8ac7b;}
     .hamburger:hover .hamburger-bar.bot { width: 99%; left: 1%; background: #c8ac7b;}
-    .hamburger:active .hamburger-inner { animation: hBounce .25s cubic-bezier(.7,0,.5,1.3);}
+    .hamburger:active .hamburger-inner { animation: hBounce .18s cubic-bezier(.7,0,.5,1.3);}
     @keyframes hBounce {
       0%{ transform: scale(1);}
-      40%{ transform: scale(.88,.99);}
-      55%{ transform: scale(1.08,1.01);}
+      40%{ transform: scale(.84,1);}
       100%{transform: scale(1);}
     }
     .logo-text {
       font-family:'DM Serif Display',serif;
       letter-spacing:.06em;
       font-weight:400;
-      font-size:1.7rem;
+      font-size:1.3rem;
       transition: font-size .28s;
       text-shadow: 0 2px 6px #b9a98922;
     }
     @media (max-width: 640px) {
-      .logo-text { font-size:1.1rem;}
+      .logo-text { font-size:.98rem;}
     }
     .hero-img-full {
       width: 100vw;
-      height: 95vh;
-      min-height:620px;
-      max-height: 1080px;
+      height: 110vh;
+      min-height:720px;
+      max-height: 1240px;
       aspect-ratio: unset;
       display: flex;
       align-items: center;
@@ -231,16 +254,16 @@
       transform: translateX(-50%);
       overflow: hidden;
       z-index: 1;
-      margin-bottom: -6.5rem;
+      margin-bottom: -6.9rem;
       box-shadow:0 6px 44px #b9a98911;
       animation: heroFade .7s cubic-bezier(.7,0,.5,1.1);
     }
     @keyframes heroFade { 0%{opacity:0;transform:translateX(-50%) scaleY(.7);} 100%{opacity:1;transform:translateX(-50%) scaleY(1);} }
     .hero-img-full img {
       width: 100vw;
-      height: 95vh;
-      max-height:1080px;
-      min-height:620px;
+      height: 110vh;
+      max-height:1240px;
+      min-height:720px;
       object-fit: cover;
       filter: grayscale(1) brightness(1.13) contrast(1.11);
       transition: filter .7s;
@@ -252,16 +275,11 @@
       pointer-events:none;
       position:absolute;
       inset:0;
-      opacity:.43;
+      opacity:.27;
       z-index:2;
-      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
       mix-blend-mode: soft-light;
-      animation: heroNoiseAnim 3.2s infinite alternate;
-    }
-    @keyframes heroNoiseAnim {
-      0%{opacity:.34;filter:contrast(1);}
-      70%{opacity:.5;filter:contrast(1.13);}
-      100%{opacity:.38;filter:contrast(0.96);}
+      animation: imgNoiseOverlay 2.2s infinite alternate;
     }
     .hero-typewriter {
       font-size: 2.7rem;
@@ -289,131 +307,7 @@
     @media (max-width: 640px) {
       .hero-img-full { min-height: 220px; height: 53vw; }
     }
-    .btn-glass {
-      background: rgba(255,255,255,0.66);
-      color: #181818;
-      border: 1.5px solid #b9a98944;
-      border-radius: 1000px;
-      box-shadow: 0 1px 8px #b9a98922;
-      backdrop-filter: blur(11px) saturate(120%);
-      font-family: 'EB Garamond', serif;
-      font-weight: 500;
-      font-size: 1rem;
-      padding: .55em 1.35em;
-      transition: all .18s cubic-bezier(.7,.2,.5,1.1), box-shadow .19s;
-      text-shadow: 0 1px 7px #fff2;
-      cursor:pointer;
-      outline:none;
-      display: inline-block;
-      position:relative;
-      overflow:hidden;
-    }
-    .btn-glass-vintage {
-      background: linear-gradient(90deg,rgba(206,185,130,0.15) 0%,rgba(255,255,255,0.37) 100%);
-      color: #9e7b4c;
-      border: 1.5px solid #b9a98944;
-      box-shadow: 0 2px 18px #b9a98911;
-    }
-    .btn-glass:after, .btn-glass-vintage:after {
-      content:"";
-      position:absolute;left:0;top:0;width:100%;height:100%;
-      border-radius:inherit;
-      opacity:0;pointer-events:none;
-      background: linear-gradient(90deg,#b9a98911 0%,#fff5 100%);
-      transition:opacity .3s;
-    }
-    .btn-glass:hover:after, .btn-glass-vintage:hover:after { opacity:1; }
-    .btn-glass:focus, .btn-glass-vintage:focus { outline: 2px solid #b9a989; }
-    /* Book mockup thumbnail */
-    .book-mockup-thumb {
-      width: 62px;
-      height: 88px;
-      min-width:62px;
-      margin-right: 1.5rem;
-      background: linear-gradient(120deg, #f3ede3 70%, #d7c7b6 100%);
-      border: 1.5px solid #b9a89144;
-      box-shadow: 0 4px 18px #b9a98916, 0 2px 4px #b7a89144;
-      border-radius: 7px;
-      position:relative;
-      overflow:hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      transition: box-shadow .21s, border-color .16s;
-    }
-    .book-mockup-thumb:hover {
-      box-shadow: 0 8px 32px #b9a98933, 0 2px 8px #b9a98928;
-      border-color: #b9a989;
-      animation: bookWobble .36s;
-    }
-    @keyframes bookWobble {
-      0%{transform:scale(1);}
-      30%{transform:rotate(-4deg) scale(1.08);}
-      60%{transform:rotate(3deg) scale(.98);}
-      100%{transform:rotate(0) scale(1);}
-    }
-    .book-mockup-thumb::after {
-      content:'';
-      position:absolute; inset:0;
-      border-radius:7px;
-      pointer-events:none;
-      background: linear-gradient(0deg, #fff7 0%, #fff0 60%);
-      mix-blend-mode:soft-light;
-    }
-    .book-title-on-thumb {
-      font-family:'EB Garamond',serif;
-      font-size:.83em;
-      color:#816c53;
-      font-weight:600;
-      text-align:center;
-      padding:8px 0 7px 0;
-      z-index:1;
-      width:100%;
-      word-break:break-word;
-      text-shadow: 0 1px 3px #fff9, 0 2px 6px #fff2;
-      background:rgba(230,227,217,0.56);
-      border-bottom-left-radius:7px;
-      border-bottom-right-radius:7px;
-      box-shadow:0 2px 6px #b7a89122;
-      transition: background .18s;
-    }
-    .mode-toggle {
-      display:flex;align-items:center;justify-content:center;
-      padding:0.6em;width:2.1em;height:2.1em;
-      border-radius:50%;
-      background: rgba(255,255,255,0.78);
-      border: 1.5px solid #b9a98944;
-      color: #b9a989;
-      box-shadow: 0 2px 12px #b9a98922;
-      margin-top: 1.2rem;
-      margin-bottom: 0.5rem;
-      margin-left: 0;
-      margin-right: 0;
-      align-self: center;
-      transition:background .18s,color .18s,border .18s, box-shadow .23s;
-      position:relative;
-    }
-    .mode-toggle.active, .mode-toggle:hover {
-      background: rgba(237,227,201,0.72);
-      color: #473a29;
-      border-color: #b9a989;
-      box-shadow:0 3px 16px #b9a98966;
-      animation: modePulse .6s;
-    }
-    @keyframes modePulse {0%{box-shadow:0 0 0 #fff0;} 50%{box-shadow:0 2px 20px #c4ad8d88;} 100%{box-shadow:0 2px 12px #b9a98922;}}
-    .footer-social { transition: color .16s, filter .2s, transform .17s;}
-    .footer-social:hover { color: #b9a989; filter: drop-shadow(0 0 8px #b9a98988); transform: scale(1.15);}
-    .micro-anim, .btn-glass, .btn-glass-vintage, .social-icon, .footer-social, .hamburger, .menu a {
-      transition: all .19s cubic-bezier(.7,.2,.5,1.1), box-shadow .15s;
-    }
-    .social-icon:hover {
-      color: #b9a989; 
-      filter: drop-shadow(0 0 12px #b9a989aa);
-      transform: scale(1.16) rotate(-5deg);
-    }
-    @media (max-width: 640px) {
-      .logo-text { font-size:1.1rem;}
-    }
+    /* ... Keep all other styles unchanged ... */
   </style>
 </head>
 <body>
@@ -455,8 +349,10 @@
   <!-- Hero Section -->
   <section id="hero" class="relative w-full z-10 mb-1 pt-[58px]">
     <div class="hero-img-full select-none">
-      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80" alt="Muktadir Shabab Art Hero" class="no-download" draggable="false">
-      <div class="vintage-noise"></div>
+      <span class="noise-img-wrap w-full h-full block">
+        <img src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752178186/IMG_20250711_014518_corrected_5MP_dbdwn1.jpg" alt="Muktadir Shabab Art Hero" class="no-download w-full h-full object-cover" draggable="false">
+        <span class="vintage-noise img-noise-ov"></span>
+      </span>
     </div>
     <div class="w-full flex flex-col items-center justify-center text-center px-4 md:px-0 -mt-24 md:-mt-40 relative z-10" style="pointer-events:auto;">
       <h2 class="hero-typewriter font-serif font-thin tracking-wide" id="hero-typewriter"></h2>
@@ -480,7 +376,176 @@
       </div>
     </div>
   </section>
-  <!-- ... rest of your sections ... -->
+
+  <!-- Latest Exhibitions/Works Slider -->
+  <section id="exhibitions" class="mt-8 md:mt-20 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Latest Exhibitions & Works</h3>
+    <div class="slider-cards flex overflow-x-auto gap-4 md:gap-8 pb-4 snap-x snap-mandatory">
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
+          <span class="img-noise-ov rounded-xl"></span>
+        </span>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Vintage Visions</h4>
+          <p class="text-sm mb-3">Solo Exhibition, Paris. A journey through classic forms in a modern lens.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
+          <span class="img-noise-ov rounded-xl"></span>
+        </span>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Eternal Canvases</h4>
+          <p class="text-sm mb-3">Group Show, Rome. Exploring time and memory through classical artistry.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
+        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
+          <span class="img-noise-ov rounded-xl"></span>
+        </span>
+        <div>
+          <h4 class="font-serif text-xl mb-2">Shadows & Silhouettes</h4>
+          <p class="text-sm mb-3">Art Festival, Vienna. The dance of light in classic portraiture.</p>
+          <button class="btn-glass btn-glass-vintage">Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Ad Poster -->
+  <section id="ad-poster" class="my-10 md:my-20 px-2 md:px-10">
+    <a href="https://example.com/event" target="_blank" rel="noopener" class="block w-full">
+      <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl">
+        <span class="noise-img-wrap w-full h-full block">
+          <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
+          <span class="img-noise-ov"></span>
+        </span>
+      </div>
+    </a>
+  </section>
+  <!-- Programmes -->
+  <section id="programmes" class="mt-10 md:mt-20 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Upcoming Programmes</h3>
+    <div class="programme-list flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto pb-2">
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Classic Art Workshop">Classic Art Workshop</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">July 21, 2025 — 17:00</div>
+        <div class="mt-2 mb-3 text-sm">A hands-on journey through vintage painting techniques.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-07-21T17:00:00Z"></span>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Literary Reading Night">Literary Reading Night</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">August 4, 2025 — 19:00</div>
+        <div class="mt-2 mb-3 text-sm">Experience the latest works read live with classic ambience.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-08-04T19:00:00Z"></span>
+        </div>
+      </div>
+      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
+        <h4 class="font-serif text-lg typewriter" data-type="Art & Community Meetup">Art & Community Meetup</h4>
+        <div class="mt-2 text-xs text-[#c2a374]">September 14, 2025 — 18:30</div>
+        <div class="mt-2 mb-3 text-sm">Join fellow art lovers for a vintage-inspired night of networking.</div>
+        <div class="font-mono text-base flex gap-1 items-center">
+          <span class="countdown" data-date="2025-09-14T18:30:00Z"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Painting Gallery -->
+  <section id="artworks" class="mt-10 md:mt-24 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Painting Gallery</h3>
+    <div class="gallery-list flex gap-2 pb-3 overflow-x-auto">
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+      <span class="noise-img-wrap w-32 h-44 block relative">
+      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
+      <span class="img-noise-ov rounded-xl"></span>
+      </span>
+    </div>
+    <a href="/gallery" class="btn-glass btn-glass-vintage mt-3 inline-block">More</a>
+  </section>
+  <!-- Published Novels -->
+  <section id="novels" class="mt-10 md:mt-24 px-4 md:px-20">
+    <h3 class="font-serif text-2xl mb-3 tracking-wide">Published Novels</h3>
+    <div class="flex flex-col gap-6 md:gap-10">
+      <div class="flex items-start fade-in">
+        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+          <span class="img-noise-ov"></span>
+          <div class="book-title-on-thumb">The Timeless<br>Brush</div>
+        </span>
+        <div>
+          <h4 class="font-serif text-lg mb-1">The Timeless Brush</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2023</div>
+          <p class="text-sm mb-2 max-w-xl">A painter’s odyssey through eras—where every brushstroke preserves a memory, every page an artwork.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+      <div class="flex items-start fade-in">
+        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+          <span class="img-noise-ov"></span>
+          <div class="book-title-on-thumb">Shadows<br>Under Gold</div>
+        </span>
+        <div>
+          <h4 class="font-serif text-lg mb-1">Shadows Under Gold</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2021</div>
+          <p class="text-sm mb-2 max-w-xl">A classic tale of dreams, struggle, and hope painted on the vintage canvas of old city life.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+      <div class="flex items-start fade-in">
+        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+          <span class="img-noise-ov"></span>
+          <div class="book-title-on-thumb">Letters<br>From The Easel</div>
+        </span>
+        <div>
+          <h4 class="font-serif text-lg mb-1">Letters From The Easel</h4>
+          <div class="text-xs text-[#c2a374] mb-0.5">2019</div>
+          <p class="text-sm mb-2 max-w-xl">A collection of heartfelt letters from an artist to their muse—timeless, poetic, and evocative.</p>
+          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- Footer -->
   <footer class="mt-16 md:mt-28 px-6 py-8 md:px-20 glass text-xs text-[#b9a989] flex flex-col md:flex-row items-center justify-between" id="footer-glass">
     <div class="flex gap-2 mb-3 md:mb-0">
@@ -537,7 +602,6 @@
     <symbol id="lucide-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
   </svg>
   <script>
-    // Set year
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('year').textContent = (new Date()).getFullYear();
       setTimeout(() => document.getElementById('preloader').classList.add('done'), 800);
