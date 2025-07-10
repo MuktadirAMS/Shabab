@@ -71,83 +71,105 @@
       80%  { text-shadow: 0 0 5px #e3d9c9; }
       100% { text-shadow: 0 0 13px #b3a68e66, 0 0 0 #fff0; }
     }
-    /* Apple-Style Hamburger + Enhanced Micro Animation */
+    /* Hamburger Apple original design + enhanced micro animation & thin, small UI */
+/* Do not change any class names */
+
+/* Container: smaller, thinner, more minimal */
 .hamburger {
-  width: 30px;
-  height: 30px;
+  width: 28px; height: 28px;
   position: sticky;
-  top: 14px;
+  top: 12px;
   z-index: 120;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(28, 28, 28, 0.15);
+  background: rgba(28,28,28,0.13);
   border-radius: 50%;
   border: 1px solid #ad977944;
-  box-shadow: 0 1px 6px #0002;
+  box-shadow: 0 1px 4px #0002;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.3s ease;
+  transition: background .15s, box-shadow .2s;
+  padding: 0;
+}
+.hamburger:active, .hamburger:focus { 
+  background: rgba(60,60,60,0.22);
+  box-shadow: 0 2px 8px #0003;
 }
 
-.hamburger:active,
-.hamburger:focus {
-  background: rgba(60, 60, 60, 0.25);
-  transform: scale(0.96);
-}
-
+/* Inner icon: smaller, more centered */
 .hamburger-inner {
-  width: 22px;
-  height: 22px;
+  width: 17px; height: 17px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: flex; flex-direction: column; justify-content: center;
   align-items: center;
 }
 
+/* Bars: extra thin, subtle, spaced for × effect */
 .hamburger-bar {
   display: block;
-  height: 1.6px;
+  height: 1.4px;
   width: 100%;
   background: #ede8df;
-  border-radius: 1px;
-  transition: all 0.35s cubic-bezier(0.65, 0, 0.35, 1.3);
+  border-radius: 2px;
   position: absolute;
   left: 0;
-  will-change: transform, background, width, opacity;
+  transition:
+    transform .38s cubic-bezier(.62,.05,.61,1.15),
+    background .31s cubic-bezier(.9,.3,.4,1.04),
+    width .24s cubic-bezier(.54,.03,.98,.36),
+    opacity .21s cubic-bezier(.45,.02,.99,.32);
+  will-change: transform,background,width,opacity;
 }
+.hamburger-bar.top   { top: 2.4px; }
+.hamburger-bar.mid   { top: 7.8px;}
+.hamburger-bar.bot   { top: 13.2px; }
 
-.hamburger-bar.top { top: 5px; }
-.hamburger-bar.mid { top: 10.5px; }
-.hamburger-bar.bot { top: 16px; }
-
+/* Animation for × and micro movement */
 .hamburger.active .hamburger-bar.top {
-  transform: translateY(5.5px) rotate(45deg);
-  background: #dab48a;
+  transform: translateY(5.4px) rotate(45deg) scaleX(1.08);
+  background: linear-gradient(90deg,#dab48a 80%,#ffe2b7 100%);
+  box-shadow: 0 0 2px #dab48a66;
 }
 .hamburger.active .hamburger-bar.mid {
   opacity: 0;
   width: 0;
+  transform: scaleX(0.5);
+  transition:
+    opacity .19s cubic-bezier(.4,.1,1,.9),
+    width .25s cubic-bezier(.54,.03,.98,.36),
+    transform .22s cubic-bezier(.45,.02,.99,.32);
 }
 .hamburger.active .hamburger-bar.bot {
-  transform: translateY(-5.5px) rotate(-45deg);
-  background: #dab48a;
+  transform: translateY(-5.4px) rotate(-45deg) scaleX(1.08);
+  background: linear-gradient(90deg,#dab48a 80%,#ffe2b7 100%);
+  box-shadow: 0 0 2px #dab48a66;
 }
 
-/* Enhanced micro hover animation */
+/* Micro animation on hover: staggered width and pulse */
 .hamburger:hover .hamburger-bar.top {
-  width: 92%;
-  transform-origin: left;
+  width: 96%;
+  transition-delay: 0.04s;
+  box-shadow: 0 0 3px #dab48a33;
 }
 .hamburger:hover .hamburger-bar.mid {
-  width: 80%;
-  transform-origin: center;
+  width: 85%;
+  transition-delay: 0.09s;
 }
 .hamburger:hover .hamburger-bar.bot {
-  width: 92%;
-  transform-origin: right;
+  width: 96%;
+  transition-delay: 0.06s;
+  box-shadow: 0 0 3px #dab48a33;
 }
 
+/* Extra micro-animation pulse on hover (subtle scale) */
+.hamburger:hover .hamburger-inner {
+  animation: hamburger-bounce .24s cubic-bezier(.32,.61,.35,1.4);
+}
+@keyframes hamburger-bounce {
+  0%   { transform: scale(1);}
+  50%  { transform: scale(1.09);}
+  100% { transform: scale(1);}
+}
     /* Micro animation on hover */
     .hamburger:hover .hamburger-bar.top { width: 94%; }
     .hamburger:hover .hamburger-bar.mid { width: 82%; }
