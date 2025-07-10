@@ -330,77 +330,26 @@
   display: none;
 }
 
-/* Gallery images with grain and animation */
-
-.slider-card img,
-.ad-poster img {
-  position: relative;
-  z-index: 1;
-  animation: noising-vintage 2.3s infinite alternate linear;
-  transition: transform 0.6s cubic-bezier(.22,.68,.52,1.01), opacity 0.6s cubic-bezier(.22,.68,.52,1.01);
-  will-change: transform, opacity;
-  /* For cards, scale down initially for entrance transition */
-  opacity: 0.8;
-  transform: scale(0.94) rotate(2deg);
-}
-
-/* Unique entrance animation on scroll (JS optional, see below) */
-.slider-card.in-view img {
-  opacity: 1;
-  transform: scale(1.04) rotate(-1deg);
-  transition-delay: 0.1s;
-}
-
-/* Noise grain overlay */
-.slider-card img::after,
-.ad-poster img::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  opacity: .14;
-  background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-  mix-blend-mode: soft-light;
-  animation: grainMove 1.35s infinite alternate linear;
-}
-
-/* Card styling for horizontal snap and pop effect */
-.slider-card {
-  flex: 0 0 350px;
-  scroll-snap-align: center;
-  background: #232323;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 30px -8px #0009;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  transition: box-shadow 0.5s, transform 0.5s;
-}
-
-.slider-card:hover,
-.slider-card:focus-within {
-  z-index: 2;
-  box-shadow: 0 16px 48px -12px #000c;
-  transform: scale(1.06) rotate(-2deg);
-}
-
-/* Animation keyframes */
-@keyframes noising-vintage {
-  0% { filter: brightness(1) contrast(1.12); }
-  100% { filter: brightness(0.98) contrast(1.18); }
-}
-@keyframes grainMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 20px 10px; }
-}
-
-/* Responsive for mobile */
-@media (max-width: 600px) {
-  .slider-card {
-    flex: 0 0 80vw;
-  }
-}
+/* Gallery images */
+    .slider-card img,
+    .ad-poster img {
+      position: relative;
+      z-index: 1;
+      animation: noising-vintage 2.3s infinite alternate linear;
+    }
+    
+    .slider-card img::after,
+    .ad-poster img::after {
+      content: '';
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      z-index:2;
+      opacity:.14;
+      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+      animation: grainMove 1.35s infinite alternate linear;
+    }
     /* Mobile menu animation */
     .mobile-anim-in { animation: menuWrapIn .34s cubic-bezier(.69,-0.02,.39,1.13) both; }
     .mobile-anim-out { animation: menuFadeOut .22s cubic-bezier(.4,.1,.6,1.2) both; }
@@ -432,6 +381,7 @@
       user-select: none;
       cursor: pointer;
     }
+
     /* Mode: Vintage style */
     html.vintage {
       background: #f3ede3;
