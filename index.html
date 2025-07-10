@@ -16,21 +16,16 @@
   <style>
     html {
       font-family: 'EB Garamond', 'DM Serif Display', serif;
-      background: #f8f8f7;
-      color: #181818;
-      scroll-behavior: smooth;
+      background: #f5f5f2;
+      color: #2c241b;
+      transition: background 0.34s, color 0.34s;
     }
     body {
-      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(48,48,48)" stroke-opacity="0.08" stroke-width="1"/></svg>') repeat, #fff;
-      background-blend-mode: lighten;
+      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(220,220,220)" stroke-opacity="0.10" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#fcfaf6 0%,#e7e3d8 100%);
+      background-blend-mode: multiply;
       position:relative;
       overflow-x:hidden;
-      transition: background .7s cubic-bezier(.7,.1,.2,1), color .6s cubic-bezier(.7,.1,.2,1);
-    }
-    body.vintage {
-      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(48,48,48)" stroke-opacity="0.13" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#ece3d2 0%,#ece4d2 100%);
-      background-blend-mode: multiply;
-      color: #473a29;
+      transition: background 0.34s;
     }
     body::after {
       content:'';
@@ -38,397 +33,372 @@
       position:fixed;
       inset:0;
       z-index:100;
-      opacity:.14;
+      opacity:.11;
       mix-blend-mode:soft-light;
       background:url('https://grainy-gradients.vercel.app/noise.svg');
-      transition: opacity .5s;
-      animation: imgNoiseOverlay 2.5s infinite alternate;
+      animation: grainMove 1.35s infinite alternate linear;
     }
-    body.vintage::after { opacity:.32;}
-    @keyframes imgNoiseOverlay {
-      0% { opacity:.14; }
-      100% { opacity:.21; }
+    @keyframes grainMove {
+      0% { background-position: 0 0 }
+      100% { background-position: 60px 40px }
     }
+    ::selection { background: #beb5a2; color: #2c241b; }
     /* Glassmorphic effect */
     .glass {
-      background: rgba(255,255,255,0.63);
-      backdrop-filter: blur(13px) saturate(135%);
-      border: 1.5px solid rgba(90,90,90,0.08);
-      box-shadow: 0 2px 32px 0 rgba(0,0,0,0.03);
-      transition: box-shadow .22s, border-color .16s, background .22s;
+      background: rgba(255,255,255,0.74);
+      backdrop-filter: blur(10px) saturate(125%);
+      border: 1px solid rgba(172,153,110,0.09);
+      box-shadow: 0 2px 32px 0 rgba(70,60,40,0.06);
+      transition: background .25s;
     }
-    .glass.vintage {
-      background: rgba(237,227,201,0.65);
-      border-color: #b9a98944;
-      box-shadow: 0 2px 32px 0 #c4ad8d25;
-    }
+    /* Header glass (more simple, semi transparent) */
     .header-glass {
-      background: rgba(255,255,255,0.83);
+      background: rgba(254,251,240,0.86);
       backdrop-filter: blur(10px);
-      border-bottom: 1.5px solid #eee;
-      box-shadow: 0 2px 32px 0 rgba(0,0,0,0.04);
-      transition: background .22s;
+      border-bottom: 1.5px solid rgba(172,153,110,0.08);
+      box-shadow: 0 2px 32px 0 rgba(70,60,40,0.04);
     }
-    .header-glass.vintage {
-      background: rgba(239,227,203,0.81);
-      border-bottom: 1.5px solid #c2a37433;
-      box-shadow: 0 2px 32px 0 #c4ad8d25;
-    }
+    /* Preloader */
     #preloader {
       position: fixed; inset: 0; z-index: 9999;
       display: flex; align-items: center; justify-content: center;
-      background: #fff;
+      background: #f2eee6;
       transition: opacity 0.6s cubic-bezier(.7,.1,.2,1);
     }
-    body.vintage #preloader { background: #ece3d2; }
     #preloader.done { opacity:0; pointer-events:none; }
     .ms-icon {
       font-family: 'EB Garamond', 'DM Serif Display', serif;
       font-size: 3rem; font-weight: bold;
-      color: #181818;
+      color: #ad9779;
       letter-spacing: 0.09em;
       animation: msIconPulse 1.2s infinite alternate cubic-bezier(.5,0,.4,1.1);
     }
     @keyframes msIconPulse {
-      0%   { text-shadow: 0 0 7px #c7b89d44, 0 0 0 #fff0; }
-      40%  { text-shadow: 0 0 16px #e0d7c788, 0 0 7px #fff2; }
-      80%  { text-shadow: 0 0 5px #e3d9c9; }
+      0%   { text-shadow: 0 0 7px #e2d7c644, 0 0 0 #fff0; }
+      40%  { text-shadow: 0 0 16px #dacbb788, 0 0 7px #fff2; }
+      80%  { text-shadow: 0 0 5px #e3dac9; }
       100% { text-shadow: 0 0 13px #b3a68e66, 0 0 0 #fff0; }
     }
-    /* Menu List Glass Animation */
-    .menu {
-      transition: opacity .36s cubic-bezier(.62,.05,.61,1.15), transform .45s cubic-bezier(.62,.05,.61,1.15);
+    /* Hamburger Apple original design + micro animation */
+    .hamburger {
+      width: 36px; height: 36px;
+      position: sticky;
+      top: 16px;
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(230,230,230,0.20);
+      border-radius: 50%;
+      border: 1.3px solid #ad977944;
+      box-shadow: 0 1px 8px #bfb09333;
+      cursor: pointer;
+      transition: background .18s;
     }
-    .menu.mobile {
-      opacity: 0;
-      pointer-events:none;
-      transform: translateY(-32px) scale(.98);
-      transition: opacity .34s cubic-bezier(.62,.05,.61,1.15), transform .45s cubic-bezier(.62,.05,.61,1.15);
+    .hamburger:active, .hamburger:focus { background: rgba(186,162,130,0.25);}
+    .hamburger-inner {
+      width: 26px; height: 26px; position: relative;
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center;
     }
-    .menu.mobile.open {
-      opacity: 1;
-      pointer-events:auto;
-      transform: translateY(0) scale(1.03);
-    }
-    .menu a {
-      position: relative;
-      padding: 7px 0;
-      margin: 0 8px;
-      border-radius: 9px;
-      transition: color .17s, background .18s, box-shadow .21s, letter-spacing .2s;
-      font-weight: 500;
-      z-index: 1;
-    }
-    .menu a::before {
-      content: "";
+    .hamburger-bar {
+      display: block;
+      height: 2.1px;
+      width: 100%;
+      background: #ad9779;
+      border-radius: 2px;
+      transition: all .35s cubic-bezier(.62,.05,.61,1.15);
       position: absolute;
-      left: 50%; top: 50%; transform: translate(-50%,-50%) scaleX(.6);
-      width: 90%; height: 82%;
-      background: linear-gradient(90deg,#1112 0%,#eee5 100%);
-      border-radius: 9px;
-      opacity: 0;
-      z-index: -1;
-      transition: opacity .23s, transform .22s;
+      left: 0;
+      will-change: transform,background;
     }
-    .menu a:hover, .menu a:focus {
-      color: #9e7b4c;
-      letter-spacing: .08em;
-      background: rgba(238,203,144,0.07);
-      box-shadow: 0 2px 10px #b9a98922;
+    .hamburger-bar.top   { top: 6px; }
+    .hamburger-bar.mid   { top: 12px;}
+    .hamburger-bar.bot   { top: 18px;}
+    .hamburger.active .hamburger-bar.top {
+      transform: translateY(6px) rotate(45deg);
+      background: #6e5d46;
     }
-    .menu a:hover::before,
-    .menu a:focus::before {
-      opacity: .18;
-      transform: translate(-50%,-50%) scaleX(1);
+    .hamburger.active .hamburger-bar.mid {
+      opacity: 0; width:0;
     }
-   /* Professional Artistic Hamburger Menu Icon */
-/* Container */
-.hamburger {
-  width: 32px; height: 32px;
-  position: sticky;
-  top: 16px;
-  right: 20px;
-  z-index: 120;
-  display: flex;
-  align-items: center; justify-content: center;
-  background: rgba(245, 245, 245, 0.23);
-  border-radius: 14px;
-  border: 1.5px solid #b3a48033;
-  box-shadow: 0 2px 16px #0001, 0 1px 3px #d3c9b7c0;
-  cursor: pointer;
-  transition: background .18s cubic-bezier(.6,.1,.63,1.13), box-shadow .22s cubic-bezier(.62,.05,.61,1.15);
-  will-change: background, box-shadow;
-  overflow: hidden;
-  animation: hInit 0.7s cubic-bezier(.62,.05,.61,1.15);
-}
-@keyframes hInit {
-  0% { transform: scale(.7) rotate(-10deg); opacity: 0.3; }
-  50%{ opacity: 0.7; }
-  100% { transform: none; opacity: 1; }
-}
-
-.hamburger-inner {
-  width: 20px; height: 20px; position: relative;
-  display: flex; flex-direction: column; justify-content: center;
-  align-items: center;
-  pointer-events:none;
-  transition: filter 0.18s;
-  filter: drop-shadow(0 1px 5px #e4d8c7aa);
-}
-
-.hamburger-bar {
-  display: block;
-  height: 2.2px; width: 100%;
-  background: linear-gradient(90deg, #e0c489 0%, #a08455 100%);
-  border-radius: 3px;
-  position: absolute; left: 0;
-  transition: all .38s cubic-bezier(.54,.05,.61,1.15);
-  box-shadow: 0 0 6px #b9a98930, 0 1px 6px #eee8;
-  will-change: transform, background, width, left, box-shadow;
-}
-.hamburger-bar.top   { top: 2.5px; }
-.hamburger-bar.mid   { top: 9px;}
-.hamburger-bar.bot   { top: 15.4px;}
-/* Hamburger animation: slide-in and morph to X with artistic swirl */
-.hamburger.active .hamburger-bar.top {
-  transform: translateY(6.5px) rotate(45deg) scaleX(1.12) scaleY(1.15);
-  background: linear-gradient(90deg, #bfa46c 0%, #8d6c3a 100%);
-  left: 0px;
-  box-shadow: 0 0 9px #b9a98970;
-  animation: swirlTop 0.38s cubic-bezier(.8,.4,.16,1.4);
-}
-@keyframes swirlTop {
-  0%{transform: translateY(0) rotate(0) scaleX(1) scaleY(1);}
-  60%{transform: translateY(10px) rotate(30deg) scaleX(1.25) scaleY(1.1);}
-  100%{transform: translateY(6.5px) rotate(45deg) scaleX(1.12) scaleY(1.15);}
-}
-
-.hamburger.active .hamburger-bar.mid {
-  opacity: 0;
-  width: 0%; left: 50%;
-  filter: blur(1.5px);
-  transition: opacity 0.17s, width 0.32s 0.12s, left 0.32s 0.12s, filter 0.25s;
-}
-
-.hamburger.active .hamburger-bar.bot {
-  transform: translateY(-6.5px) rotate(-45deg) scaleX(1.12) scaleY(1.15);
-  background: linear-gradient(90deg, #bfa46c 0%, #8d6c3a 100%);
-  left: 0px;
-  box-shadow: 0 0 9px #b9a98970;
-  animation: swirlBot 0.38s cubic-bezier(.8,.4,.16,1.4);
-}
-@keyframes swirlBot {
-  0%{transform: translateY(0) rotate(0) scaleX(1) scaleY(1);}
-  60%{transform: translateY(-10px) rotate(-30deg) scaleX(1.25) scaleY(1.1);}
-  100%{transform: translateY(-6.5px) rotate(-45deg) scaleX(1.12) scaleY(1.15);}
-}
-
-/* Close animation with unique 'bounce' and subtle swirl out */
-.hamburger:not(.active) .hamburger-bar.top,
-.hamburger:not(.active) .hamburger-bar.bot {
-  animation: closeBounce 0.33s cubic-bezier(.7,0,.5,1.3);
-}
-@keyframes closeBounce {
-  0% {transform: scale(.9) rotate(-10deg);}
-  55% {transform: scale(1.15) rotate(8deg);}
-  100% {transform: none;}
-}
-
-/* Hover */
-.hamburger:hover {
-  background: rgba(255, 251, 233, 0.49);
-  box-shadow: 0 3px 22px #d9cba680, 0 1px 6px #eee8;
-}
-.hamburger:hover .hamburger-bar.top { width: 97%; left: 1.5%; background: linear-gradient(90deg,#f1e0b7 0%, #c8ac7b 100%);}
-.hamburger:hover .hamburger-bar.mid { width: 85%; left: 7.5%; background: linear-gradient(90deg,#f1e0b7 0%, #c8ac7b 100%);}
-.hamburger:hover .hamburger-bar.bot { width: 97%; left: 1.5%; background: linear-gradient(90deg,#f1e0b7 0%, #c8ac7b 100%);}
-
-.hamburger:active .hamburger-inner {
-  animation: hBounce .18s cubic-bezier(.7,0,.5,1.3);
-  filter: drop-shadow(0 2px 7px #d3bc83cc);
-}
-@keyframes hBounce {
-  0%{ transform: scale(1);}
-  40%{ transform: scale(.85,1);}
-  100%{transform: scale(1);}
-}    .logo-text {
+    .hamburger.active .hamburger-bar.bot {
+      transform: translateY(-6px) rotate(-45deg);
+      background: #6e5d46;
+    }
+    /* Micro animation on hover */
+    .hamburger:hover .hamburger-bar.top { width: 94%; }
+    .hamburger:hover .hamburger-bar.mid { width: 82%; }
+    .hamburger:hover .hamburger-bar.bot { width: 94%; }
+    /* Responsive logo size */
+    .logo-text {
       font-family:'DM Serif Display',serif;
       letter-spacing:.06em;
       font-weight:400;
-      font-size:1.15rem;
+      font-size:1.7rem;
       transition: font-size .28s;
-      text-shadow: 0 2px 6px #b9a98922;
+      color: #ad9779;
     }
     @media (max-width: 640px) {
-      .logo-text { font-size:.8rem;}
+      .logo-text { font-size:1.1rem;}
     }
-/* Hero image - only image, original size, responsive, never cropped, full width */
-.hero-img-original {
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  transform: translateX(-50%);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 50%;
-  margin-right: 0;
-  overflow: hidden;
-  background: #eee;
-  z-index: 1;
-  margin-bottom: 0;
-  box-shadow: 0 6px 44px #b9a98911;
-  animation: heroFade .7s cubic-bezier(.7,0,.5,1.1);
-  min-height: 30vw;
-  padding: 0;
-  border-radius: 0;
-}
-
-@keyframes heroFade {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) scaleY(.7);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) scaleY(1);
-  }
-}
-
-/* Hero image inner container */
-.hero-img-original .img-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: visible;
-}
-
-/* Main hero image: responsive, not cropped, auto-vintage filter */
-.hero-img-original img {
-  max-width: 100vw;
-  max-height: 95vh;
-  width: auto;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  object-fit: contain !important;
-  background: #eee;
-  border-radius: 0;
-  box-shadow: 0 1px 30px 2px #b9a98914;
-  transition: filter .7s, box-shadow .33s;
-  z-index: 1;
-  position: relative;
-
-  /* "Auto-vintage" filter: sepia, slightly faded, a bit yellow, soft contrast and vignette effect */
-  filter:
-    sepia(0.23)
-    contrast(1.08)
-    brightness(0.98)
-    saturate(0.84)
-    hue-rotate(-7deg)
-    drop-shadow(0 0 22px #d6a57222);
-}
-
-/* Optional vignette overlay for vintage effect (edge darkening) */
-.hero-img-original::after {
-  content: '';
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  border-radius: 0;
-  z-index: 3;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 66%, rgba(47,34,20,0.22) 100%);
-  mix-blend-mode: multiply;
-}
-
-/* Noising animation overlay (grain effect) */
-.hero-img-original .img-noise-ov {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  opacity: .16;
-  z-index: 2;
-  background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-  mix-blend-mode: soft-light;
-  animation: imgNoiseOverlay 1.8s infinite alternate;
-}
-
-@keyframes imgNoiseOverlay {
-  0% { filter: grayscale(0.75) brightness(1.09) contrast(1.12) blur(0.3px); transform: translateX(0) translateY(0); }
-  50% { filter: grayscale(1) brightness(1.08) contrast(1.16) blur(0.7px); transform: translateX(-2px) translateY(2px);}
-  100% { filter: grayscale(0.95) brightness(1.15) contrast(1.13) blur(0.5px); transform: translateX(2px) translateY(-2px);}
-}
-
-/* Responsive hero image container */
-@media (max-width: 900px) {
-  .hero-img-original { min-height:180px;}
-  .hero-img-original img { max-width:98vw; max-height:60vw;}
-}
-@media (max-width: 640px) {
-  .hero-img-original img { max-width:100vw; max-height:46vw;}
-}
-    /* Content after hero image */
-    .hero-content {
-      margin-top: 0;
-      margin-bottom: 2.5rem;
+    /* Hero fullwidth after header */
+    .hero-img-full {
+      width: 100vw;
+      min-height: 300px;
+      max-height: 56vw;
+      aspect-ratio: 16/5;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      text-align: center;
-      animation: fadeInUp .7s cubic-bezier(.7,0,.5,1.1);
-    }
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(30px);}
-      100%{ opacity:1; transform: none;}
-    }
-    .hero-typewriter {
-      font-size: 2.2rem;
-      font-family: 'DM Serif Display', serif;
-      font-weight: 400;
-      white-space: nowrap;
+      justify-content: center;
+      position: relative;
+      margin-left: 50%;
+      transform: translateX(-50%);
       overflow: hidden;
-      border-right: .09em solid #b9a989;
-      letter-spacing: .08em;
-      animation: typing 2.2s steps(36, end), blink-caret .65s step-end infinite;
-      margin-bottom: .8rem;
-      min-height: 2.7em;
-      max-width: 98vw;
-      filter: drop-shadow(0 0 8px #b9a98944);
-      text-shadow: 0 2px 8px #b9a98933;
-      transition: filter .24s;
+      z-index: 1;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
     }
-    .hero-typewriter:hover { filter: drop-shadow(0 0 16px #b9a98999);}
-    @keyframes typing {from{width:0} to{width:100%}}
-    @keyframes blink-caret {from, to{border-color: #b9a989;} 50%{border-color:transparent}}
-    @media (max-width: 900px) {
-      .hero-typewriter { font-size: 1.4rem;}
+    .hero-img-full img {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(.21) contrast(1.08) brightness(1.07) grayscale(.05) saturate(1.13);
+      pointer-events: none;
+      user-drag: none;
+      -webkit-user-drag: none;
+      user-select: none;
+      transition: filter .25s;
+      z-index: 1;
+      animation: noising-vintage 3.2s infinite alternate linear;
     }
-    @media (max-width: 640px) {
-      .hero-typewriter { font-size: .97rem;}
-    }
-    /* Gallery & Published Books: Keep old design, add noise overlay */
-    .gallery-list img.art-thumb,
-    .book-mockup-thumb {
-      position:relative;
-      z-index:1;
-    }
-    .gallery-list .img-noise-ov,
-    .book-mockup-thumb .img-noise-ov {
+    .hero-img-full .vintage-noise {
       pointer-events:none;
       position:absolute;
       inset:0;
-      opacity:.19;
+      opacity:.15;
       z-index:2;
-      background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
       mix-blend-mode: soft-light;
-      animation: imgNoiseOverlay 2.2s infinite alternate;
-      border-radius: inherit;
+      animation: grainMove 1.35s infinite alternate linear;
     }
-    /* ... keep rest of your styles unchanged ... */
+    @keyframes noising-vintage {
+      0% { filter: sepia(.21) contrast(1.08) brightness(1.07) grayscale(.05) saturate(1.13);}
+      40% { filter: sepia(.26) contrast(1.13) brightness(1.12) grayscale(.12) saturate(1.15);}
+      100% { filter: sepia(.19) contrast(1.06) brightness(1.01) grayscale(0.07) saturate(1.1);}
+    }
+    @media (max-width: 900px) {
+      .hero-img-full { max-height: 43vw;}
+    }
+    @media (max-width: 640px) {
+      .hero-img-full { min-height: 152px; max-height: 40vw;}
+    }
+    /* Glassmorphic Buttons (all) */
+    .btn-glass {
+      background: rgba(255,255,255,0.61);
+      color: #6e5d46;
+      border: 1.5px solid #ad977944;
+      border-radius: 1000px;
+      box-shadow: 0 1px 8px #bfb09333;
+      backdrop-filter: blur(9px) saturate(120%);
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: .55em 1.35em;
+      transition: all .18s cubic-bezier(.7,.2,.5,1.1);
+      text-shadow: 0 1px 7px #efedea59;
+      cursor:pointer;
+      outline:none;
+      display: inline-block;
+    }
+    .btn-glass:active { scale: .96; }
+    .btn-glass-vintage {
+      background: linear-gradient(90deg,rgba(163,142,92,0.08) 0%,rgba(238,225,196,0.72) 100%);
+      color: #ad9779;
+      border: 1.5px solid #b7a89144;
+      box-shadow: 0 2px 18px #231a0f22;
+    }
+    /* Book mockup thumbnail */
+    .book-mockup-thumb {
+      width: 60px;
+      height: 84px;
+      min-width:60px;
+      margin-right: 1.5rem;
+      background: linear-gradient(120deg, #f3ede3 70%, #d7c7b6 100%);
+      border: 1.5px solid #b7a89144;
+      box-shadow: 0 4px 18px #c8b89a22, 0 2px 4px #b7a89144;
+      border-radius: 7px;
+      position:relative;
+      overflow:hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      animation: noising-vintage 2.9s infinite alternate linear;
+    }
+    .book-mockup-thumb::after {
+      content:'';
+      position:absolute; inset:0;
+      border-radius:7px;
+      pointer-events:none;
+      background: linear-gradient(0deg, #fff7 0%, #fff0 60%);
+      mix-blend-mode:soft-light;
+      animation: grainMove 1.35s infinite alternate linear;
+    }
+    .book-title-on-thumb {
+      font-family:'EB Garamond',serif;
+      font-size:.83em;
+      color:#816c53;
+      font-weight:600;
+      text-align:center;
+      padding:8px 0 7px 0;
+      z-index:1;
+      width:100%;
+      word-break:break-word;
+      text-shadow: 0 1px 3px #fff9, 0 2px 6px #fff2;
+      background:rgba(230,227,217,0.56);
+      border-bottom-left-radius:7px;
+      border-bottom-right-radius:7px;
+      box-shadow:0 2px 6px #b7a89122;
+    }
+    /* Footer + social + disables */
+    .mode-toggle {
+      display:flex;align-items:center;justify-content:center;
+      padding:0.6em;width:2.1em;height:2.1em;
+      border-radius:50%;
+      background: rgba(238,225,196,0.36);
+      border: 1.5px solid #ad977944;
+      color: #ad9779;
+      box-shadow: 0 2px 12px #c8b89a22;
+      margin-top: 1.2rem;
+      margin-bottom: 0.5rem;
+      margin-left: 0;
+      margin-right: 0;
+      align-self: center;
+      transition:background .18s,color .18s,border .18s;
+      cursor: pointer;
+    }
+    .mode-toggle.active {
+      background: linear-gradient(120deg,#231a0f22 0%,#ad977944 100%);
+      color: #6e5d46;
+      border-color: #e8d6b644;
+    }
+    .mode-toggle.vintage {
+      background: linear-gradient(120deg,#e5dac0 60%,#c3a47d 100%);
+      color: #6e5d46;
+      border-color: #c3a47d99;
+      box-shadow: 0 2px 12px #c8b89a66;
+    }
+    .mode-toggle.light {
+      background: rgba(238,225,196,0.36);
+      color: #ad9779;
+      border-color: #ad977944;
+    }
+    /* Social icon hover */
+    .social-icon, .footer-social {
+      transition: color .18s, filter .2s;
+      filter: drop-shadow(0 0 2px #ad977944);
+    }
+    .social-icon:hover, .footer-social:hover { color: #816c53; filter: drop-shadow(0 0 8px #a58d5844);}
+    /* Images vintage noising animation */
+    .vintage-noise-img {
+      position:relative;
+      z-index:1;
+    }
+    .vintage-noise-img::after {
+      content: '';
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      z-index:2;
+      opacity:.15;
+      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+      animation: grainMove 1.35s infinite alternate linear;
+    }
+    /* Gallery images */
+    .art-thumb,
+    .slider-card img,
+    .ad-poster img {
+      position: relative;
+      z-index: 1;
+      animation: noising-vintage 2.3s infinite alternate linear;
+    }
+    .art-thumb::after,
+    .slider-card img::after,
+    .ad-poster img::after {
+      content: '';
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      z-index:2;
+      opacity:.14;
+      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+      animation: grainMove 1.35s infinite alternate linear;
+    }
+    /* Mobile menu animation */
+    .mobile-anim-in { animation: menuWrapIn .34s cubic-bezier(.69,-0.02,.39,1.13) both; }
+    .mobile-anim-out { animation: menuFadeOut .22s cubic-bezier(.4,.1,.6,1.2) both; }
+    @keyframes menuWrapIn {
+      0% { opacity: 0; transform: scaleY(.85) translateY(-70px);}
+      100% { opacity: 1; transform: scaleY(1) translateY(0);}
+    }
+    @keyframes menuFadeOut {
+      0% { opacity: 1; transform: scaleY(1) translateY(0);}
+      100% { opacity: 0; transform: scaleY(.85) translateY(-40px);}
+    }
+    /* Hide default mode toggles */
+    #mode-toggle, #mode-toggle-mobile { display: none !important; }
+    /* Footer mode toggle placement */
+    .footer-mode-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      margin-top: 1.1em;
+    }
+    .footer-mode-label {
+      font-family: 'EB Garamond', serif;
+      font-size: 1em;
+      color: #ad9779;
+      letter-spacing: .03em;
+      opacity: 0.85;
+      margin-right: 0.5em;
+      margin-left: 0.1em;
+      user-select: none;
+      cursor: pointer;
+    }
+    /* Mode: Vintage style */
+    html.vintage {
+      background: #f3ede3;
+      color: #6e5d46;
+    }
+    html.vintage body {
+      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(163,142,92)" stroke-opacity="0.07" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#f3ede3 0%,#f4e0c4 100%);
+      background-blend-mode: multiply;
+    }
+    html.vintage .logo-text,
+    html.vintage .footer-mode-label { color: #705828;}
+    html.vintage .header-glass,
+    html.vintage .glass,
+    html.vintage .btn-glass {
+      background: rgba(245,236,216,0.91) !important;
+      border-color: #c3a47d88 !important;
+      color: #6e5d46 !important;
+    }
+    html.vintage .btn-glass-vintage {
+      background: linear-gradient(90deg,rgba(163,142,92,0.15) 0%,rgba(230,227,217,0.86) 100%) !important;
+      color: #705828 !important;
+      border-color: #c3a47d88 !important;
+    }
+    html.vintage .mode-toggle {
+      background: linear-gradient(120deg,#e5dac0 60%,#c3a47d 100%) !important;
+      color: #6e5d46 !important;
+      border-color: #c3a47d99 !important;
+      box-shadow: 0 2px 12px #c8b89a66 !important;
+    }
+    .visible { opacity: 1 !important; }
+    .fade-in { opacity: 0; transition: opacity .55s;}
+    .fade-in.visible { opacity: 1; }
   </style>
 </head>
 <body>
@@ -437,17 +407,18 @@
     <span class="ms-icon">MS</span>
   </div>
   <!-- Header -->
-  <header class="header-glass w-full fixed top-0 left-0 z-50 backdrop-blur-md" id="header">
+  <header class="header-glass w-full fixed top-0 left-0 z-50 backdrop-blur-md">
     <div class="flex justify-between items-center px-6 md:px-14 h-[58px]">
       <span class="logo-text font-serif font-thin select-none">Muktadir Shabab</span>
-      <nav class="hidden md:flex gap-8 text-lg font-serif font-semibold tracking-wide menu">
-        <a href="#about" class="micro-anim">About</a>
-        <a href="#cv" class="micro-anim">CV</a>
-        <a href="#artworks" class="micro-anim">Artworks</a>
-        <a href="#blogs" class="micro-anim">Blogs</a>
-        <a href="#community" class="micro-anim">Community</a>
-        <a href="#booking" class="micro-anim">Booking</a>
+      <nav class="hidden md:flex gap-8 text-lg font-serif font-semibold tracking-wide">
+        <a href="#about" class="micro-anim hover:text-[#a08b6b]">About</a>
+        <a href="#cv" class="micro-anim hover:text-[#a08b6b]">CV</a>
+        <a href="#artworks" class="micro-anim hover:text-[#a08b6b]">Artworks</a>
+        <a href="#blogs" class="micro-anim hover:text-[#a08b6b]">Blogs</a>
+        <a href="#community" class="micro-anim hover:text-[#a08b6b]">Community</a>
+        <a href="#booking" class="micro-anim hover:text-[#a08b6b]">Booking</a>
       </nav>
+      <!-- Hamburger sticky + micro-animated -->
       <div class="hamburger md:hidden" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
         <div class="hamburger-inner">
           <span class="hamburger-bar top"></span>
@@ -456,54 +427,33 @@
         </div>
       </div>
     </div>
-    <div class="menu mobile flex-col gap-6 px-7 pt-4 pb-2 font-serif text-xl glass" id="mobile-menu" style="display:none;">
-      <a href="#about" class="micro-anim">About</a>
-      <a href="#cv" class="micro-anim">CV</a>
-      <a href="#artworks" class="micro-anim">Artworks</a>
-      <a href="#blogs" class="micro-anim">Blogs</a>
-      <a href="#community" class="micro-anim">Community</a>
-      <a href="#booking" class="micro-anim">Booking</a>
+    <!-- Mobile Menu -->
+    <div class="menu mobile flex-col gap-6 px-7 pt-4 pb-2 font-serif text-xl" id="mobile-menu" style="display:none;">
+      <a href="#about" class="micro-anim hover:text-[#a08b6b]">About</a>
+      <a href="#cv" class="micro-anim hover:text-[#a08b6b]">CV</a>
+      <a href="#artworks" class="micro-anim hover:text-[#a08b6b]">Artworks</a>
+      <a href="#blogs" class="micro-anim hover:text-[#a08b6b]">Blogs</a>
+      <a href="#community" class="micro-anim hover:text-[#a08b6b]">Community</a>
+      <a href="#booking" class="micro-anim hover:text-[#a08b6b]">Booking</a>
     </div>
   </header>
-  <!-- Hero Section: ONLY image, no cropping, responsive, original size, then content -->
-  <section id="hero" class="relative w-full z-10 pt-[58px]">
-    <div class="hero-img-original select-none">
-      <div class="img-container">
-        <img src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752178186/IMG_20250711_014518_corrected_5MP_dbdwn1.jpg" alt="Muktadir Shabab Art Hero" class="no-download" draggable="false">
-        <span class="img-noise-ov"></span>
-      </div>
-    </div>
-    <div class="hero-content w-full flex flex-col items-center justify-center text-center px-4 md:px-0">
-      <h2 class="hero-typewriter font-serif font-thin tracking-wide" id="hero-typewriter"></h2>
-      <p class="text-base md:text-lg font-serif max-w-xl mb-6">Welcome to the world of <b>Muktadir Shabab</b>—artist, author, and visionary. Explore classic artistry, exhibitions, and literary works in a premium, vintage-inspired web experience.</p>
-      <div class="flex gap-2 mt-2 justify-center">
-        <a href="https://facebook.com/" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-facebook"></use></svg>
-        </a>
-        <a href="https://instagram.com/" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-instagram"></use></svg>
-        </a>
-        <a href="https://behance.net/" class="social-icon" aria-label="Behance" target="_blank" rel="noopener">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-behance"></use></svg>
-        </a>
-        <a href="https://youtube.com/" class="social-icon" aria-label="YouTube" target="_blank" rel="noopener">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-youtube"></use></svg>
-        </a>
-        <a href="https://x.com/" class="social-icon" aria-label="X" target="_blank" rel="noopener">
-          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-twitter"></use></svg>
-        </a>
-      </div>
+  <!-- Hero Section -->
+  <section id="hero" class="relative w-full z-10 mb-1 pt-[58px]">
+    <div class="hero-img-full select-none">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80" alt="Muktadir Shabab Art Hero" class="no-download vintage-noise-img" draggable="false">
+      <div class="vintage-noise"></div>
     </div>
   </section>
+  <!-- After Hero: Content Starts -->
   <!-- Latest Exhibitions/Works Slider -->
   <section id="exhibitions" class="mt-8 md:mt-20 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Latest Exhibitions & Works</h3>
     <div class="slider-cards flex overflow-x-auto gap-4 md:gap-8 pb-4 snap-x snap-mandatory">
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
-          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
-          <span class="img-noise-ov rounded-xl"></span>
+        <div class="relative vintage-noise-img">
+          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
         </div>
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
         <div>
           <h4 class="font-serif text-xl mb-2">Vintage Visions</h4>
           <p class="text-sm mb-3">Solo Exhibition, Paris. A journey through classic forms in a modern lens.</p>
@@ -511,10 +461,10 @@
         </div>
       </div>
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
-          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
-          <span class="img-noise-ov rounded-xl"></span>
+        <div class="relative vintage-noise-img">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
         </div>
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
         <div>
           <h4 class="font-serif text-xl mb-2">Eternal Canvases</h4>
           <p class="text-sm mb-3">Group Show, Rome. Exploring time and memory through classical artistry.</p>
@@ -522,10 +472,10 @@
         </div>
       </div>
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
-          <span class="img-noise-ov rounded-xl"></span>
+        <div class="relative vintage-noise-img">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
         </div>
+        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
         <div>
           <h4 class="font-serif text-xl mb-2">Shadows & Silhouettes</h4>
           <p class="text-sm mb-3">Art Festival, Vienna. The dance of light in classic portraiture.</p>
@@ -537,11 +487,9 @@
   <!-- Ad Poster -->
   <section id="ad-poster" class="my-10 md:my-20 px-2 md:px-10">
     <a href="https://example.com/event" target="_blank" rel="noopener" class="block w-full">
-      <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl">
-        <div class="noise-img-wrap w-full h-full block">
-          <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
-          <span class="img-noise-ov"></span>
-        </div>
+      <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl vintage-noise-img">
+        <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
+        <div class="vintage-noise absolute inset-0"></div>
       </div>
     </a>
   </section>
@@ -551,7 +499,7 @@
     <div class="programme-list flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto pb-2">
       <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
         <h4 class="font-serif text-lg typewriter" data-type="Classic Art Workshop">Classic Art Workshop</h4>
-        <div class="mt-2 text-xs text-[#c2a374]">July 21, 2025 — 17:00</div>
+        <div class="mt-2 text-xs text-[#ad9779]">July 21, 2025 — 17:00</div>
         <div class="mt-2 mb-3 text-sm">A hands-on journey through vintage painting techniques.</div>
         <div class="font-mono text-base flex gap-1 items-center">
           <span class="countdown" data-date="2025-07-21T17:00:00Z"></span>
@@ -559,7 +507,7 @@
       </div>
       <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
         <h4 class="font-serif text-lg typewriter" data-type="Literary Reading Night">Literary Reading Night</h4>
-        <div class="mt-2 text-xs text-[#c2a374]">August 4, 2025 — 19:00</div>
+        <div class="mt-2 text-xs text-[#ad9779]">August 4, 2025 — 19:00</div>
         <div class="mt-2 mb-3 text-sm">Experience the latest works read live with classic ambience.</div>
         <div class="font-mono text-base flex gap-1 items-center">
           <span class="countdown" data-date="2025-08-04T19:00:00Z"></span>
@@ -567,7 +515,7 @@
       </div>
       <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
         <h4 class="font-serif text-lg typewriter" data-type="Art & Community Meetup">Art & Community Meetup</h4>
-        <div class="mt-2 text-xs text-[#c2a374]">September 14, 2025 — 18:30</div>
+        <div class="mt-2 text-xs text-[#ad9779]">September 14, 2025 — 18:30</div>
         <div class="mt-2 mb-3 text-sm">Join fellow art lovers for a vintage-inspired night of networking.</div>
         <div class="font-mono text-base flex gap-1 items-center">
           <span class="countdown" data-date="2025-09-14T18:30:00Z"></span>
@@ -575,89 +523,76 @@
       </div>
     </div>
   </section>
-  <!-- Painting Gallery (original previous design with noise overlay) -->
+  <!-- Painting Gallery -->
   <section id="artworks" class="mt-10 md:mt-24 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Painting Gallery</h3>
     <div class="gallery-list flex gap-2 pb-3 overflow-x-auto">
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
-      <div class="relative">
+      <div class="relative vintage-noise-img">
         <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
-        <span class="img-noise-ov rounded-xl"></span>
       </div>
     </div>
     <a href="/gallery" class="btn-glass btn-glass-vintage mt-3 inline-block">More</a>
   </section>
-  <!-- Published Novels (original design, noise overlay) -->
+  <!-- Published Novels -->
   <section id="novels" class="mt-10 md:mt-24 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Published Novels</h3>
     <div class="flex flex-col gap-6 md:gap-10">
       <div class="flex items-start fade-in">
         <div class="book-mockup-thumb relative mr-4">
-          <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">The Timeless<br>Brush</div>
         </div>
         <div>
           <h4 class="font-serif text-lg mb-1">The Timeless Brush</h4>
-          <div class="text-xs text-[#c2a374] mb-0.5">2023</div>
+          <div class="text-xs text-[#ad9779] mb-0.5">2023</div>
           <p class="text-sm mb-2 max-w-xl">A painter’s odyssey through eras—where every brushstroke preserves a memory, every page an artwork.</p>
           <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
         </div>
       </div>
       <div class="flex items-start fade-in">
         <div class="book-mockup-thumb relative mr-4">
-          <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">Shadows<br>Under Gold</div>
         </div>
         <div>
           <h4 class="font-serif text-lg mb-1">Shadows Under Gold</h4>
-          <div class="text-xs text-[#c2a374] mb-0.5">2021</div>
+          <div class="text-xs text-[#ad9779] mb-0.5">2021</div>
           <p class="text-sm mb-2 max-w-xl">A classic tale of dreams, struggle, and hope painted on the vintage canvas of old city life.</p>
           <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
         </div>
       </div>
       <div class="flex items-start fade-in">
         <div class="book-mockup-thumb relative mr-4">
-          <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">Letters<br>From The Easel</div>
         </div>
         <div>
           <h4 class="font-serif text-lg mb-1">Letters From The Easel</h4>
-          <div class="text-xs text-[#c2a374] mb-0.5">2019</div>
+          <div class="text-xs text-[#ad9779] mb-0.5">2019</div>
           <p class="text-sm mb-2 max-w-xl">A collection of heartfelt letters from an artist to their muse—timeless, poetic, and evocative.</p>
           <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
         </div>
@@ -665,7 +600,7 @@
     </div>
   </section>
   <!-- Footer -->
-  <footer class="mt-16 md:mt-28 px-6 py-8 md:px-20 glass text-xs text-[#b9a989] flex flex-col md:flex-row items-center justify-between" id="footer-glass">
+  <footer class="mt-16 md:mt-28 px-6 py-8 md:px-20 bg-[#f5f5f5] bg-opacity-90 glass text-xs text-[#ad9779] flex flex-col md:flex-row items-center justify-between">
     <div class="flex gap-2 mb-3 md:mb-0">
       <a href="https://facebook.com/" class="footer-social" aria-label="Facebook" target="_blank" rel="noopener">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -694,22 +629,29 @@
       </a>
     </div>
     <div class="flex gap-4 mb-3 md:mb-0">
-      <a href="#about" class="hover:text-[#473a29]">About</a>
-      <a href="#cv" class="hover:text-[#473a29]">CV</a>
-      <a href="#artworks" class="hover:text-[#473a29]">Artworks</a>
-      <a href="#blogs" class="hover:text-[#473a29]">Blogs</a>
-      <a href="#community" class="hover:text-[#473a29]">Community</a>
-      <a href="#booking" class="hover:text-[#473a29]">Booking</a>
+      <a href="#about" class="hover:text-[#6e5d46]">About</a>
+      <a href="#cv" class="hover:text-[#6e5d46]">CV</a>
+      <a href="#artworks" class="hover:text-[#6e5d46]">Artworks</a>
+      <a href="#blogs" class="hover:text-[#6e5d46]">Blogs</a>
+      <a href="#community" class="hover:text-[#6e5d46]">Community</a>
+      <a href="#booking" class="hover:text-[#6e5d46]">Booking</a>
     </div>
     <div class="flex items-center gap-2">
       <span>&copy; <span id="year"></span> Muktadir Shabab</span>
-      <button id="mode-toggle" class="mode-toggle ml-3" title="Toggle vintage mode">
-        <svg id="mode-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-sun"></use></svg>
-        <svg id="mode-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none;"><use href="#lucide-moon"></use></svg>
-      </button>
-      <span id="mode-label" class="ml-2 text-sm font-serif font-semibold tracking-wider select-none">Light</span>
+      <!-- Mode toggle: Light / Vintage -->
+      <div class="footer-mode-toggle-wrap">
+        <span class="footer-mode-label" id="mode-label-light">Light</span>
+        <button id="footer-mode-toggle-light" class="mode-toggle light" aria-label="Light mode" title="Light Mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-sun"></use></svg>
+        </button>
+        <span class="footer-mode-label" id="mode-label-vintage">Vintage</span>
+        <button id="footer-mode-toggle-vintage" class="mode-toggle vintage" aria-label="Vintage mode" title="Vintage Mode">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-moon"></use></svg>
+        </button>
+      </div>
     </div>
   </footer>
+  <!-- Lucide SVG Symbol Definitions (for inline icon use) -->
   <svg style="display:none;">
     <symbol id="lucide-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></symbol>
     <symbol id="lucide-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></symbol>
@@ -720,59 +662,149 @@
     <symbol id="lucide-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
   </svg>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded',()=> {
+      setTimeout(()=>document.getElementById('preloader').classList.add('done'), 800);
       document.getElementById('year').textContent = (new Date()).getFullYear();
-      setTimeout(() => document.getElementById('preloader').classList.add('done'), 800);
-      // Hamburger menu logic
-      const hamburger = document.getElementById('hamburger');
-      const mobileMenu = document.getElementById('mobile-menu');
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        if (hamburger.classList.contains('active')) {
-          mobileMenu.style.display = 'flex';
-          setTimeout(() => mobileMenu.classList.add('open'), 8);
-        } else {
-          mobileMenu.classList.remove('open');
-          setTimeout(() => mobileMenu.style.display = 'none', 350);
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let mobileMenuOpen = false;
+    hamburger.addEventListener('click',()=>{
+      hamburger.classList.toggle('active');
+      mobileMenuOpen = hamburger.classList.contains('active');
+      hamburger.setAttribute('aria-expanded', mobileMenuOpen ? 'true' : 'false');
+      if (mobileMenuOpen) {
+        mobileMenu.style.display = 'flex';
+        mobileMenu.classList.remove('mobile-anim-out');
+        mobileMenu.classList.add('mobile-anim-in');
+      } else {
+        mobileMenu.classList.remove('mobile-anim-in');
+        mobileMenu.classList.add('mobile-anim-out');
+        setTimeout(() => {
+          mobileMenu.style.display = 'none';
+        }, 200);
+      }
+    });
+    // Hide menu on nav click with animation
+    mobileMenu.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click',()=> {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('mobile-anim-in');
+        mobileMenu.classList.add('mobile-anim-out');
+        setTimeout(()=>{mobileMenu.style.display='none';}, 200);
+      });
+    });
+
+    // Remove default dark/light mode code
+    // Custom mode toggle for footer: Light (bw) and Vintage
+    function setCustomMode(mode) {
+      if (mode === 'vintage') {
+        document.documentElement.classList.add('vintage');
+        document.documentElement.classList.remove('light');
+        window.localStorage.setItem('theme', 'vintage');
+      } else {
+        document.documentElement.classList.remove('vintage');
+        document.documentElement.classList.add('light');
+        window.localStorage.setItem('theme', 'light');
+      }
+      // Visual feedback on toggle buttons
+      document.getElementById('footer-mode-toggle-light').classList.toggle('active', mode==='light');
+      document.getElementById('footer-mode-toggle-vintage').classList.toggle('active', mode==='vintage');
+    }
+    function getCustomMode() {
+      return localStorage.getItem('theme') || 'light';
+    }
+    setCustomMode(getCustomMode());
+
+    document.getElementById('footer-mode-toggle-light').addEventListener('click',()=>{
+      setCustomMode('light');
+    });
+    document.getElementById('footer-mode-toggle-vintage').addEventListener('click',()=>{
+      setCustomMode('vintage');
+    });
+
+    // Glitch effect on slider card on scroll/snap
+    document.querySelectorAll('.slider-card').forEach(card => {
+      card.addEventListener('mouseenter',()=> {
+        card.classList.add('glitch');
+        setTimeout(()=>card.classList.remove('glitch'), 400);
+      });
+    });
+    // Ad poster zoom on scroll into view
+    function inView(el) {
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight*.82 && rect.bottom > 0;
+    }
+    const adPoster = document.querySelector('.ad-poster');
+    function checkAdPoster() {
+      if (inView(adPoster)) adPoster.classList.add('inview');
+      else adPoster.classList.remove('inview');
+    }
+    window.addEventListener('scroll',checkAdPoster);
+    window.addEventListener('resize',checkAdPoster);
+    setTimeout(checkAdPoster,200);
+    // Programmes timeline fade-in & typewriter on in-view
+    function fadeInTimeline() {
+      document.querySelectorAll('.timeline-in').forEach((el,i)=>{
+        if (inView(el)) {
+          setTimeout(()=>el.classList.add('visible'), i*160);
+          const tw = el.querySelector('.typewriter');
+          if (tw && !tw.classList.contains('typed')) {
+            tw.classList.add('typed');
+            const text = tw.getAttribute('data-type') || tw.textContent;
+            tw.textContent = '';
+            let idx = 0;
+            function type() {
+              if (idx <= text.length) {
+                tw.textContent = text.slice(0,idx);
+                idx++; setTimeout(type, 23);
+              }
+            }
+            type();
+          }
         }
       });
-      // Hide menu on nav click
-      mobileMenu.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('open');
-          setTimeout(() => mobileMenu.style.display = 'none', 350);
-        });
+    }
+    window.addEventListener('scroll', fadeInTimeline);
+    window.addEventListener('resize', fadeInTimeline);
+    setTimeout(fadeInTimeline,600);
+    // Fade-in animations for novels
+    function fadeInElements() {
+      document.querySelectorAll('.fade-in').forEach((el,i)=>{
+        if (inView(el)) setTimeout(()=>el.classList.add('visible'), i*85);
       });
-      // Hero typewriter text
-      let heroType = "Classic Art, Timeless Stories";
-      let i = 0;
-      function heroTypewriter() {
-        const el = document.getElementById('hero-typewriter');
-        if (!el) return;
-        if (i <= heroType.length) {
-          el.textContent = heroType.slice(0, i);
-          i++; setTimeout(heroTypewriter, 32);
+    }
+    window.addEventListener('scroll', fadeInElements);
+    window.addEventListener('resize', fadeInElements);
+    setTimeout(fadeInElements,700);
+    // Network-synced countdown for events
+    function updateCountdowns() {
+      document.querySelectorAll('.countdown').forEach(span=>{
+        const end = new Date(span.dataset.date);
+        const now = Date.now();
+        let diff = (end - now) / 1000;
+        if (diff < 0) {
+          span.textContent = "Started";
+          return;
         }
-      }
-      heroTypewriter();
-      // Mode toggle (footer only, Light <-> Vintage)
-      const modeToggle = document.getElementById('mode-toggle');
-      const modeLabel = document.getElementById('mode-label');
-      const header = document.getElementById('header');
-      const footer = document.getElementById('footer-glass');
-      let vintage = false;
-      function setVintageMode(on) {
-        document.body.classList.toggle('vintage', on);
-        header.classList.toggle('vintage', on);
-        footer.classList.toggle('vintage', on);
-        modeToggle.classList.toggle('active', on);
-        modeLabel.textContent = on ? "Vintage" : "Light";
-      }
-      modeToggle.addEventListener('click', () => {
-        vintage = !vintage;
-        setVintageMode(vintage);
+        const d = Math.floor(diff/86400);
+        diff -= d*86400;
+        const h = Math.floor(diff/3600);
+        diff -= h*3600;
+        const m = Math.floor(diff/60);
+        const s = Math.floor(diff%60);
+        span.textContent = d>0 ? `${d}d ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}` : `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
       });
+    }
+    setInterval(updateCountdowns, 1000);
+    updateCountdowns();
+    // Prevent text copying & right click context menu for images
+    document.addEventListener('copy', e=>e.preventDefault());
+    document.querySelectorAll('img,no-download,.no-download').forEach(img=>{
+      img.addEventListener('contextmenu',e=>e.preventDefault());
+      img.addEventListener('dragstart',e=>e.preventDefault());
     });
   </script>
 </body>
