@@ -331,7 +331,7 @@
 }
 
 /* Gallery images with grain and animation */
-.art-thumb,
+
 .slider-card img,
 .ad-poster img {
   position: relative;
@@ -352,7 +352,6 @@
 }
 
 /* Noise grain overlay */
-.art-thumb::after,
 .slider-card img::after,
 .ad-poster img::after {
   content: '';
@@ -465,6 +464,117 @@
     .visible { opacity: 1 !important; }
     .fade-in { opacity: 0; transition: opacity .55s;}
     .fade-in.visible { opacity: 1; }
+ /* Container styles */
+#artworks .gallery-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-behavior: smooth; /* For smooth scroll on swipe or arrow */
+  /* For Webkit-based browsers (Chrome, Safari) */
+  -webkit-overflow-scrolling: touch;
+}
+
+#artworks .gallery-list::-webkit-scrollbar {
+  height: 10px;
+  background: transparent;
+}
+#artworks .gallery-list::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 10px;
+}
+
+/* Masonry effect using CSS columns for vertical stacking */
+#artworks .gallery-list {
+  align-items: flex-start;
+}
+#artworks .vintage-noise-img {
+  display: flex;
+  flex-direction: column;
+  /* Randomize the height for "masonry" effect */
+  min-width: 130px;
+  max-width: 140px;
+  transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.3s;
+  will-change: transform, box-shadow;
+  cursor: pointer;
+  /* Give it a little spacing */
+  margin-bottom: 10px;
+  /* Optional: Add a little vintage border/noise effect */
+  box-shadow: 0 6px 30px -12px rgba(0,0,0,0.1), 0 1.5px 6px 0 rgba(0,0,0,0.04);
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  animation: masonryFadeIn 0.7s forwards;
+}
+#artworks .vintage-noise-img:nth-child(odd) {
+  margin-top: 30px;
+}
+#artworks .vintage-noise-img:nth-child(even) {
+  margin-top: 0px;
+}
+#artworks .vintage-noise-img:hover {
+  transform: translateY(-8px) scale(1.04) rotate(-2deg);
+  box-shadow: 0 14px 48px -12px rgba(0,0,0,0.14), 0 6px 24px 0 rgba(0,0,0,0.08);
+  z-index: 2;
+}
+
+/* Animate each thumb with a slight delay for a staggered effect */
+#artworks .vintage-noise-img {
+  animation-delay: calc(var(--stagger, 0) * 0.08s);
+}
+#artworks .vintage-noise-img:nth-child(1) { --stagger: 0; }
+#artworks .vintage-noise-img:nth-child(2) { --stagger: 1; }
+#artworks .vintage-noise-img:nth-child(3) { --stagger: 2; }
+#artworks .vintage-noise-img:nth-child(4) { --stagger: 3; }
+#artworks .vintage-noise-img:nth-child(5) { --stagger: 4; }
+#artworks .vintage-noise-img:nth-child(6) { --stagger: 5; }
+#artworks .vintage-noise-img:nth-child(7) { --stagger: 6; }
+#artworks .vintage-noise-img:nth-child(8) { --stagger: 7; }
+#artworks .vintage-noise-img:nth-child(9) { --stagger: 8; }
+#artworks .vintage-noise-img:nth-child(10) { --stagger: 9; }
+
+@keyframes masonryFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Make the images "masonry" style by varying heights and keeping width fixed */
+#artworks .art-thumb {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 1em;
+  transition: filter 0.25s, box-shadow 0.25s;
+  /* Optional: slight shadow for floating look */
+  box-shadow: 0 2px 10px 0 rgba(60, 60, 60, 0.06);
+}
+#artworks .vintage-noise-img:nth-child(1) .art-thumb { height: 200px; }
+#artworks .vintage-noise-img:nth-child(2) .art-thumb { height: 160px; }
+#artworks .vintage-noise-img:nth-child(3) .art-thumb { height: 230px; }
+#artworks .vintage-noise-img:nth-child(4) .art-thumb { height: 190px; }
+#artworks .vintage-noise-img:nth-child(5) .art-thumb { height: 170px; }
+#artworks .vintage-noise-img:nth-child(6) .art-thumb { height: 210px; }
+#artworks .vintage-noise-img:nth-child(7) .art-thumb { height: 180px; }
+#artworks .vintage-noise-img:nth-child(8) .art-thumb { height: 240px; }
+#artworks .vintage-noise-img:nth-child(9) .art-thumb { height: 175px; }
+#artworks .vintage-noise-img:nth-child(10) .art-thumb { height: 220px; }
+
+/* Responsive for small screens */
+@media (max-width: 600px) {
+  #artworks .gallery-list {
+    gap: 12px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  #artworks .vintage-noise-img {
+    min-width: 90px;
+    max-width: 100px;
+  }
+  #artworks .art-thumb {
+    border-radius: 0.6em;
+  }
+}
   </style>
 </head>
 <body>
