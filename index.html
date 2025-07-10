@@ -18,6 +18,7 @@
       font-family: 'EB Garamond', 'DM Serif Display', serif;
       background: #f8f8f7;
       color: #181818;
+      scroll-behavior: smooth;
     }
     body {
       background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(48,48,48)" stroke-opacity="0.08" stroke-width="1"/></svg>') repeat, #fff;
@@ -47,29 +48,6 @@
     @keyframes imgNoiseOverlay {
       0% { opacity:.14; }
       100% { opacity:.21; }
-    }
-    /* Overlay noise for all images */
-    .noise-img-wrap {
-      position:relative;
-      display:inline-block;
-      overflow:hidden;
-    }
-    .noise-img-wrap img {
-      display:block;
-      width:100%;
-      height:auto;
-      position:relative;
-      z-index:1;
-    }
-    .img-noise-ov {
-      pointer-events:none;
-      position:absolute;
-      inset:0;
-      opacity:.21;
-      z-index:2;
-      background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-      mix-blend-mode: soft-light;
-      animation: imgNoiseOverlay 2.2s infinite alternate;
     }
     /* Glassmorphic effect */
     .glass {
@@ -165,7 +143,7 @@
     }
     /* Hamburger Apple style - smaller + different animation */
     .hamburger {
-      width: 32px; height: 32px;
+      width: 28px; height: 28px;
       position: sticky;
       top: 16px;
       right: 20px;
@@ -184,7 +162,7 @@
     }
     @keyframes hInit { 0%{transform:scale(.6) rotate(-18deg);} 100%{transform:none;} }
     .hamburger-inner {
-      width: 20px; height: 20px; position: relative;
+      width: 16px; height: 16px; position: relative;
       display: flex; flex-direction: column; justify-content: center;
       align-items: center;
       pointer-events:none;
@@ -195,19 +173,18 @@
       background: #181818;
       border-radius: 2.5px;
       position: absolute; left: 0;
-      transition: all .43s cubic-bezier(.54,.05,.61,1.15);
+      transition: all .38s cubic-bezier(.54,.05,.61,1.15);
       box-shadow: 0 0 4px #b9a98922, 0 1px 6px #eee8;
       will-change: transform,background,width,left,box-shadow;
     }
-    .body.vintage .hamburger-bar { background: #9e7b4c; }
-    .hamburger-bar.top   { top: 3px; }
-    .hamburger-bar.mid   { top: 9px;}
-    .hamburger-bar.bot   { top: 15px;}
+    .hamburger-bar.top   { top: 2px; }
+    .hamburger-bar.mid   { top: 7px;}
+    .hamburger-bar.bot   { top: 12px;}
     /* Hamburger animation: slide-in and morph to X with scale pop */
     .hamburger.active .hamburger-bar.top {
-      transform: translateY(6px) rotate(38deg) scaleX(1.13) scaleY(1.2);
+      transform: translateY(5px) rotate(38deg) scaleX(1.13) scaleY(1.2);
       background: #9e7b4c;
-      left: 1.5px;
+      left: 1px;
       box-shadow: 0 0 7px #b9a98999;
     }
     .hamburger.active .hamburger-bar.mid {
@@ -215,9 +192,9 @@
       width: 0%; left:50%;
     }
     .hamburger.active .hamburger-bar.bot {
-      transform: translateY(-6px) rotate(-38deg) scaleX(1.13) scaleY(1.2);
+      transform: translateY(-5px) rotate(-38deg) scaleX(1.13) scaleY(1.2);
       background: #9e7b4c;
-      left: 1.5px;
+      left: 1px;
       box-shadow: 0 0 7px #b9a98999;
     }
     .hamburger:hover .hamburger-bar.top { width: 99%; left: 1%; background: #c8ac7b;}
@@ -233,19 +210,16 @@
       font-family:'DM Serif Display',serif;
       letter-spacing:.06em;
       font-weight:400;
-      font-size:1.3rem;
+      font-size:1.15rem;
       transition: font-size .28s;
       text-shadow: 0 2px 6px #b9a98922;
     }
     @media (max-width: 640px) {
-      .logo-text { font-size:.98rem;}
+      .logo-text { font-size:.8rem;}
     }
-    .hero-img-full {
+    /* Hero image - only image, original size, responsive, never cropped */
+    .hero-img-original {
       width: 100vw;
-      height: 110vh;
-      min-height:720px;
-      max-height: 1240px;
-      aspect-ratio: unset;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -253,36 +227,71 @@
       margin-left: 50%;
       transform: translateX(-50%);
       overflow: hidden;
+      background: #eee;
       z-index: 1;
-      margin-bottom: -6.9rem;
+      margin-bottom: 0;
       box-shadow:0 6px 44px #b9a98911;
       animation: heroFade .7s cubic-bezier(.7,0,.5,1.1);
+      min-height: 30vw;
     }
     @keyframes heroFade { 0%{opacity:0;transform:translateX(-50%) scaleY(.7);} 100%{opacity:1;transform:translateX(-50%) scaleY(1);} }
-    .hero-img-full img {
-      width: 100vw;
-      height: 110vh;
-      max-height:1240px;
-      min-height:720px;
-      object-fit: cover;
-      filter: grayscale(1) brightness(1.13) contrast(1.11);
-      transition: filter .7s;
+    .hero-img-original .img-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width:100%;
+      height:100%;
+      position:relative;
     }
-    body.vintage .hero-img-full img {
-      filter: sepia(.13) contrast(1.14) brightness(.99) grayscale(.11) saturate(1.02);
+    .hero-img-original img {
+      max-width: 100%;
+      max-height: 95vh;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain !important;
+      background: #eee;
+      border-radius: 0;
+      box-shadow:0 1px 30px 2px #b9a98914;
+      transition: filter .7s, box-shadow .33s;
+      z-index:1;
+      position:relative;
     }
-    .hero-img-full .vintage-noise {
+    .hero-img-original .img-noise-ov {
       pointer-events:none;
       position:absolute;
       inset:0;
-      opacity:.27;
+      opacity:.19;
       z-index:2;
       background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
       mix-blend-mode: soft-light;
       animation: imgNoiseOverlay 2.2s infinite alternate;
     }
+    /* Responsive hero image container */
+    @media (max-width: 900px) {
+      .hero-img-original { min-height:180px;}
+      .hero-img-original img { max-width:98vw; max-height:60vw;}
+    }
+    @media (max-width: 640px) {
+      .hero-img-original img { max-width:100vw; max-height:46vw;}
+    }
+    /* Content after hero image */
+    .hero-content {
+      margin-top: 0;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeInUp .7s cubic-bezier(.7,0,.5,1.1);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px);}
+      100%{ opacity:1; transform: none;}
+    }
     .hero-typewriter {
-      font-size: 2.7rem;
+      font-size: 2.2rem;
       font-family: 'DM Serif Display', serif;
       font-weight: 400;
       white-space: nowrap;
@@ -301,13 +310,30 @@
     @keyframes typing {from{width:0} to{width:100%}}
     @keyframes blink-caret {from, to{border-color: #b9a989;} 50%{border-color:transparent}}
     @media (max-width: 900px) {
-      .hero-img-full { min-height: 420px; height: 66vw; }
       .hero-typewriter { font-size: 1.4rem;}
     }
     @media (max-width: 640px) {
-      .hero-img-full { min-height: 220px; height: 53vw; }
+      .hero-typewriter { font-size: .97rem;}
     }
-    /* ... Keep all other styles unchanged ... */
+    /* Gallery & Published Books: Keep old design, add noise overlay */
+    .gallery-list img.art-thumb,
+    .book-mockup-thumb {
+      position:relative;
+      z-index:1;
+    }
+    .gallery-list .img-noise-ov,
+    .book-mockup-thumb .img-noise-ov {
+      pointer-events:none;
+      position:absolute;
+      inset:0;
+      opacity:.19;
+      z-index:2;
+      background:url('https://grainy-gradients.vercel.app/noise.svg') repeat;
+      mix-blend-mode: soft-light;
+      animation: imgNoiseOverlay 2.2s infinite alternate;
+      border-radius: inherit;
+    }
+    /* ... keep rest of your styles unchanged ... */
   </style>
 </head>
 <body>
@@ -327,7 +353,6 @@
         <a href="#community" class="micro-anim">Community</a>
         <a href="#booking" class="micro-anim">Booking</a>
       </nav>
-      <!-- Hamburger sticky + advanced micro-animated -->
       <div class="hamburger md:hidden" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
         <div class="hamburger-inner">
           <span class="hamburger-bar top"></span>
@@ -336,7 +361,6 @@
         </div>
       </div>
     </div>
-    <!-- Mobile Menu -->
     <div class="menu mobile flex-col gap-6 px-7 pt-4 pb-2 font-serif text-xl glass" id="mobile-menu" style="display:none;">
       <a href="#about" class="micro-anim">About</a>
       <a href="#cv" class="micro-anim">CV</a>
@@ -346,15 +370,15 @@
       <a href="#booking" class="micro-anim">Booking</a>
     </div>
   </header>
-  <!-- Hero Section -->
-  <section id="hero" class="relative w-full z-10 mb-1 pt-[58px]">
-    <div class="hero-img-full select-none">
-      <span class="noise-img-wrap w-full h-full block">
-        <img src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752178186/IMG_20250711_014518_corrected_5MP_dbdwn1.jpg" alt="Muktadir Shabab Art Hero" class="no-download w-full h-full object-cover" draggable="false">
-        <span class="vintage-noise img-noise-ov"></span>
-      </span>
+  <!-- Hero Section: ONLY image, no cropping, responsive, original size, then content -->
+  <section id="hero" class="relative w-full z-10 pt-[58px]">
+    <div class="hero-img-original select-none">
+      <div class="img-container">
+        <img src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752178186/IMG_20250711_014518_corrected_5MP_dbdwn1.jpg" alt="Muktadir Shabab Art Hero" class="no-download" draggable="false">
+        <span class="img-noise-ov"></span>
+      </div>
     </div>
-    <div class="w-full flex flex-col items-center justify-center text-center px-4 md:px-0 -mt-24 md:-mt-40 relative z-10" style="pointer-events:auto;">
+    <div class="hero-content w-full flex flex-col items-center justify-center text-center px-4 md:px-0">
       <h2 class="hero-typewriter font-serif font-thin tracking-wide" id="hero-typewriter"></h2>
       <p class="text-base md:text-lg font-serif max-w-xl mb-6">Welcome to the world of <b>Muktadir Shabab</b>—artist, author, and visionary. Explore classic artistry, exhibitions, and literary works in a premium, vintage-inspired web experience.</p>
       <div class="flex gap-2 mt-2 justify-center">
@@ -376,16 +400,15 @@
       </div>
     </div>
   </section>
-
   <!-- Latest Exhibitions/Works Slider -->
   <section id="exhibitions" class="mt-8 md:mt-20 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Latest Exhibitions & Works</h3>
     <div class="slider-cards flex overflow-x-auto gap-4 md:gap-8 pb-4 snap-x snap-mandatory">
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
           <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
           <span class="img-noise-ov rounded-xl"></span>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-xl mb-2">Vintage Visions</h4>
           <p class="text-sm mb-3">Solo Exhibition, Paris. A journey through classic forms in a modern lens.</p>
@@ -393,10 +416,10 @@
         </div>
       </div>
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
           <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
           <span class="img-noise-ov rounded-xl"></span>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-xl mb-2">Eternal Canvases</h4>
           <p class="text-sm mb-3">Group Show, Rome. Exploring time and memory through classical artistry.</p>
@@ -404,10 +427,10 @@
         </div>
       </div>
       <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <span class="noise-img-wrap w-full h-44 block mb-3 relative">
+        <div class="noise-img-wrap w-full h-44 block mb-3 relative">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover" alt="Exhibition Image" draggable="false" loading="lazy">
           <span class="img-noise-ov rounded-xl"></span>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-xl mb-2">Shadows & Silhouettes</h4>
           <p class="text-sm mb-3">Art Festival, Vienna. The dance of light in classic portraiture.</p>
@@ -420,10 +443,10 @@
   <section id="ad-poster" class="my-10 md:my-20 px-2 md:px-10">
     <a href="https://example.com/event" target="_blank" rel="noopener" class="block w-full">
       <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl">
-        <span class="noise-img-wrap w-full h-full block">
+        <div class="noise-img-wrap w-full h-full block">
           <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
           <span class="img-noise-ov"></span>
-        </span>
+        </div>
       </div>
     </a>
   </section>
@@ -457,62 +480,62 @@
       </div>
     </div>
   </section>
-  <!-- Painting Gallery -->
+  <!-- Painting Gallery (original previous design with noise overlay) -->
   <section id="artworks" class="mt-10 md:mt-24 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Painting Gallery</h3>
     <div class="gallery-list flex gap-2 pb-3 overflow-x-auto">
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
-      <span class="noise-img-wrap w-32 h-44 block relative">
-      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
-      <span class="img-noise-ov rounded-xl"></span>
-      </span>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
+      <div class="relative">
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
+        <span class="img-noise-ov rounded-xl"></span>
+      </div>
     </div>
     <a href="/gallery" class="btn-glass btn-glass-vintage mt-3 inline-block">More</a>
   </section>
-  <!-- Published Novels -->
+  <!-- Published Novels (original design, noise overlay) -->
   <section id="novels" class="mt-10 md:mt-24 px-4 md:px-20">
     <h3 class="font-serif text-2xl mb-3 tracking-wide">Published Novels</h3>
     <div class="flex flex-col gap-6 md:gap-10">
       <div class="flex items-start fade-in">
-        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+        <div class="book-mockup-thumb relative mr-4">
           <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">The Timeless<br>Brush</div>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-lg mb-1">The Timeless Brush</h4>
           <div class="text-xs text-[#c2a374] mb-0.5">2023</div>
@@ -521,10 +544,10 @@
         </div>
       </div>
       <div class="flex items-start fade-in">
-        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+        <div class="book-mockup-thumb relative mr-4">
           <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">Shadows<br>Under Gold</div>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-lg mb-1">Shadows Under Gold</h4>
           <div class="text-xs text-[#c2a374] mb-0.5">2021</div>
@@ -533,10 +556,10 @@
         </div>
       </div>
       <div class="flex items-start fade-in">
-        <span class="book-mockup-thumb relative mr-4 noise-img-wrap">
+        <div class="book-mockup-thumb relative mr-4">
           <span class="img-noise-ov"></span>
           <div class="book-title-on-thumb">Letters<br>From The Easel</div>
-        </span>
+        </div>
         <div>
           <h4 class="font-serif text-lg mb-1">Letters From The Easel</h4>
           <div class="text-xs text-[#c2a374] mb-0.5">2019</div>
