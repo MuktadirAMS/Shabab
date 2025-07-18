@@ -1,938 +1,799 @@
 <!DOCTYPE html>
-<html lang="en" class="light scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <meta name="description" content="Muktadir Shabab - Artist, Author, Classic Artworks, Vintage UI.">
-  <meta name="keywords" content="Muktadir Shabab, classic art, vintage, artist, author, exhibition, gallery, novel">
-  <meta name="author" content="Muktadir Shabab">
-  <title>Muktadir Shabab — Classic Artist & Author</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: EB Garamond & DM Serif -->
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><text x=%2210%22 y=%2248%22 font-size=%2240%22 font-family=%22EB Garamond, serif%22>MS</text></svg>">
-  <!-- Font Awesome Free CDN (for brand icons) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-jQKHFtI4zXH3M7MPs1QZnh5dMz2+RVRVqU6AvVNRHhf1x9lXc5rKiQAm6oZ+u43OjAyKiSljvZ4jRJwQmnS0kQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Muktadir Shabab | Artist & Writer Portfolio</title>
+  <meta name="description" content="Portfolio website for Muktadir Shabab. Fast, lightweight, responsive, SEO friendly. Explore art, writing, skills, and creative projects.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80">
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/1f3a8.svg">
   <style>
-    html {
-      font-family: 'EB Garamond', 'DM Serif Display', serif;
-      background: #f5f5f2;
-      color: #2c241b;
-      transition: background 0.34s, color 0.34s;
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+    :root {
+      --font-main: 'Montserrat', Arial, sans-serif;
+      --font-vintage: 'Playfair Display', serif;
+      --bg-main: #f6f6f6;
+      --bg-classic: #fffbe6;
+      --bg-vintage: #f5eee6;
+      --bg-greyscale: #1a1a1a;
+      --color-main: #242424;
+      --color-classic: #3a2c14;
+      --color-vintage: #6d4c41;
+      --color-greyscale: #f6f6f6;
+      --accent: #b99b72;
+      --accent-classic: #c2995b;
+      --accent-vintage: #a67c52;
+      --accent-greyscale: #888;
+      --transition: 0.3s cubic-bezier(.45,.03,.52,.96);
     }
-    body {
-      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(220,220,220)" stroke-opacity="0.10" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#fcfaf6 0%,#e7e3d8 100%);
-      background-blend-mode: multiply;
-      position:relative;
-      overflow-x:hidden;
-      transition: background 0.34s;
+    [data-theme="classic"] {
+      --bg-main: var(--bg-classic);
+      --color-main: var(--color-classic);
+      --accent: var(--accent-classic);
+      --font-main: 'Montserrat', Arial, sans-serif;
     }
-    body::after {
-      content:'';
-      pointer-events:none;
-      position:fixed;
-      inset:0;
-      z-index:100;
-      opacity:.11;
-      mix-blend-mode:soft-light;
-      background:url('https://grainy-gradients.vercel.app/noise.svg');
-      animation: grainMove 1.35s infinite alternate linear;
+    [data-theme="vintage"] {
+      --bg-main: var(--bg-vintage);
+      --color-main: var(--color-vintage);
+      --accent: var(--accent-vintage);
+      --font-main: var(--font-vintage);
     }
-    @keyframes grainMove {
-      0% { background-position: 0 0 }
-      100% { background-position: 60px 40px }
+    [data-theme="greyscale"] {
+      --bg-main: var(--bg-greyscale);
+      --color-main: var(--color-greyscale);
+      --accent: var(--accent-greyscale);
+      --font-main: 'Montserrat', Arial, sans-serif;
     }
-    ::selection { background: #beb5a2; color: #2c241b; }
-    /* Glassmorphic effect */
-    .glass {
-      background: rgba(255,255,255,0.74);
-      backdrop-filter: blur(10px) saturate(125%);
-      border: 1px solid rgba(172,153,110,0.09);
-      box-shadow: 0 2px 32px 0 rgba(70,60,40,0.06);
-      transition: background .25s;
-    }
-    /* Header glass (more simple, semi transparent) */
-    .header-glass {
-      background: rgba(254,251,240,0.86);
-      backdrop-filter: blur(10px);
-      border-bottom: 1.5px solid rgba(172,153,110,0.08);
-      box-shadow: 0 2px 32px 0 rgba(70,60,40,0.04);
-    }
-    /* Preloader */
-    #preloader {
-      position: fixed; inset: 0; z-index: 9999;
-      display: flex; align-items: center; justify-content: center;
-      background: #f2eee6;
-      transition: opacity 0.6s cubic-bezier(.7,.1,.2,1);
-    }
-    #preloader.done { opacity:0; pointer-events:none; }
-    .ms-icon {
-      font-family: 'EB Garamond', 'DM Serif Display', serif;
-      font-size: 3rem; font-weight: bold;
-      color: #ad9779;
-      letter-spacing: 0.09em;
-      animation: msIconPulse 1.2s infinite alternate cubic-bezier(.5,0,.4,1.1);
-    }
-    @keyframes msIconPulse {
-      0%   { text-shadow: 0 0 7px #e2d7c644, 0 0 0 #fff0; }
-      40%  { text-shadow: 0 0 16px #dacbb788, 0 0 7px #fff2; }
-      80%  { text-shadow: 0 0 5px #e3dac9; }
-      100% { text-shadow: 0 0 13px #b3a68e66, 0 0 0 #fff0; }
-    }
-    /* Hamburger Apple original design + micro animation */
-    .hamburger {
-      width: 36px; height: 36px;
-      position: sticky;
-      top: 16px;
-      z-index: 120;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(230,230,230,0.20);
-      border-radius: 50%;
-      border: 1.3px solid #ad977944;
-      box-shadow: 0 1px 8px #bfb09333;
-      cursor: pointer;
-      transition: background .18s;
-    }
-    .hamburger:active, .hamburger:focus { background: rgba(186,162,130,0.25);}
-    .hamburger-inner {
-      width: 26px; height: 26px; position: relative;
-      display: flex; flex-direction: column; justify-content: center;
-      align-items: center;
-    }
-    .hamburger-bar {
-      display: block;
-      height: 2.1px;
-      width: 100%;
-      background: #ad9779;
-      border-radius: 2px;
-      transition: all .35s cubic-bezier(.62,.05,.61,1.15);
-      position: absolute;
-      left: 0;
-      will-change: transform,background;
-    }
-    .hamburger-bar.top   { top: 6px; }
-    .hamburger-bar.mid   { top: 12px;}
-    .hamburger-bar.bot   { top: 18px;}
-    .hamburger.active .hamburger-bar.top {
-      transform: translateY(6px) rotate(45deg);
-      background: #6e5d46;
-    }
-    .hamburger.active .hamburger-bar.mid {
-      opacity: 0; width:0;
-    }
-    .hamburger.active .hamburger-bar.bot {
-      transform: translateY(-6px) rotate(-45deg);
-      background: #6e5d46;
-    }
-    /* Micro animation on hover */
-    .hamburger:hover .hamburger-bar.top { width: 94%; }
-    .hamburger:hover .hamburger-bar.mid { width: 82%; }
-    .hamburger:hover .hamburger-bar.bot { width: 94%; }
-    /* Responsive logo size */
-    .logo-text {
-      font-family:'DM Serif Display',serif;
-      letter-spacing:.06em;
-      font-weight:400;
-      font-size:1.7rem;
-      transition: font-size .28s;
-      color: #ad9779;
-    }
-    @media (max-width: 640px) {
-      .logo-text { font-size:1.1rem;}
-    }
-    /* Hero fullwidth after header */
-    .hero-img-full {
-      width: 100vw;
-      min-height: 300px;
-      max-height: 56vw;
-      aspect-ratio: 16/5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+
+    html, body {
+      margin: 0; padding: 0;
+      font-family: var(--font-main);
+      background: var(--bg-main);
+      color: var(--color-main);
+      transition: background .45s, color .45s;
+      min-height: 100vh;
       position: relative;
-      margin-left: 50%;
-      transform: translateX(-50%);
+      overflow-x: hidden;
+    }
+
+    /* Remove grid background! */
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100vw;
+      min-height: 60vh;
+      height: 60vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
       z-index: 1;
-      border-bottom-left-radius: 25px;
-      border-bottom-right-radius: 25px;
     }
-    .hero-img-full img {
-      width: 100vw;
-      height: 100%;
+    .hero-img {
+      position: absolute;
+      width: 100vw; height: 100%;
+      top: 0; left: 0;
       object-fit: cover;
-      filter: sepia(.21) contrast(1.08) brightness(1.07) grayscale(.05) saturate(1.13);
+      opacity: 1;
+      filter: brightness(0.85);
+      z-index: 1;
+    }
+    .hero-noise {
+      position: absolute;
+      width: 100vw; height: 100%;
+      top: 0; left: 0;
+      z-index: 2;
       pointer-events: none;
-      user-drag: none;
-      -webkit-user-drag: none;
-      user-select: none;
-      transition: filter .25s;
-      z-index: 1;
-      animation: noising-vintage 3.2s infinite alternate linear;
+      opacity: .18;
+      background: url('https://www.transparenttextures.com/patterns/noise.png');
+      animation: noiseMove 3s infinite linear alternate;
     }
-    .hero-img-full .vintage-noise {
-      pointer-events:none;
-      position:absolute;
-      inset:0;
-      opacity:.15;
-      z-index:2;
-      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-      mix-blend-mode: soft-light;
-      animation: grainMove 1.35s infinite alternate linear;
+    @keyframes noiseMove {
+      0% {background-position:0 0;}
+      100% {background-position:30px 30px;}
     }
-    @keyframes noising-vintage {
-      0% { filter: sepia(.21) contrast(1.08) brightness(1.07) grayscale(.05) saturate(1.13);}
-      40% { filter: sepia(.26) contrast(1.13) brightness(1.12) grayscale(.12) saturate(1.15);}
-      100% { filter: sepia(.19) contrast(1.06) brightness(1.01) grayscale(0.07) saturate(1.1);}
-    }
-    @media (max-width: 900px) {
-      .hero-img-full { max-height: 43vw;}
-    }
-    @media (max-width: 640px) {
-      .hero-img-full { min-height: 152px; max-height: 40vw;}
-    }
-    /* Glassmorphic Buttons (all) */
-    .btn-glass {
-      background: rgba(255,255,255,0.61);
-      color: #6e5d46;
-      border: 1.5px solid #ad977944;
-      border-radius: 1000px;
-      box-shadow: 0 1px 8px #bfb09333;
-      backdrop-filter: blur(9px) saturate(120%);
-      font-family: 'EB Garamond', serif;
-      font-weight: 500;
-      font-size: 1rem;
-      padding: .55em 1.35em;
-      transition: all .18s cubic-bezier(.7,.2,.5,1.1);
-      text-shadow: 0 1px 7px #efedea59;
-      cursor:pointer;
-      outline:none;
-      display: inline-block;
-    }
-    .btn-glass:active { scale: .96; }
-    .btn-glass-vintage {
-      background: linear-gradient(90deg,rgba(163,142,92,0.08) 0%,rgba(238,225,196,0.72) 100%);
-      color: #ad9779;
-      border: 1.5px solid #b7a89144;
-      box-shadow: 0 2px 18px #231a0f22;
-    }
-    /* Book mockup thumbnail */
-    .book-mockup-thumb {
-      width: 60px;
-      height: 84px;
-      min-width:60px;
-      margin-right: 1.5rem;
-      background: linear-gradient(120deg, #f3ede3 70%, #d7c7b6 100%);
-      border: 1.5px solid #b7a89144;
-      box-shadow: 0 4px 18px #c8b89a22, 0 2px 4px #b7a89144;
-      border-radius: 7px;
-      position:relative;
-      overflow:hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      animation: noising-vintage 2.9s infinite alternate linear;
-    }
-    .book-mockup-thumb::after {
-      content:'';
-      position:absolute; inset:0;
-      border-radius:7px;
-      pointer-events:none;
-      background: linear-gradient(0deg, #fff7 0%, #fff0 60%);
-      mix-blend-mode:soft-light;
-      animation: grainMove 1.35s infinite alternate linear;
-    }
-    .book-title-on-thumb {
-      font-family:'EB Garamond',serif;
-      font-size:.83em;
-      color:#816c53;
-      font-weight:600;
-      text-align:center;
-      padding:8px 0 7px 0;
-      z-index:1;
-      width:100%;
-      word-break:break-word;
-      text-shadow: 0 1px 3px #fff9, 0 2px 6px #fff2;
-      background:rgba(230,227,217,0.56);
-      border-bottom-left-radius:7px;
-      border-bottom-right-radius:7px;
-      box-shadow:0 2px 6px #b7a89122;
-    }
-    /* Footer + social + disables */
-    .mode-toggle {
-      display:flex;align-items:center;justify-content:center;
-      padding:0.6em;width:2.1em;height:2.1em;
-      border-radius:50%;
-      background: rgba(238,225,196,0.36);
-      border: 1.5px solid #ad977944;
-      color: #ad9779;
-      box-shadow: 0 2px 12px #c8b89a22;
-      margin-top: 1.2rem;
-      margin-bottom: 0.5rem;
-      margin-left: 0;
-      margin-right: 0;
-      align-self: center;
-      transition:background .18s,color .18s,border .18s;
-      cursor: pointer;
-    }
-    .mode-toggle.active {
-      background: linear-gradient(120deg,#231a0f22 0%,#ad977944 100%);
-      color: #6e5d46;
-      border-color: #e8d6b644;
-    }
-    .mode-toggle.vintage {
-      background: linear-gradient(120deg,#e5dac0 60%,#c3a47d 100%);
-      color: #6e5d46;
-      border-color: #c3a47d99;
-      box-shadow: 0 2px 12px #c8b89a66;
-    }
-    .mode-toggle.light {
-      background: rgba(238,225,196,0.36);
-      color: #ad9779;
-      border-color: #ad977944;
-    }
-    /* Social icon hover */
-    .social-icon, .footer-social {
-      transition: color .18s, filter .2s;
-      filter: drop-shadow(0 0 2px #ad977944);
-    }
-    .social-icon:hover, .footer-social:hover { color: #816c53; filter: drop-shadow(0 0 8px #a58d5844);}
-    /* Images vintage noising animation */
-    .vintage-noise-img {
-      position:relative;
-      z-index:1;
-    }
-    .vintage-noise-img::after {
-      content: '';
-      pointer-events:none;
-      position:absolute;
-      inset:0;
-      z-index:2;
-      opacity:.15;
-      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-      mix-blend-mode: soft-light;
-      animation: grainMove 1.35s infinite alternate linear;
-    }
-    /* Wrapper for horizontal scroll */
-.slider {
-  display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 2rem;
-  /* Hide scrollbar for modern browsers */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
-}
-.slider::-webkit-scrollbar {
-  display: none;
-}
-
-/* Gallery images */
-    .slider-card img,
-    .ad-poster img {
+    .hero-content {
       position: relative;
-      z-index: 1;
-      animation: noising-vintage 2.3s infinite alternate linear;
+      z-index: 3;
+      text-align: center;
+      color: var(--color-main);
     }
-    
-    .slider-card img::after,
-    .ad-poster img::after {
-      content: '';
-      pointer-events:none;
-      position:absolute;
-      inset:0;
-      z-index:2;
-      opacity:.14;
-      background: url('https://grainy-gradients.vercel.app/noise.svg') repeat;
-      mix-blend-mode: soft-light;
-      animation: grainMove 1.35s infinite alternate linear;
+    .hero-content h1 {
+      font-size: 3rem;
+      margin: 0;
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-family: var(--font-main);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.07);
     }
-    /* Mobile menu animation */
-    .mobile-anim-in { animation: menuWrapIn .34s cubic-bezier(.69,-0.02,.39,1.13) both; }
-    .mobile-anim-out { animation: menuFadeOut .22s cubic-bezier(.4,.1,.6,1.2) both; }
-    @keyframes menuWrapIn {
-      0% { opacity: 0; transform: scaleY(.85) translateY(-70px);}
-      100% { opacity: 1; transform: scaleY(1) translateY(0);}
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-top: .7rem;
+      font-family: var(--font-main);
+      font-weight: 400;
+      letter-spacing: .5px;
     }
-    @keyframes menuFadeOut {
-      0% { opacity: 1; transform: scaleY(1) translateY(0);}
-      100% { opacity: 0; transform: scaleY(.85) translateY(-40px);}
-    }
-    /* Hide default mode toggles */
-    #mode-toggle, #mode-toggle-mobile { display: none !important; }
-    /* Footer mode toggle placement */
-    .footer-mode-toggle-wrap {
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: rgba(245,245,245,0.9);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
-      gap: 0.7em;
-      margin-top: 1.1em;
+      justify-content: space-between;
+      padding: .7rem 2rem;
+      z-index: 100;
+      box-shadow: 0 1px 14px rgba(0,0,0,.07);
+      font-family: var(--font-main);
+      transition: background var(--transition);
     }
-    .footer-mode-label {
-      font-family: 'EB Garamond', serif;
-      font-size: 1em;
-      color: #ad9779;
-      letter-spacing: .03em;
-      opacity: 0.85;
-      margin-right: 0.5em;
-      margin-left: 0.1em;
-      user-select: none;
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 1.2px;
+      color: var(--accent);
+      font-family: var(--font-main);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none !important;
+      color: var(--color-main);
+      font-weight: 500;
+      position: relative;
+      padding: .3rem .6rem;
+      transition: color var(--transition), background .2s;
+      border-radius: 6px;
+      background: none;
+      box-shadow: none;
+    }
+    .nav-links a::after {
+      display: none;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+      background: rgba(185,155,114,0.09);
+      box-shadow: 0 4px 14px rgba(185,155,114,0.05);
+      text-decoration: none !important;
+    }
+    /* Hamburger Icon */
+    .nav-menu-icon {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
+      width: 38px;
+      height: 38px;
+      position: relative;
+      z-index: 101;
+      background: transparent;
+      border-radius: 12px;
+      border: none;
+      transition: background .2s;
     }
-
-    /* Mode: Vintage style */
-    html.vintage {
-      background: #f3ede3;
-      color: #6e5d46;
+    .nav-menu-icon:active {
+      background: rgba(185,155,114,0.11);
     }
-    html.vintage body {
-      background: url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none" stroke="rgb(163,142,92)" stroke-opacity="0.07" stroke-width="1"/></svg>') repeat, linear-gradient(135deg,#f3ede3 0%,#f4e0c4 100%);
-      background-blend-mode: multiply;
+    .menu-lines {
+      width: 26px;
+      height: 26px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: .4s cubic-bezier(.40,.03,.52,.96);
     }
-    html.vintage .logo-text,
-    html.vintage .footer-mode-label { color: #705828;}
-    html.vintage .header-glass,
-    html.vintage .glass,
-    html.vintage .btn-glass {
-      background: rgba(245,236,216,0.91) !important;
-      border-color: #c3a47d88 !important;
-      color: #6e5d46 !important;
+    .menu-line {
+      width: 100%;
+      height: 2px;
+      background: var(--color-main);
+      border-radius: 2px;
+      transition: .35s cubic-bezier(.4,.03,.52,.96);
     }
-    html.vintage .btn-glass-vintage {
-      background: linear-gradient(90deg,rgba(163,142,92,0.15) 0%,rgba(230,227,217,0.86) 100%) !important;
-      color: #705828 !important;
-      border-color: #c3a47d88 !important;
+    .nav-menu-icon.open .menu-lines .menu-line:first-child {
+      transform: rotate(45deg) translate(7px, 5px);
+      background: var(--accent);
     }
-    html.vintage .mode-toggle {
-      background: linear-gradient(120deg,#e5dac0 60%,#c3a47d 100%) !important;
-      color: #6e5d46 !important;
-      border-color: #c3a47d99 !important;
-      box-shadow: 0 2px 12px #c8b89a66 !important;
+    .nav-menu-icon.open .menu-lines .menu-line:last-child {
+      transform: rotate(-45deg) translate(7px, -5px);
+      background: var(--accent);
     }
-    .visible { opacity: 1 !important; }
-    .fade-in { opacity: 0; transition: opacity .55s;}
-    .fade-in.visible { opacity: 1; }
- /* Container styles */
-#artworks .gallery-list {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 20px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  scroll-behavior: smooth; /* For smooth scroll on swipe or arrow */
-  /* For Webkit-based browsers (Chrome, Safari) */
-  -webkit-overflow-scrolling: touch;
-}
+    .nav-menu-icon.open .menu-lines .menu-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    /* Mobile Nav */
+    .nav-links-mobile {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: var(--bg-main);
+      z-index: 90;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      animation: fadeInMenu .5s;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.13);
+    }
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(-20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .nav-links-mobile a {
+      color: var(--color-main);
+      font-size: 1.38rem;
+      font-family: var(--font-main);
+      font-weight: 600;
+      background: rgba(185,155,114,0.07);
+      border-radius: 8px;
+      padding: .7rem 2.7rem;
+      margin: .3rem 0;
+      box-shadow: 0 2px 8px rgba(185,155,114,0.04);
+      text-decoration: none !important;
+      transition: background .2s, color .2s;
+      display: flex; align-items: center; gap: 0.8em;
+    }
+    .nav-links-mobile a:hover {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none !important;
+    }
+    /* Slider */
+    .slider {
+      width: 100vw;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      z-index: 1;
+    }
+    .slide {
+      position: absolute;
+      width: 100vw; height: 300px;
+      opacity: 0;
+      transition: opacity .8s;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+    /* Text Slider */
+    .text-slider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      min-height: 80px;
+      background: transparent;
+      font-size: 1.7rem;
+      font-family: var(--font-main);
+      color: var(--accent);
+      overflow: hidden;
+      position: relative;
+    }
+    .typewriter-text {
+      display: inline-block;
+      white-space: nowrap;
+      border-right: 2px solid var(--accent);
+      animation: blink-caret .8s steps(1) infinite;
+    }
+    @keyframes blink-caret {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: var(--accent); }
+    }
+    /* Skills Section */
+    .skills-section {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 2rem 1rem;
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .skills-title {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-main);
+      color: var(--accent);
+      letter-spacing: 1.2px;
+    }
+    .skills-infographics {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr .7fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2.1rem 2.5rem;
+      justify-items: stretch;
+      align-items: stretch;
+    }
+    .skill-bar,
+    .skill-chart,
+    .skill-counter {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+      padding: 1rem 1.1rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      transition: opacity .7s, transform .8s;
+      min-width: 160px;
+      max-width: 340px;
+      margin: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Irregular rearranging using nth-child for asymmetry */
+    .skill-bar:nth-child(1) { grid-column: 1/2; grid-row: 1/2;}
+    .skill-chart:nth-child(2) { grid-column: 2/3; grid-row: 1/2;}
+    .skill-counter:nth-child(3) { grid-column: 3/4; grid-row: 1/3;}
+    .skill-bar:nth-child(4) { grid-column: 2/3; grid-row: 2/3;}
+    .skill-bar:nth-child(5) { grid-column: 1/2; grid-row: 2/3;}
+    .skill-counter:nth-child(6) { grid-column: 3/4; grid-row: 2/3; top: -30px;}
 
-#artworks .gallery-list::-webkit-scrollbar {
-  height: 10px;
-  background: transparent;
-}
-#artworks .gallery-list::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.3);
-  border-radius: 10px;
-}
-
-/* Masonry effect using CSS columns for vertical stacking */
-#artworks .gallery-list {
-  align-items: flex-start;
-}
-#artworks .vintage-noise-img {
-  display: flex;
-  flex-direction: column;
-  /* Randomize the height for "masonry" effect */
-  min-width: 130px;
-  max-width: 140px;
-  transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.3s;
-  will-change: transform, box-shadow;
-  cursor: pointer;
-  /* Give it a little spacing */
-  margin-bottom: 10px;
-  /* Optional: Add a little vintage border/noise effect */
-  box-shadow: 0 6px 30px -12px rgba(0,0,0,0.1), 0 1.5px 6px 0 rgba(0,0,0,0.04);
-  opacity: 0;
-  transform: translateY(30px) scale(0.98);
-  animation: masonryFadeIn 0.7s forwards;
-}
-#artworks .vintage-noise-img:nth-child(odd) {
-  margin-top: 30px;
-}
-#artworks .vintage-noise-img:nth-child(even) {
-  margin-top: 0px;
-}
-#artworks .vintage-noise-img:hover {
-  transform: translateY(-8px) scale(1.04) rotate(-2deg);
-  box-shadow: 0 14px 48px -12px rgba(0,0,0,0.14), 0 6px 24px 0 rgba(0,0,0,0.08);
-  z-index: 2;
-}
-
-/* Animate each thumb with a slight delay for a staggered effect */
-#artworks .vintage-noise-img {
-  animation-delay: calc(var(--stagger, 0) * 0.08s);
-}
-#artworks .vintage-noise-img:nth-child(1) { --stagger: 0; }
-#artworks .vintage-noise-img:nth-child(2) { --stagger: 1; }
-#artworks .vintage-noise-img:nth-child(3) { --stagger: 2; }
-#artworks .vintage-noise-img:nth-child(4) { --stagger: 3; }
-#artworks .vintage-noise-img:nth-child(5) { --stagger: 4; }
-#artworks .vintage-noise-img:nth-child(6) { --stagger: 5; }
-#artworks .vintage-noise-img:nth-child(7) { --stagger: 6; }
-#artworks .vintage-noise-img:nth-child(8) { --stagger: 7; }
-#artworks .vintage-noise-img:nth-child(9) { --stagger: 8; }
-#artworks .vintage-noise-img:nth-child(10) { --stagger: 9; }
-
-@keyframes masonryFadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Make the images "masonry" style by varying heights and keeping width fixed */
-#artworks .art-thumb {
-  width: 100%;
-  object-fit: cover;
-  border-radius: 1em;
-  transition: filter 0.25s, box-shadow 0.25s;
-  /* Optional: slight shadow for floating look */
-  box-shadow: 0 2px 10px 0 rgba(60, 60, 60, 0.06);
-}
-#artworks .vintage-noise-img:nth-child(1) .art-thumb { height: 200px; }
-#artworks .vintage-noise-img:nth-child(2) .art-thumb { height: 160px; }
-#artworks .vintage-noise-img:nth-child(3) .art-thumb { height: 230px; }
-#artworks .vintage-noise-img:nth-child(4) .art-thumb { height: 190px; }
-#artworks .vintage-noise-img:nth-child(5) .art-thumb { height: 170px; }
-#artworks .vintage-noise-img:nth-child(6) .art-thumb { height: 210px; }
-#artworks .vintage-noise-img:nth-child(7) .art-thumb { height: 180px; }
-#artworks .vintage-noise-img:nth-child(8) .art-thumb { height: 240px; }
-#artworks .vintage-noise-img:nth-child(9) .art-thumb { height: 175px; }
-#artworks .vintage-noise-img:nth-child(10) .art-thumb { height: 220px; }
-
-/* Responsive for small screens */
-@media (max-width: 600px) {
-  #artworks .gallery-list {
-    gap: 12px;
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-  #artworks .vintage-noise-img {
-    min-width: 90px;
-    max-width: 100px;
-  }
-  #artworks .art-thumb {
-    border-radius: 0.6em;
-  }
-}
+    .skills-section.visible .skill-bar,
+    .skills-section.visible .skill-chart,
+    .skills-section.visible .skill-counter {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .skill-bar-title {
+      font-size: 1.2rem;
+      margin-bottom: .2rem;
+      font-family: var(--font-main);
+      font-weight: 700;
+    }
+    .skill-bar-bar {
+      width: 90%;
+      height: 16px;
+      background: #eee;
+      border-radius: 8px;
+      margin: .6rem auto;
+      overflow: hidden;
+      position: relative;
+    }
+    .skill-bar-inner {
+      height: 100%;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--accent) 70%, var(--color-main) 100%);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+      transition: width .7s;
+    }
+    .skill-bar-percent {
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: .2rem;
+    }
+    .skill-counter-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .skill-counter-label {
+      font-size: 1.1rem;
+      color: var(--color-main);
+    }
+    /* 3D UI Chart (SVG) */
+    .skill-chart svg {
+      width: 100px; height: 100px;
+      margin-bottom: .5rem;
+      display: block;
+    }
+    /* Poster Section */
+    .poster-section {
+      width: 100vw;
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+    }
+    .poster-img {
+      width: 100vw;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 0;
+      display: block;
+      margin: 0;
+      box-shadow: 0 2px 18px rgba(0,0,0,.06);
+    }
+    /* Footer */
+    .footer {
+      width: 100vw;
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--bg-main);
+      box-shadow: 0 -2px 14px rgba(0,0,0,.07);
+      font-family: var(--font-main);
+      z-index: 2;
+      color: var(--color-main);
+      position: relative;
+      margin-top: 2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--accent);
+      text-decoration: none !important;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: color .3s;
+      border-radius: 7px;
+      background: rgba(185,155,114,0.05);
+      padding: .26em .8em;
+      margin-bottom: 2px;
+      box-shadow: 0 2px 7px rgba(185,155,114,0.02);
+    }
+    .footer-links a:hover {
+      color: var(--color-main);
+      background: var(--accent);
+      text-decoration: none !important;
+      box-shadow: 0 2px 9px rgba(185,155,114,0.08);
+    }
+    /* Mode Switcher */
+    .mode-switcher {
+      position: fixed;
+      left: 30px;
+      bottom: 30px;
+      z-index: 999;
+      background: var(--bg-main);
+      border-radius: 80px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.09);
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .2rem .9rem;
+      font-family: var(--font-main);
+      font-size: 1.08rem;
+      cursor: pointer;
+      border: 2px solid var(--accent);
+      transition: background var(--transition), border var(--transition);
+      min-width: 56px;
+      min-height: 42px;
+    }
+    .mode-switcher span {
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-main);
+      letter-spacing: .5px;
+      margin-right: .3em;
+    }
+    .mode-switcher .mode-icon {
+      width: 22px; height: 22px; display: inline-block; vertical-align: middle;
+      margin-left: .2em;
+    }
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .skills-section { max-width: 99vw;}
+      .skills-infographics { gap: 1.3rem 1.1rem;}
+    }
+    @media (max-width: 900px) {
+      .skills-infographics {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem 1.1rem;
+      }
+      .skill-bar:nth-child(1) { grid-column: 1/2; grid-row: 1/2;}
+      .skill-chart:nth-child(2) { grid-column: 2/3; grid-row: 1/2;}
+      .skill-counter:nth-child(3) { grid-column: 1/2; grid-row: 2/3;}
+      .skill-bar:nth-child(4) { grid-column: 2/3; grid-row: 2/3;}
+      .skill-bar:nth-child(5) { grid-column: 1/2; grid-row: 3/4;}
+      .skill-counter:nth-child(6) { grid-column: 2/3; grid-row: 3/4;}
+      .slider, .slide { height: 190px;}
+      .poster-img { height: 200px;}
+    }
+    @media (max-width: 700px) {
+      nav { padding: .8rem 1rem; }
+      .nav-links { display: none; }
+      .nav-menu-icon { display: flex; }
+      .hero-content h1 { font-size: 2.2rem;}
+      .slider, .slide { height: 120px;}
+      .poster-img { height: 120px;}
+      .skills-section { padding: 1rem .5rem;}
+      .mode-switcher {
+        left: 12px; bottom: 12px; font-size: .95rem; min-width: 48px; min-height: 36px;
+        padding: .1rem .7rem;
+        border-radius: 50px;
+      }
+      .mode-switcher .mode-icon { width: 18px; height: 18px;}
+    }
+    @media (max-width: 480px) {
+      .skills-infographics {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, auto);
+        gap: .8rem .6rem;
+      }
+      .skill-bar, .skill-chart, .skill-counter {
+        min-width: 0; max-width: 99vw; font-size: 1.06rem;
+        padding: .7rem .6rem;
+      }
+      .mode-switcher {
+        left: 8px; bottom: 8px; font-size: .89rem; min-width: 44px; min-height: 33px;
+        padding: .05rem .38rem;
+        border-radius: 36px;
+      }
+      .nav-links-mobile a { font-size: 1.08rem; padding: .7rem 1.2rem;}
+    }
+    /* Mobile Menu Open */
+    .nav-links-mobile.open {
+      display: flex;
+    }
   </style>
 </head>
-<body>
-  <!-- Preloader -->
-  <div id="preloader">
-    <span class="ms-icon">MS</span>
+<body data-theme="classic">
+  <!-- Mode Switcher -->
+  <div class="mode-switcher" id="modeSwitcher" title="Switch Theme">
+    <span id="modeText">Classic</span>
+    <span class="mode-icon" id="modeIcon">
+      <!-- Sun icon default -->
+      <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><circle cx="12" cy="12" r="6" stroke="#b99b72" stroke-width="2"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#b99b72" stroke-width="2"/></svg>
+    </span>
   </div>
-  <!-- Header -->
-  <header class="header-glass w-full fixed top-0 left-0 z-50 backdrop-blur-md">
-    <div class="flex justify-between items-center px-6 md:px-14 h-[58px]">
-      <span class="logo-text font-serif font-thin select-none">Muktadir Shabab</span>
-      <nav class="hidden md:flex gap-8 text-lg font-serif font-semibold tracking-wide">
-        <a href="#about" class="micro-anim hover:text-[#a08b6b]">About</a>
-        <a href="#cv" class="micro-anim hover:text-[#a08b6b]">CV</a>
-        <a href="#artworks" class="micro-anim hover:text-[#a08b6b]">Artworks</a>
-        <a href="#blogs" class="micro-anim hover:text-[#a08b6b]">Blogs</a>
-        <a href="#community" class="micro-anim hover:text-[#a08b6b]">Community</a>
-        <a href="#booking" class="micro-anim hover:text-[#a08b6b]">Booking</a>
-      </nav>
-      <!-- Hamburger sticky + micro-animated -->
-      <div class="hamburger md:hidden" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
-        <div class="hamburger-inner">
-          <span class="hamburger-bar top"></span>
-          <span class="hamburger-bar mid"></span>
-          <span class="hamburger-bar bot"></span>
-        </div>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">Muktadir Shabab</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#intro">Intro</a>
+      <a href="#skills">Skills</a>
+      <a href="#poster">Poster</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-menu-icon" id="menuIcon" aria-label="Menu" tabindex="0">
+      <div class="menu-lines">
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
       </div>
     </div>
-    <!-- Mobile Menu -->
-    <div class="menu mobile flex-col gap-6 px-7 pt-4 pb-2 font-serif text-xl" id="mobile-menu" style="display:none;">
-      <a href="#about" class="micro-anim hover:text-[#a08b6b]">About</a>
-      <a href="#cv" class="micro-anim hover:text-[#a08b6b]">CV</a>
-      <a href="#artworks" class="micro-anim hover:text-[#a08b6b]">Artworks</a>
-      <a href="#blogs" class="micro-anim hover:text-[#a08b6b]">Blogs</a>
-      <a href="#community" class="micro-anim hover:text-[#a08b6b]">Community</a>
-      <a href="#booking" class="micro-anim hover:text-[#a08b6b]">Booking</a>
-    </div>
-  </header>
+  </nav>
+  <div class="nav-links-mobile" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()"><svg width="18" height="18" style="margin-right:.6em" viewBox="0 0 24 24"><path fill="#b99b72" d="M12 3l9 9-1.41 1.41L12 5.83l-7.59 7.58L3 12z"/></svg> Home</a>
+    <a href="#intro" onclick="toggleMenu()"><svg width="18" height="18" style="margin-right:.6em" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="#b99b72"/></svg> Intro</a>
+    <a href="#skills" onclick="toggleMenu()"><svg width="18" height="18" style="margin-right:.6em" viewBox="0 0 24 24"><rect x="6" y="7" width="12" height="10" fill="#b99b72" /><rect x="4" y="17" width="16" height="2" fill="#b99b72"/></svg> Skills</a>
+    <a href="#poster" onclick="toggleMenu()"><svg width="18" height="18" style="margin-right:.6em" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2" fill="#b99b72"/></svg> Poster</a>
+    <a href="#contact" onclick="toggleMenu()"><svg width="18" height="18" style="margin-right:.6em" viewBox="0 0 24 24"><path fill="#b99b72" d="M21 8V7l-3 2.29V7a7 7 0 0 0-14 0v1l-3-2.29V8a9 9 0 0 0 18 0z"/></svg> Contact</a>
+  </div>
   <!-- Hero Section -->
-  <section id="hero" class="relative w-full z-10 mb-1 pt-[58px]">
-    <div class="hero-img-full select-none">
-      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80" alt="Muktadir Shabab Art Hero" class="no-download vintage-noise-img" draggable="false">
-      <div class="vintage-noise"></div>
+  <section class="hero" id="home">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80" alt="Hero Image (Open Source)">
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <h1>Muktadir Shabab</h1>
+      <p>Artist & Writer | Portfolio</p>
     </div>
   </section>
-  <!-- After Hero: Content Starts -->
-  <!-- Latest Exhibitions/Works Slider -->
-  <section id="exhibitions" class="mt-8 md:mt-20 px-4 md:px-20">
-    <h3 class="font-serif text-2xl mb-3 tracking-wide">Latest Exhibitions & Works</h3>
-    <div class="slider-cards flex overflow-x-auto gap-4 md:gap-8 pb-4 snap-x snap-mandatory">
-      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="relative vintage-noise-img">
-          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
-        </div>
-        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
-        <div>
-          <h4 class="font-serif text-xl mb-2">Vintage Visions</h4>
-          <p class="text-sm mb-3">Solo Exhibition, Paris. A journey through classic forms in a modern lens.</p>
-          <button class="btn-glass btn-glass-vintage">Details</button>
-        </div>
-      </div>
-      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="relative vintage-noise-img">
-          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
-        </div>
-        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
-        <div>
-          <h4 class="font-serif text-xl mb-2">Eternal Canvases</h4>
-          <p class="text-sm mb-3">Group Show, Rome. Exploring time and memory through classical artistry.</p>
-          <button class="btn-glass btn-glass-vintage">Details</button>
-        </div>
-      </div>
-      <div class="slider-card glass min-w-[340px] md:min-w-[420px] rounded-2xl p-5 relative snap-center micro-anim flex flex-col">
-        <div class="relative vintage-noise-img">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="rounded-xl no-download w-full h-44 object-cover mb-3" alt="Exhibition Image" draggable="false" loading="lazy">
-        </div>
-        <div class="vintage-noise rounded-xl pointer-events-none absolute inset-0"></div>
-        <div>
-          <h4 class="font-serif text-xl mb-2">Shadows & Silhouettes</h4>
-          <p class="text-sm mb-3">Art Festival, Vienna. The dance of light in classic portraiture.</p>
-          <button class="btn-glass btn-glass-vintage">Details</button>
-        </div>
-      </div>
-    </div>
+  <!-- Intro Slider Section -->
+  <section class="slider" id="intro">
+    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1200&q=80" class="slide active" alt="Art Slide 1">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" class="slide" alt="Art Slide 2">
+    <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1200&q=80" class="slide" alt="Art Slide 3">
   </section>
-  <!-- Ad Poster -->
-  <section id="ad-poster" class="my-10 md:my-20 px-2 md:px-10">
-    <a href="https://example.com/event" target="_blank" rel="noopener" class="block w-full">
-      <div class="ad-poster rounded-2xl overflow-hidden w-full max-w-5xl mx-auto relative shadow-xl vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=1200&q=80" alt="Event Poster" class="w-full h-48 md:h-72 object-cover no-download" draggable="false" loading="lazy">
-        <div class="vintage-noise absolute inset-0"></div>
-      </div>
-    </a>
+  <!-- Text Slider Section -->
+  <section class="text-slider">
+    <span class="typewriter-text" id="typewriter"></span>
   </section>
-  <!-- Programmes -->
-  <section id="programmes" class="mt-10 md:mt-20 px-4 md:px-20">
-    <h3 class="font-serif text-2xl mb-3 tracking-wide">Upcoming Programmes</h3>
-    <div class="programme-list flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto pb-2">
-      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
-        <h4 class="font-serif text-lg typewriter" data-type="Classic Art Workshop">Classic Art Workshop</h4>
-        <div class="mt-2 text-xs text-[#ad9779]">July 21, 2025 — 17:00</div>
-        <div class="mt-2 mb-3 text-sm">A hands-on journey through vintage painting techniques.</div>
-        <div class="font-mono text-base flex gap-1 items-center">
-          <span class="countdown" data-date="2025-07-21T17:00:00Z"></span>
+  <!-- Skills Section -->
+  <section class="skills-section" id="skills">
+    <div class="skills-title">Skills & Experience</div>
+    <div class="skills-infographics">
+      <div class="skill-bar">
+        <div class="skill-bar-title">Digital Art</div>
+        <div class="skill-bar-bar">
+          <div class="skill-bar-inner" style="width: 90%;"></div>
         </div>
+        <div class="skill-bar-percent">90%</div>
       </div>
-      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
-        <h4 class="font-serif text-lg typewriter" data-type="Literary Reading Night">Literary Reading Night</h4>
-        <div class="mt-2 text-xs text-[#ad9779]">August 4, 2025 — 19:00</div>
-        <div class="mt-2 mb-3 text-sm">Experience the latest works read live with classic ambience.</div>
-        <div class="font-mono text-base flex gap-1 items-center">
-          <span class="countdown" data-date="2025-08-04T19:00:00Z"></span>
-        </div>
+      <div class="skill-chart">
+        <div class="skill-bar-title">Storytelling</div>
+        <svg viewBox="0 0 100 100">
+          <ellipse cx="50" cy="50" rx="38" ry="25" fill="#e9cba7"></ellipse>
+          <ellipse cx="50" cy="50" rx="30" ry="17" fill="#b99b72"></ellipse>
+          <text x="50" y="57" text-anchor="middle" font-size="14" fill="#6d4c41">3D</text>
+        </svg>
+        <div>3D Infographics</div>
       </div>
-      <div class="glass rounded-xl p-5 min-w-[290px] md:min-w-0 relative timeline-in fade-in">
-        <h4 class="font-serif text-lg typewriter" data-type="Art & Community Meetup">Art & Community Meetup</h4>
-        <div class="mt-2 text-xs text-[#ad9779]">September 14, 2025 — 18:30</div>
-        <div class="mt-2 mb-3 text-sm">Join fellow art lovers for a vintage-inspired night of networking.</div>
-        <div class="font-mono text-base flex gap-1 items-center">
-          <span class="countdown" data-date="2025-09-14T18:30:00Z"></span>
+      <div class="skill-counter">
+        <div class="skill-bar-title">Published Works</div>
+        <div class="skill-counter-value" id="counter1">0</div>
+        <div class="skill-counter-label">Books & Articles</div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-bar-title">Creative Writing</div>
+        <div class="skill-bar-bar">
+          <div class="skill-bar-inner" style="width: 85%;"></div>
         </div>
+        <div class="skill-bar-percent">85%</div>
+      </div>
+      <div class="skill-bar">
+        <div class="skill-bar-title">UI Design</div>
+        <div class="skill-bar-bar">
+          <div class="skill-bar-inner" style="width: 75%;"></div>
+        </div>
+        <div class="skill-bar-percent">75%</div>
+      </div>
+      <div class="skill-counter">
+        <div class="skill-bar-title">Years Experience</div>
+        <div class="skill-counter-value" id="counter2">0</div>
+        <div class="skill-counter-label">in Art & Writing</div>
       </div>
     </div>
   </section>
-  <!-- Painting Gallery -->
-  <section id="artworks" class="mt-10 md:mt-24 px-4 md:px-20">
-    <h3 class="font-serif text-2xl mb-3 tracking-wide">Painting Gallery</h3>
-    <div class="gallery-list flex gap-2 pb-3 overflow-x-auto">
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3c58?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 1" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 2" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1451481454041-104482d8e284?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 3" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 4" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 5" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 6" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 7" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 8" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 9" draggable="false" loading="lazy">
-      </div>
-      <div class="relative vintage-noise-img">
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=250&q=80" class="art-thumb rounded-xl w-32 h-44 object-cover no-download" alt="Artwork 10" draggable="false" loading="lazy">
-      </div>
-    </div>
-    <a href="/gallery" class="btn-glass btn-glass-vintage mt-3 inline-block">More</a>
-  </section>
-  <!-- Published Novels -->
-  <section id="novels" class="mt-10 md:mt-24 px-4 md:px-20">
-    <h3 class="font-serif text-2xl mb-3 tracking-wide">Published Novels</h3>
-    <div class="flex flex-col gap-6 md:gap-10">
-      <div class="flex items-start fade-in">
-        <div class="book-mockup-thumb relative mr-4">
-          <div class="book-title-on-thumb">The Timeless<br>Brush</div>
-        </div>
-        <div>
-          <h4 class="font-serif text-lg mb-1">The Timeless Brush</h4>
-          <div class="text-xs text-[#ad9779] mb-0.5">2023</div>
-          <p class="text-sm mb-2 max-w-xl">A painter’s odyssey through eras—where every brushstroke preserves a memory, every page an artwork.</p>
-          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
-        </div>
-      </div>
-      <div class="flex items-start fade-in">
-        <div class="book-mockup-thumb relative mr-4">
-          <div class="book-title-on-thumb">Shadows<br>Under Gold</div>
-        </div>
-        <div>
-          <h4 class="font-serif text-lg mb-1">Shadows Under Gold</h4>
-          <div class="text-xs text-[#ad9779] mb-0.5">2021</div>
-          <p class="text-sm mb-2 max-w-xl">A classic tale of dreams, struggle, and hope painted on the vintage canvas of old city life.</p>
-          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
-        </div>
-      </div>
-      <div class="flex items-start fade-in">
-        <div class="book-mockup-thumb relative mr-4">
-          <div class="book-title-on-thumb">Letters<br>From The Easel</div>
-        </div>
-        <div>
-          <h4 class="font-serif text-lg mb-1">Letters From The Easel</h4>
-          <div class="text-xs text-[#ad9779] mb-0.5">2019</div>
-          <p class="text-sm mb-2 max-w-xl">A collection of heartfelt letters from an artist to their muse—timeless, poetic, and evocative.</p>
-          <a href="#" class="btn-glass btn-glass-vintage">Read More</a>
-        </div>
-      </div>
-    </div>
+  <!-- Poster Section -->
+  <section class="poster-section" id="poster">
+    <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1200&q=80" class="poster-img" alt="Portfolio Poster">
   </section>
   <!-- Footer -->
-  <footer class="mt-16 md:mt-28 px-6 py-8 md:px-20 bg-[#f5f5f5] bg-opacity-90 glass text-xs text-[#ad9779] flex flex-col md:flex-row items-center justify-between">
-    <div class="flex gap-2 mb-3 md:mb-0">
-      <!-- Behance -->
-<a href="https://www.behance.net/yourprofile" target="_blank">
-  <i class="fab fa-behance" style="font-size:18px;"></i>
-</a>
-
-<!-- Facebook -->
-<a href="https://facebook.com/yourprofile" target="_blank">
-  <i class="fab fa-facebook-f" style="font-size:18px;"></i>
-</a>
-
-<!-- Twitter -->
-<a href="https://twitter.com/yourprofile" target="_blank">
-  <i class="fab fa-twitter" style="font-size:18px;"></i>
-</a>
-
-<!-- YouTube -->
-<a href="https://youtube.com/yourchannel" target="_blank">
-  <i class="fab fa-youtube" style="font-size:18px;"></i>
-</a>
-
-<!-- Instagram -->
-<a href="https://instagram.com/yourprofile" target="_blank">
-  <i class="fab fa-instagram" style="font-size:18px;"></i>
-</a>
-      
+  <footer class="footer" id="contact">
+    <div class="footer-links">
+      <a href="mailto:muktadir@gmail.com">Email</a>
+      <a href="https://github.com/MuktadirAMS" target="_blank">GitHub</a>
+      <a href="#" target="_blank">Instagram</a>
+      <a href="#" target="_blank">LinkedIn</a>
     </div>
-    <div class="flex gap-4 mb-3 md:mb-0">
-      <a href="#about" class="hover:text-[#6e5d46]">About</a>
-      <a href="#cv" class="hover:text-[#6e5d46]">CV</a>
-      <a href="#artworks" class="hover:text-[#6e5d46]">Artworks</a>
-      <a href="#blogs" class="hover:text-[#6e5d46]">Blogs</a>
-      <a href="#community" class="hover:text-[#6e5d46]">Community</a>
-      <a href="#booking" class="hover:text-[#6e5d46]">Booking</a>
-    </div>
-    <div class="flex items-center gap-2">
-      <span>&copy; <span id="year"></span> Muktadir Shabab</span>
-      <!-- Mode toggle: Light / Vintage -->
-      <div class="footer-mode-toggle-wrap">
-        <span class="footer-mode-label" id="mode-label-light">Light</span>
-        <button id="footer-mode-toggle-light" class="mode-toggle light" aria-label="Light mode" title="Light Mode">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-sun"></use></svg>
-        </button>
-        <span class="footer-mode-label" id="mode-label-vintage">Vintage</span>
-        <button id="footer-mode-toggle-vintage" class="mode-toggle vintage" aria-label="Vintage mode" title="Vintage Mode">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#lucide-moon"></use></svg>
-        </button>
-      </div>
-    </div>
+    <div>&copy; 2025 Muktadir Shabab. All open source images. No download/copy allowed.</div>
   </footer>
-  <!-- Lucide SVG Symbol Definitions (for inline icon use) -->
-  <svg style="display:none;">
-    <symbol id="lucide-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></symbol>
-    <symbol id="lucide-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></symbol>
-    <symbol id="lucide-behance" viewBox="0 0 24 24"><path d="M8.5 11.5h-4v-4h4a2 2 0 1 1 0 4z"/><path d="M10.5 17.5v-5h-6v5"/><path d="M17.5 11.5h2.5v2.5a3 3 0 1 1-3-3v0"/><rect x="14.5" y="8.5" width="7" height="7" rx="3.5"/><line x1="11.5" x2="11.5" y1="12.5" y2="17.5"/></symbol>
-    <symbol id="lucide-youtube" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29.94 29.94 0 0 0 1 12a29.94 29.94 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29.94 29.94 0 0 0 23 12a29.94 29.94 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></symbol>
-    <symbol id="lucide-twitter" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9.09 9.09 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.35 0c-2.51 0-4.52 2.01-4.52 4.5 0 .35.04.7.1 1.03-3.76-.19-7.1-1.99-9.34-4.73a4.48 4.48 0 0 0-.61 2.25c0 1.55.8 2.91 2.03 3.72A4.48 4.48 0 0 1 .96 6.1v.06c0 2.16 1.55 3.97 3.62 4.38a4.52 4.52 0 0 1-2.04.08c.57 1.78 2.21 3.08 4.16 3.12A9.05 9.05 0 0 1 0 19.54a12.82 12.82 0 0 0 6.94 2.03c8.33 0 12.89-6.91 12.89-12.89 0-.2-.01-.41-.02-.61A9.18 9.18 0 0 0 23 3z"/></symbol>
-    <symbol id="lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></symbol>
-    <symbol id="lucide-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></symbol>
-  </svg>
+  <!-- Scripts -->
   <script>
-    window.addEventListener('DOMContentLoaded',()=> {
-      setTimeout(()=>document.getElementById('preloader').classList.add('done'), 800);
-      document.getElementById('year').textContent = (new Date()).getFullYear();
-    });
+    // Theme Switcher
+    const themes = [
+      { name: "Classic", value: "classic", icon: `<svg viewBox="0 0 24 24" fill="none" width="22" height="22"><circle cx="12" cy="12" r="6" stroke="#b99b72" stroke-width="2"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#b99b72" stroke-width="2"/></svg>`
+      },
+      { name: "Vintage", value: "vintage", icon: `<svg viewBox="0 0 24 24" fill="none" width="22" height="22"><ellipse cx="12" cy="12" rx="8" ry="10" stroke="#a67c52" stroke-width="2"/><ellipse cx="12" cy="12" rx="5" ry="7" fill="#a67c52"/></svg>` },
+      { name: "Greyscale", value: "greyscale", icon: `<svg viewBox="0 0 24 24" fill="none" width="22" height="22"><circle cx="12" cy="12" r="9" fill="#888"/><circle cx="12" cy="12" r="6" fill="#222"/></svg>` }
+    ];
+    let themeIdx = 0;
+    const modeSwitcher = document.getElementById('modeSwitcher');
+    const modeText = document.getElementById('modeText');
+    const modeIcon = document.getElementById('modeIcon');
+    modeSwitcher.onclick = () => {
+      themeIdx = (themeIdx + 1) % themes.length;
+      document.body.setAttribute("data-theme", themes[themeIdx].value);
+      modeText.textContent = themes[themeIdx].name;
+      modeIcon.innerHTML = themes[themeIdx].icon;
+    };
 
-    // Hamburger
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    let mobileMenuOpen = false;
-    hamburger.addEventListener('click',()=>{
-      hamburger.classList.toggle('active');
-      mobileMenuOpen = hamburger.classList.contains('active');
-      hamburger.setAttribute('aria-expanded', mobileMenuOpen ? 'true' : 'false');
-      if (mobileMenuOpen) {
-        mobileMenu.style.display = 'flex';
-        mobileMenu.classList.remove('mobile-anim-out');
-        mobileMenu.classList.add('mobile-anim-in');
+    // Add icon in floating mode changing btn for small screen
+    function updateModeSwitcherIcon() {
+      if(window.innerWidth < 700) {
+        modeIcon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" width="18" height="18"><circle cx="12" cy="12" r="8" fill="#b99b72"/><path d="M12 8v8M8 12h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>`;
       } else {
-        mobileMenu.classList.remove('mobile-anim-in');
-        mobileMenu.classList.add('mobile-anim-out');
-        setTimeout(() => {
-          mobileMenu.style.display = 'none';
-        }, 200);
+        modeIcon.innerHTML = themes[themeIdx].icon;
       }
-    });
-    // Hide menu on nav click with animation
-    mobileMenu.querySelectorAll('a').forEach(a=>{
-      a.addEventListener('click',()=> {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('mobile-anim-in');
-        mobileMenu.classList.add('mobile-anim-out');
-        setTimeout(()=>{mobileMenu.style.display='none';}, 200);
-      });
+    }
+    window.addEventListener('resize', updateModeSwitcherIcon);
+    updateModeSwitcherIcon();
+
+    // Mobile Menu Toggle
+    const menuIcon = document.getElementById('menuIcon');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuIcon.onclick = () => {
+      menuIcon.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    };
+    function toggleMenu() {
+      menuIcon.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleMenu();
     });
 
-    // Remove default dark/light mode code
-    // Custom mode toggle for footer: Light (bw) and Vintage
-    function setCustomMode(mode) {
-      if (mode === 'vintage') {
-        document.documentElement.classList.add('vintage');
-        document.documentElement.classList.remove('light');
-        window.localStorage.setItem('theme', 'vintage');
+    // Fade Slider
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 3200);
+
+    // Typewriter Text Slider
+    const typewriter = document.getElementById('typewriter');
+    const typewriterTexts = [
+      "Art is the journey of a free soul.",
+      "Writing speaks louder than words.",
+      "Creativity is intelligence having fun.",
+      "Welcome to my world of art & ideas.",
+      "Explore stories, visuals, imagination."
+    ];
+    let twIdx = 0, twChar = 0, twDir = 1;
+    function typeWrite() {
+      let txt = typewriterTexts[twIdx];
+      if (twDir === 1) {
+        if (twChar < txt.length) {
+          typewriter.textContent = txt.slice(0, ++twChar);
+          setTimeout(typeWrite, 55 + Math.random()*40);
+        } else {
+          twDir = -1;
+          setTimeout(typeWrite, 1200);
+        }
       } else {
-        document.documentElement.classList.remove('vintage');
-        document.documentElement.classList.add('light');
-        window.localStorage.setItem('theme', 'light');
+        if (twChar > 0) {
+          typewriter.textContent = txt.slice(0, --twChar);
+          setTimeout(typeWrite, 32 + Math.random()*28);
+        } else {
+          twDir = 1;
+          twIdx = (twIdx + 1) % typewriterTexts.length;
+          setTimeout(typeWrite, 500);
+        }
       }
-      // Visual feedback on toggle buttons
-      document.getElementById('footer-mode-toggle-light').classList.toggle('active', mode==='light');
-      document.getElementById('footer-mode-toggle-vintage').classList.toggle('active', mode==='vintage');
     }
-    function getCustomMode() {
-      return localStorage.getItem('theme') || 'light';
-    }
-    setCustomMode(getCustomMode());
+    typeWrite();
 
-    document.getElementById('footer-mode-toggle-light').addEventListener('click',()=>{
-      setCustomMode('light');
-    });
-    document.getElementById('footer-mode-toggle-vintage').addEventListener('click',()=>{
-      setCustomMode('vintage');
+    // Skills Section Animation on Scroll
+    function onVisible(element, callback) {
+      let observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) callback();
+        });
+      }, { threshold: 0.3 });
+      observer.observe(element);
+    }
+    let skillsSection = document.querySelector('.skills-section');
+    onVisible(skillsSection, () => {
+      skillsSection.classList.add('visible');
+      animateCounters();
     });
 
-    // Glitch effect on slider card on scroll/snap
-    document.querySelectorAll('.slider-card').forEach(card => {
-      card.addEventListener('mouseenter',()=> {
-        card.classList.add('glitch');
-        setTimeout(()=>card.classList.remove('glitch'), 400);
-      });
+    // Animated Counters
+    function animateCounters() {
+      let counter1 = document.getElementById('counter1');
+      let counter2 = document.getElementById('counter2');
+      let val1 = 12, val2 = 7; // Published works, years
+      let count1 = 0, count2 = 0;
+      let interval1 = setInterval(() => {
+        if (count1 < val1) {
+          counter1.textContent = ++count1;
+        } else clearInterval(interval1);
+      }, 80);
+      let interval2 = setInterval(() => {
+        if (count2 < val2) {
+          counter2.textContent = ++count2;
+        } else clearInterval(interval2);
+      }, 120);
+    }
+
+    // Prevent img copy/download
+    document.querySelectorAll('img').forEach(img => {
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('contextmenu', e => e.preventDefault());
+      img.addEventListener('mousedown', e => e.preventDefault());
     });
-    // Ad poster zoom on scroll into view
-    function inView(el) {
-      const rect = el.getBoundingClientRect();
-      return rect.top < window.innerHeight*.82 && rect.bottom > 0;
-    }
-    const adPoster = document.querySelector('.ad-poster');
-    function checkAdPoster() {
-      if (inView(adPoster)) adPoster.classList.add('inview');
-      else adPoster.classList.remove('inview');
-    }
-    window.addEventListener('scroll',checkAdPoster);
-    window.addEventListener('resize',checkAdPoster);
-    setTimeout(checkAdPoster,200);
-    // Programmes timeline fade-in & typewriter on in-view
-    function fadeInTimeline() {
-      document.querySelectorAll('.timeline-in').forEach((el,i)=>{
-        if (inView(el)) {
-          setTimeout(()=>el.classList.add('visible'), i*160);
-          const tw = el.querySelector('.typewriter');
-          if (tw && !tw.classList.contains('typed')) {
-            tw.classList.add('typed');
-            const text = tw.getAttribute('data-type') || tw.textContent;
-            tw.textContent = '';
-            let idx = 0;
-            function type() {
-              if (idx <= text.length) {
-                tw.textContent = text.slice(0,idx);
-                idx++; setTimeout(type, 23);
-              }
-            }
-            type();
-          }
-        }
-      });
-    }
-    window.addEventListener('scroll', fadeInTimeline);
-    window.addEventListener('resize', fadeInTimeline);
-    setTimeout(fadeInTimeline,600);
-    // Fade-in animations for novels
-    function fadeInElements() {
-      document.querySelectorAll('.fade-in').forEach((el,i)=>{
-        if (inView(el)) setTimeout(()=>el.classList.add('visible'), i*85);
-      });
-    }
-    window.addEventListener('scroll', fadeInElements);
-    window.addEventListener('resize', fadeInElements);
-    setTimeout(fadeInElements,700);
-    // Network-synced countdown for events
-    function updateCountdowns() {
-      document.querySelectorAll('.countdown').forEach(span=>{
-        const end = new Date(span.dataset.date);
-        const now = Date.now();
-        let diff = (end - now) / 1000;
-        if (diff < 0) {
-          span.textContent = "Started";
-          return;
-        }
-        const d = Math.floor(diff/86400);
-        diff -= d*86400;
-        const h = Math.floor(diff/3600);
-        diff -= h*3600;
-        const m = Math.floor(diff/60);
-        const s = Math.floor(diff%60);
-        span.textContent = d>0 ? `${d}d ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}` : `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-      });
-    }
-    setInterval(updateCountdowns, 1000);
-    updateCountdowns();
-    // Prevent text copying & right click context menu for images
-    document.addEventListener('copy', e=>e.preventDefault());
-    document.querySelectorAll('img,no-download,.no-download').forEach(img=>{
-      img.addEventListener('contextmenu',e=>e.preventDefault());
-      img.addEventListener('dragstart',e=>e.preventDefault());
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      alert("Copy/Download is disabled for images and media.");
     });
   </script>
 </body>
