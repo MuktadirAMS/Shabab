@@ -695,22 +695,18 @@ section {
     </section>
  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Archivo+Black&family=Smooch+Sans:wght@400&display=swap" rel="stylesheet">
   <style>
+    /* Hide flyer on desktop */
+    @media (min-width: 768px) {
+      .event-announcement-container {
+        display: none;
+      }
+    }
     .event-announcement-container {
       margin: 0; padding: 0; position: relative; z-index: 2;
       border: 1px solid #ddd;
       text-align: center;
-      background-image: repeating-linear-gradient(
-        45deg,
-        #000 0,
-        #000 2px,
-        transparent 2px,
-        transparent 4px
-      );
-      opacity: var(--zebra-opacity);
-      /* To keep content fully visible, use a pseudo element for zebra */
-      position: relative;
+      background: var(--color-bg);
     }
-    /* Add pseudo element to contain zebra crossing with low opacity, so content stays fully visible */
     .event-announcement-container::before {
       content: "";
       position: absolute;
@@ -790,9 +786,6 @@ section {
     @keyframes typing { from { width: 0 } to { width: 100% } }
     @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-header); } }
   </style>
-
-  <!-- Removed noise overlay -->
-  <!-- Removed zebra overlay fixed -->
   <div class="event-announcement-container">
     <div class="event-announcement-days-left-tag" id="daysLeft">Days left: ...</div>
     <div class="event-announcement-timer" id="timer">00:00:00</div>
