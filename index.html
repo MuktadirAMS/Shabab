@@ -695,19 +695,10 @@ section {
     </section>
  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Archivo+Black&family=Smooch+Sans:wght@400&display=swap" rel="stylesheet">
   <style>
-    .event-announcement-noise-overlay,
-    .event-announcement-zebra-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .event-announcement-noise-overlay {
-      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-      opacity: 0.06;
-    }
-    .event-announcement-zebra-overlay {
+    .event-announcement-container {
+      margin: 0; padding: 0; position: relative; z-index: 2;
+      border: 1px solid #ddd;
+      text-align: center;
       background-image: repeating-linear-gradient(
         45deg,
         #000 0,
@@ -716,12 +707,26 @@ section {
         transparent 4px
       );
       opacity: var(--zebra-opacity);
+      /* To keep content fully visible, use a pseudo element for zebra */
+      position: relative;
     }
-    .event-announcement-container {
-      margin: 0; padding: 0; position: relative; z-index: 2;
-      border: 1px solid #ddd;
-      text-align: center;
+    /* Add pseudo element to contain zebra crossing with low opacity, so content stays fully visible */
+    .event-announcement-container::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      opacity: var(--zebra-opacity);
+      pointer-events: none;
+      z-index: -1;
     }
+
     .event-announcement-days-left-tag {
       font-size: 24px;
       font-weight: bold;
@@ -786,8 +791,8 @@ section {
     @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-header); } }
   </style>
 
-  <div class="event-announcement-noise-overlay"></div>
-  <div class="event-announcement-zebra-overlay"></div>
+  <!-- Removed noise overlay -->
+  <!-- Removed zebra overlay fixed -->
   <div class="event-announcement-container">
     <div class="event-announcement-days-left-tag" id="daysLeft">Days left: ...</div>
     <div class="event-announcement-timer" id="timer">00:00:00</div>
