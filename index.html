@@ -427,7 +427,193 @@ section {
   </header>
 
   <main>
- 
+ <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  .watermark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .watermark span {
+    position: absolute;
+    font-family: 'Anton', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    color: transparent;
+    -webkit-text-stroke: 0.4px lightgrey;
+    opacity: 0.2;
+  }
+
+  .zebra {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: repeating-linear-gradient(
+      90deg,
+      #000,
+      #000 20px,
+      #fff 20px,
+      #fff 40px
+    );
+    z-index: 100;
+  }
+
+  .flyer {
+    position: relative;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .title {
+    font-family: 'Anton', sans-serif;
+    font-size: 4.5rem;
+    position: absolute;
+    top: 53%; left: 0;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left top;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  .title span {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 2px solid #000;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    animation: typing 3s steps(20, end), blink 0.75s step-end infinite;
+  }
+
+  .title .muktadir { color: #000; animation-delay: 0s; }
+  .title .shabab { color: #777; animation-delay: 3s; border-right: none; }
+
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink {
+    50% { border-color: transparent; }
+  }
+
+  .info {
+    align-self: flex-end;
+    max-width: 60%;
+    margin-top: 70px;
+    z-index: 3;
+  }
+
+  .info .tag {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 300;
+    padding: 4px 8px;
+    margin-bottom: 10px;
+  }
+
+  .info .desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #333;
+  }
+
+  .social {
+    display: flex;
+    gap: 15px;
+    font-size: 1.2rem;
+    z-index: 3;
+  }
+
+  .social a { color: #333; transition: transform 0.3s; }
+  .social a:hover { transform: scale(1.2); }
+
+  .bottom-img {
+    position: absolute;
+    right: -20px;
+    bottom: 70px;
+    width: 100%;
+    z-index: 3;
+  }
+
+  /* Noise overlay animation */
+  .noise-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.04;
+    pointer-events: none;
+    animation: noiseMove 1s infinite linear;
+    z-index: 4;
+  }
+
+  @keyframes noiseMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(5%, 5%); }
+  }
+
+  /* Hide flyer on desktop/tablet */
+  @media (min-width: 768px) {
+    .flyer {
+      display: none !important;
+    }
+  }
+</style>
+
+<div class="flyer">
+  <div class="noise-overlay"></div>
+  <div class="watermark" id="watermark"></div>
+
+  <div class="title">
+    <span class="muktadir">MUKTADIR</span>
+    <span class="shabab">SHABAB</span>
+  </div>
+
+  <div class="info">
+    <div class="tag">Artist & Writer</div>
+    <div class="desc">Crafting visual stories through art, writing, and performance. Exploring the intersection of creativity and entrepreneurship.</div>
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-behance"></i></a>
+    </div>
+  </div>
+
+  <img class="bottom-img" src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1733768565/sabu_dnibnc.png" alt="Decorative Image">
+  <div class="zebra"></div>
+</div>
+
+<script>
+  const container = document.getElementById("watermark");
+  const words = ["Muktadir", "Shabab", "Art", "Exhibition", "Writing", "Acting", "July"];
+  for (let i = 0; i < 300; i++) {
+    const word = document.createElement("span");
+    word.textContent = words[Math.floor(Math.random() * words.length)];
+    word.style.left = Math.random() * 100 + "%";
+    word.style.top = Math.random() * 100 + "%";
+    word.style.transform = `rotate(${Math.random() * 360}deg)`;
+    container.appendChild(word);
+  }
+</script>
+
     <section class="hero-image">
       <img class="filtered-img"
         src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752906015/Muktadir_20250719_051211_0000_dhf72l.png"
