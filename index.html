@@ -543,6 +543,19 @@ section {
   z-index: 3;
 
 }
+/* Hide flyer on desktop */
+@media (min-width: 768px) {
+  .flyer {
+    display: none;
+  }
+}
+
+/* Show flyer only on mobile */
+@media (max-width: 767px) {
+  .flyer {
+    display: block;
+  }
+}
 
 
     @media (min-width: 768px) {
