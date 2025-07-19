@@ -687,13 +687,142 @@ section {
     container.appendChild(word);
   }
 </script>
-
     <section class="hero-image">
       <img class="filtered-img"
         src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752906015/Muktadir_20250719_051211_0000_dhf72l.png"
         alt="Gallery Hero"
         sizes="100vw">
     </section>
+  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Archivo+Black&family=Smooch+Sans:wght@400&display=swap" rel="stylesheet">
+  <style>
+    .noise-overlay,
+    .zebra-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .noise-overlay {
+      background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+      opacity: 0.06;
+    }
+    .zebra-overlay {
+      background-image: repeating-linear-gradient(
+        45deg,
+        #000 0,
+        #000 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      opacity: var(--zebra-opacity);
+    }
+    .container {
+      margin: 0; padding: 0; position: relative; z-index: 2;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    .days-left-tag {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--color-text-3);
+      margin: 8px 0;
+    }
+    .timer {
+      font-size: 20px;
+      color: var(--color-text-3);
+      margin: 4px 0;
+    }
+    .section {margin: 0; padding: 4px 0;}
+    .date {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 240px;
+      color: var(--color-header);
+      line-height: 1;
+      display: block;
+    }
+    .month-year {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: 50px;
+      color: var(--color-header);
+      display: inline-block;
+      overflow: hidden;
+      border-right: .15em solid var(--color-header);
+      white-space: nowrap;
+      animation: typing 2s steps(10,end) forwards, blink-caret 0.75s step-end infinite;
+    }
+    .title {
+      font-family: 'Almendra', serif;
+      font-size: 60px;
+      color: var(--color-title);
+      display: block;
+    }
+    .description {
+      font-size: 14px;
+      padding: 8px;
+      border-top: 1px solid #ddd;
+      color: var(--color-description);
+      text-align: justify;
+      margin: 0 10px;
+    }
+    .location {
+      font-family: 'Anton', sans-serif;
+      font-size: 18px;
+      color: var(--color-text-3);
+      display: block;
+      margin: 8px 0;
+    }
+    .btn {
+      margin: 8px auto 16px;
+      padding: 8px 16px;
+      border: 1px solid #000;
+      font-size: 14px;
+      font-weight: 600;
+      background: transparent;
+      cursor: pointer;
+      display: inline-block;
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-header); } }
+  </style>
+  <div class="noise-overlay"></div>
+  <div class="zebra-overlay"></div>
+  <div class="container">
+    <div class="days-left-tag" id="daysLeft">Days left: ...</div>
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="section date" id="day">0</div>
+    <div class="section month-year" id="monthYear">July 2025</div>
+    <div class="section title">2025 Exhibition</div>
+    <div class="description">
+      This event delves into the mechanisms of media manipulation, public opinion, and ideological control in modern society. Expect a critical look at propaganda, persuasion, and the power structures that influence what we see and believe.
+    </div>
+    <div class="location">Art Gallery, Dhaka</div>
+    <button class="btn">See More Events</button>
+  </div>
+  <script>
+    // Day counter
+    let count = 0;
+    const dayEl = document.getElementById("day");
+    const dayInterval = setInterval(() => {
+      count++;
+      dayEl.textContent = count;
+      if (count >= 21) clearInterval(dayInterval);
+    }, 200);
+    // Days left
+    const eventDate = new Date("2025-07-21");
+    const diffDays = Math.ceil((eventDate - new Date()) / (1000*60*60*24));
+    document.getElementById("daysLeft").textContent = `Days left: ${diffDays}`;
+    // Timer
+    function updateTimer() {
+      const diff = eventDate - new Date();
+      if (diff < 0) return;
+      const h = String(Math.floor(diff/(1000*60*60))).padStart(2,'0');
+      const m = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
+      const s = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
+      document.getElementById("timer").textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(updateTimer,1000);
+  </script>
     <section id="gallery" class="image-section">
       <img class="filtered-img"
         src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
