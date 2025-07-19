@@ -693,21 +693,21 @@ section {
         alt="Gallery Hero"
         sizes="100vw">
     </section>
-  <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Archivo+Black&family=Smooch+Sans:wght@400&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Almendra:wght@700&family=Archivo+Black&family=Smooch+Sans:wght@400&display=swap" rel="stylesheet">
   <style>
-    .noise-overlay,
-    .zebra-overlay {
+    .event-announcement-noise-overlay,
+    .event-announcement-zebra-overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 1;
     }
-    .noise-overlay {
+    .event-announcement-noise-overlay {
       background-image: url('https://grainy-gradients.vercel.app/noise.svg');
       opacity: 0.06;
     }
-    .zebra-overlay {
+    .event-announcement-zebra-overlay {
       background-image: repeating-linear-gradient(
         45deg,
         #000 0,
@@ -717,31 +717,31 @@ section {
       );
       opacity: var(--zebra-opacity);
     }
-    .container {
+    .event-announcement-container {
       margin: 0; padding: 0; position: relative; z-index: 2;
       border: 1px solid #ddd;
       text-align: center;
     }
-    .days-left-tag {
+    .event-announcement-days-left-tag {
       font-size: 24px;
       font-weight: bold;
       color: var(--color-text-3);
       margin: 8px 0;
     }
-    .timer {
+    .event-announcement-timer {
       font-size: 20px;
       color: var(--color-text-3);
       margin: 4px 0;
     }
-    .section {margin: 0; padding: 4px 0;}
-    .date {
+    .event-announcement-section {margin: 0; padding: 4px 0;}
+    .event-announcement-date {
       font-family: 'Archivo Black', sans-serif;
       font-size: 240px;
       color: var(--color-header);
       line-height: 1;
       display: block;
     }
-    .month-year {
+    .event-announcement-month-year {
       font-family: 'Archivo Black', sans-serif;
       font-size: 50px;
       color: var(--color-header);
@@ -751,13 +751,13 @@ section {
       white-space: nowrap;
       animation: typing 2s steps(10,end) forwards, blink-caret 0.75s step-end infinite;
     }
-    .title {
+    .event-announcement-title {
       font-family: 'Almendra', serif;
       font-size: 60px;
       color: var(--color-title);
       display: block;
     }
-    .description {
+    .event-announcement-description {
       font-size: 14px;
       padding: 8px;
       border-top: 1px solid #ddd;
@@ -765,14 +765,14 @@ section {
       text-align: justify;
       margin: 0 10px;
     }
-    .location {
+    .event-announcement-location {
       font-family: 'Anton', sans-serif;
       font-size: 18px;
       color: var(--color-text-3);
       display: block;
       margin: 8px 0;
     }
-    .btn {
+    .event-announcement-btn {
       margin: 8px auto 16px;
       padding: 8px 16px;
       border: 1px solid #000;
@@ -785,19 +785,20 @@ section {
     @keyframes typing { from { width: 0 } to { width: 100% } }
     @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-header); } }
   </style>
-  <div class="noise-overlay"></div>
-  <div class="zebra-overlay"></div>
-  <div class="container">
-    <div class="days-left-tag" id="daysLeft">Days left: ...</div>
-    <div class="timer" id="timer">00:00:00</div>
-    <div class="section date" id="day">0</div>
-    <div class="section month-year" id="monthYear">July 2025</div>
-    <div class="section title">2025 Exhibition</div>
-    <div class="description">
+
+  <div class="event-announcement-noise-overlay"></div>
+  <div class="event-announcement-zebra-overlay"></div>
+  <div class="event-announcement-container">
+    <div class="event-announcement-days-left-tag" id="daysLeft">Days left: ...</div>
+    <div class="event-announcement-timer" id="timer">00:00:00</div>
+    <div class="event-announcement-section event-announcement-date" id="day">0</div>
+    <div class="event-announcement-section event-announcement-month-year" id="monthYear">July 2025</div>
+    <div class="event-announcement-section event-announcement-title">2025 Exhibition</div>
+    <div class="event-announcement-description">
       This event delves into the mechanisms of media manipulation, public opinion, and ideological control in modern society. Expect a critical look at propaganda, persuasion, and the power structures that influence what we see and believe.
     </div>
-    <div class="location">Art Gallery, Dhaka</div>
-    <button class="btn">See More Events</button>
+    <div class="event-announcement-location">Art Gallery, Dhaka</div>
+    <button class="event-announcement-btn">See More Events</button>
   </div>
   <script>
     // Day counter
@@ -823,6 +824,7 @@ section {
     }
     setInterval(updateTimer,1000);
   </script>
+
     <section id="gallery" class="image-section">
       <img class="filtered-img"
         src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
