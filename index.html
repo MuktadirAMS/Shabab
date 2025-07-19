@@ -427,6 +427,142 @@ section {
   </header>
 
   <main>
+ <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+
+    .watermark { display: none; }
+    .watermark span {
+      font-size: 2rem;
+      font-weight: bold;
+      color: rgba(255,255,255,0.1);
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      margin: 10px;
+    }
+
+    .zebra {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: repeating-linear-gradient(
+        90deg,
+        #000,
+        #000 20px,
+        #fff 20px,
+        #fff 40px
+      );
+    }
+
+    .flyer {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .title {
+      font-family: 'Anton', sans-serif;
+      font-size: 4.5rem;
+      position: absolute;
+      top: 61%; left: 0;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: left top;
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .title span {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid #000;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+      animation: typing 3s steps(20, end), blink 0.75s step-end infinite;
+    }
+    .title .muktadir { color: #000; animation-delay: 0s; }
+    .title .shabab { color: #777; animation-delay: 3s; border-right: none; }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .info {
+      align-self: flex-end;
+      max-width: 60%;
+      margin-top: 70px;
+    }
+    .info .tag {
+      display: inline-block;
+      background: #000;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 300;
+      padding: 4px 8px;
+      margin-bottom: 10px;
+    }
+    .info .desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: #333;
+    }
+    .social {
+      display: flex;
+      gap: 15px;
+      font-size: 1.2rem;
+    }
+    .social a { color: #333; transition: transform 0.3s; }
+    .social a:hover { transform: scale(1.2); }
+
+    @media (min-width: 768px) {
+      .watermark { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; pointer-events: none; }
+      .flyer { padding: 60px; display: block; }
+      .title { position: static; transform: none; font-size: 7rem; text-align: center; margin-bottom: 20px; flex-direction: row; justify-content: center; gap: 20px; }
+      .positions { text-align: center; font-weight: bold; margin-bottom: 30px; }
+      .glass {
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        padding: 20px;
+        margin: 0 auto 30px;
+        max-width: 60%;
+        border-radius: 12px;
+      }
+      .social { justify-content: center; font-size: 1.5rem; }
+    }
+  </style>
+ <div class="watermark">
+    <script>
+      for (let i = 0; i < 20; i++) document.write('<span>Muktadir Sabab</span>');
+    </script>
+  </div>
+
+  <div class="flyer">
+    <div class="title">
+      <span class="muktadir">MUKTADIR</span>
+      <span class="shabab">SHABAB</span>
+    </div>
+
+    <div class="info">
+      <div class="tag">Artist & Writer</div>
+      <div class="desc">Crafting visual stories through art, writing, and performance. Exploring the intersection of creativity and entrepreneurship.</div>
+    </div>
+
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-behance"></i></a>
+    </div>
+  </div>
+
+  <div class="zebra"></div>
+
     <section class="hero-image">
       <img class="filtered-img"
         src="https://res.cloudinary.com/dxbf5wacu/image/upload/v1752906015/Muktadir_20250719_051211_0000_dhf72l.png"
