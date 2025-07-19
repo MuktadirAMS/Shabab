@@ -430,6 +430,18 @@ section {
  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Default: show flyer on mobile */
+.flyer {
+  display: block;
+}
+
+/* Hide on tablets and desktops */
+@media (min-width: 768px) {
+  .flyer {
+    display: none;
+  }
+}
+
     .watermark {
       position: absolute;
       top: 0;
@@ -543,20 +555,6 @@ section {
   z-index: 3;
 
 }
-/* Hide flyer on desktop */
-@media (min-width: 768px) {
-  .flyer {
-    display: none;
-  }
-}
-
-/* Show flyer only on mobile */
-@media (max-width: 767px) {
-  .flyer {
-    display: block;
-  }
-}
-
 
     @media (min-width: 768px) {
       .flyer { padding: 60px; display: block; }
