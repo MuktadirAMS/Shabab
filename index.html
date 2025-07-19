@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="description" content="Minimal, fast, SEO-friendly responsive site for GitHub Pages, with slider, image sections, and two mode themes.">
   <title>Minimal Gallery – GitHub Pages Demo</title>
+  <!-- Font Awesome 6 (latest) CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
 :root {
   /* --- Minimalist Default Theme --- */
@@ -20,7 +22,6 @@
   --font-main: 'Inter', 'Roboto', 'Arial', sans-serif;
   --nav-bg: rgba(255,255,255,0.97);
   --footer-bg: #f5f5f5;
-  --slider-arrow: #212121;
 }
 
 /* ----------- VINTAGE MODE COLORS ----------- */
@@ -36,7 +37,6 @@
   --color-btn-hover-text: #fff;
   --nav-bg: #f4e2c8;
   --footer-bg: #efdecb;
-  --slider-arrow: #6b4f27;
 }
 
 /* ----------- GRAYSCALE MODE COLORS ----------- */
@@ -52,7 +52,22 @@
   --color-btn-hover-text: #fff;
   --nav-bg: #f8f8f8;
   --footer-bg: #e0e0e0;
-  --slider-arrow: #222;
+}
+
+/* ----------- IMAGE FILTERS BY MODE ----------- */
+.vintage-mode .filtered-img,
+.vintage-mode .slider img {
+  filter: sepia(0.4) contrast(1.18) brightness(1.08) saturate(0.8) hue-rotate(-13deg) drop-shadow(0 3px 8px rgba(126, 93, 33, 0.1));
+}
+.grayscale-mode .filtered-img,
+.grayscale-mode .slider img {
+  filter: grayscale(1) contrast(1.05) brightness(1.07);
+}
+/* Minimalist: no filter */
+.filtered-img,
+.slider img {
+  filter: none;
+  transition: filter 0.5s cubic-bezier(.4,.2,.2,1);
 }
 
 /* ----------- BASE LAYOUT ----------- */
@@ -135,8 +150,6 @@ header {
   transition: all 0.4s cubic-bezier(.4,.2,.2,1);
   position: relative;
 }
-
-/* Hamburger animation: 2 thin lines to X on open */
 .hamburger.open span:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
 }
@@ -196,30 +209,28 @@ header {
 /* ----------- HERO & IMAGES ----------- */
 .hero-image,
 .image-section {
-  margin: 0;
-  padding: 0;
+  margin: 0;
+  padding: 0;
+}
+.hero-image img.filtered-img,
+.image-section img.filtered-img {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  border-radius: 0;
+  margin: 0;
+  max-width: 100vw;
 }
 
-.hero-image img,
-.image-section img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain; /* or remove entirely */
-  border-radius: 0;
-  margin: 0 auto;
-  max-width: 100%;
-}
-
-/* Optional: Ensure responsiveness on small screens */
 @media (max-width: 700px) {
-  .hero-image img,
-  .image-section img {
-    width: 100%;
-    height: auto;
-  }
-}
-
+  .hero-image img.filtered-img {
+    content: url('Muktadir_20250719_051211_0000.png');
+    height: 240px;
+  }
+  .image-section img.filtered-img {
+    height: 170px;
+  }
   .slider,
   .slide,
   .slide img {
@@ -251,12 +262,6 @@ button, .btn {
   transition: background 0.2s, color 0.2s;
   cursor: pointer;
 }
-button:hover, .btn:hover,
-button:focus, .btn:focus {
-  background: var(--color-btn-hover-bg);
-  color: var(--color-btn-hover-text);
-  outline: none;
-}
 
 /* ----------- FLOATING MODE SWITCHER (DESKTOP) ----------- */
 .fab-mode-switcher {
@@ -270,7 +275,7 @@ button:focus, .btn:focus {
 }
 .fab-mode-btn {
   background: var(--color-btn-bg);
-  color: #000;
+  color: var(--color-header);
   border: none;
   border-radius: 50%;
   box-shadow: 0 3px 15px rgba(0,0,0,0.08);
@@ -292,10 +297,6 @@ button:focus, .btn:focus {
 }
 .fab-mode-btn:focus {
   outline: 2px solid var(--color-accent-hover);
-}
-.fab-mode-btn svg {
-  width: 32px;
-  height: 32px;
 }
 .fab-mode-label {
   font-size: 0.8rem;
@@ -341,13 +342,9 @@ button:focus, .btn:focus {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   transition: background 0.2s, color 0.2s;
   outline: none;
-}
-.mobile-mode-btn svg {
-  width: 22px;
-  height: 22px;
 }
 .mobile-mode-btn.active,
 .mobile-mode-btn:hover {
@@ -412,16 +409,13 @@ section {
         <li><a href="#about">About</a></li>
         <li class="mobile-mode-switcher">
           <button class="mobile-mode-btn active" data-mode="minimalist" title="Light mode" aria-label="Light mode">
-            <!-- Sun Icon -->
-            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <i class="fas fa-sun"></i>
           </button>
           <button class="mobile-mode-btn" data-mode="vintage" title="Vintage mode" aria-label="Vintage mode">
-            <!-- Vintage Icon (simple leaf) -->
-            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c8-8 16 0 16 0s-8 8-16 0z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            <i class="fas fa-leaf"></i>
           </button>
-          <button class="mobile-mode-btn" data-mode="grayscale" title="Gray mode" aria-label="Grayscale mode">
-            <!-- Moon Icon -->
-            <svg viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          <button class="mobile-mode-btn" data-mode="grayscale" title="Grayscale mode" aria-label="Grayscale mode">
+            <i class="fas fa-moon"></i>
           </button>
         </li>
       </ul>
@@ -434,16 +428,14 @@ section {
 
   <main>
     <section class="hero-image">
-      <img src="Muktadir_20250719_051211_0000.png"
-     alt="Gallery Hero"
-     srcset="Muktadir_20250719_051211_0000.png 700w,
-             Muktadir_20250719_051211_0000.png 1200w,
-             Muktadir_20250719_051211_0000.png 1920w"
-     sizes="100vw">
-
+      <img class="filtered-img"
+        src="Muktadir_20250719_051211_0000.png"
+        alt="Gallery Hero"
+        sizes="100vw">
     </section>
     <section id="gallery" class="image-section">
-      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
+      <img class="filtered-img"
+        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80"
         alt="Gallery 1"
         srcset="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=700&q=80 700w,
                 https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80 1200w,
@@ -454,7 +446,8 @@ section {
     <section class="slider-section">
       <div class="slider" id="slider">
         <div class="slide active">
-          <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1920&q=80"
+          <img class="filtered-img"
+               src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1920&q=80"
                alt="Slider 1"
                srcset="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=700&q=80 700w,
                        https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1200&q=80 1200w,
@@ -462,7 +455,8 @@ section {
                sizes="100vw">
         </div>
         <div class="slide">
-          <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1920&q=80"
+          <img class="filtered-img"
+               src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1920&q=80"
                alt="Slider 2"
                srcset="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=700&q=80 700w,
                        https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&q=80 1200w,
@@ -470,7 +464,8 @@ section {
                sizes="100vw">
         </div>
         <div class="slide">
-          <img src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e9?auto=format&fit=crop&w=1920&q=80"
+          <img class="filtered-img"
+               src="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e9?auto=format&fit=crop&w=1920&q=80"
                alt="Slider 3"
                srcset="https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e9?auto=format&fit=crop&w=700&q=80 700w,
                        https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e9?auto=format&fit=crop&w=1200&q=80 1200w,
@@ -484,18 +479,15 @@ section {
   <!-- Floating mode switcher (desktop only) -->
   <div class="fab-mode-switcher" id="fabModeSwitcher">
     <button class="fab-mode-btn active" data-mode="minimalist" title="Light mode" aria-label="Light mode">
-      <!-- Sun Icon -->
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <i class="fas fa-sun"></i>
     </button>
     <div class="fab-mode-label">Light</div>
     <button class="fab-mode-btn" data-mode="vintage" title="Vintage mode" aria-label="Vintage mode">
-      <!-- Vintage Icon (simple leaf) -->
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12c8-8 16 0 16 0s-8 8-16 0z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      <i class="fas fa-leaf"></i>
     </button>
     <div class="fab-mode-label">Vintage</div>
-    <button class="fab-mode-btn" data-mode="grayscale" title="Gray mode" aria-label="Grayscale mode">
-      <!-- Moon Icon -->
-      <svg viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+    <button class="fab-mode-btn" data-mode="grayscale" title="Grayscale mode" aria-label="Grayscale mode">
+      <i class="fas fa-moon"></i>
     </button>
     <div class="fab-mode-label">Gray</div>
   </div>
@@ -551,6 +543,7 @@ section {
       document.body.classList.remove('minimalist-mode'); // for possible extensibility
       if (mode === 'vintage') document.body.classList.add('vintage-mode');
       else if (mode === 'grayscale') document.body.classList.add('grayscale-mode');
+      // Otherwise minimalist (default)
     }
 
     // Floating btns (desktop)
@@ -618,7 +611,6 @@ section {
     - Button Hover Text: #fff
     - Navigation Bar: rgba(255,255,255,0.97)
     - Footer: #f5f5f5
-    - Slider Arrow: #212121
     - Font: 'Inter', 'Roboto', 'Arial', sans-serif
 
     Vintage Mode
@@ -632,7 +624,6 @@ section {
     - Button Hover Text: #fff
     - Navigation Bar: #f4e2c8
     - Footer: #efdecb
-    - Slider Arrow: #6b4f27
     - Font: 'Inter', 'Roboto', 'Arial', sans-serif
 
     Grayscale Mode
@@ -646,7 +637,6 @@ section {
     - Button Hover Text: #fff
     - Navigation Bar: #f8f8f8
     - Footer: #e0e0e0
-    - Slider Arrow: #222
     - Font: 'Inter', 'Roboto', 'Arial', sans-serif
 
     Buttons
