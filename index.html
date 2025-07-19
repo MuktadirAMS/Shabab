@@ -338,6 +338,7 @@ button, .btn {
 }
 
 /* ----------- MOBILE MODE SWITCHER INSIDE MENU ----------- */
+/* ----------- MOBILE MODE SWITCHER INSIDE MENU ----------- */
 .mobile-mode-switcher {
   display: none;
   flex-direction: row;
@@ -346,6 +347,7 @@ button, .btn {
   justify-content: center;
   align-items: center;
 }
+
 .mobile-mode-btn {
   background: transparent;
   color: var(--color-header);
@@ -358,15 +360,16 @@ button, .btn {
   justify-content: center;
   cursor: pointer;
   font-size: 1.3rem;
-  transition: background 0.2s, color 0.2s;
+  transition: color 0.2s;
   outline: none;
 }
-.mobile-mode-btn.active,
-.mobile-mode-btn:hover {
-  background: var(--color-accent);
-  color: #fff;
-}
 
+.mobile-mode-btn:hover,
+.mobile-mode-btn.active {
+  background: transparent;
+  color: var(--color-accent);
+}
+    
 @media (max-width: 700px) {
   .nav-links {
     position: absolute;
@@ -821,7 +824,17 @@ section {
     // Set initial state
     syncFab('minimalist');
     syncMobile('minimalist');
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.querySelector('.fab-toggle-btn');
+    const fabContainer = document.querySelector('.fab-mode-switcher');
+
+    toggleBtn.addEventListener('click', () => {
+      fabContainer.classList.toggle('open');
+    });
+  });
   </script>
+  
   <!--
     Site Colors, Fonts, Buttons, Hover Effects
 
