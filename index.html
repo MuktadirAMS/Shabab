@@ -144,7 +144,7 @@ header {
   position: relative;
 }
 .nav-links a {
-  color: var(--color-header);
+  color: var(--color-link-1);
   text-decoration: none;
   font-weight: 500;
   padding: 0.3em 0.7em;
@@ -154,7 +154,7 @@ header {
 .nav-links a:hover,
 .nav-links a:focus {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-link-2);
 }
 
 /* ----------- APPLE HAMBURGER MENU ----------- */
@@ -359,7 +359,7 @@ button, .btn {
 
 .fab-mode-btn:hover {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-2);
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -490,7 +490,7 @@ section {
   padding: 8px 16px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #000;
+  color: var(--color-text-1);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
@@ -500,7 +500,7 @@ section {
 }
 
 .about-btn:hover {
-  color: #fff;
+  color: var(--color-text-2);
   background: rgba(0, 0, 0, 0.4);
   font-weight: 600;
 }
@@ -574,8 +574,8 @@ section {
     animation: typing 3s steps(20, end), blink 0.75s step-end infinite;
   }
 
-  .title .muktadir { color: #000; animation-delay: 0s; }
-  .title .shabab { color: #777; animation-delay: 3s; border-right: none; }
+  .title .muktadir { color: var(--color-title); animation-delay: 0s; }
+  .title .shabab { color: var(--color-subtitle); animation-delay: 3s; border-right: none; }
 
   @keyframes typing {
     from { width: 0; }
@@ -596,7 +596,7 @@ section {
   .info .tag {
     display: inline-block;
     background: #000;
-    color: #fff;
+    color: var(--color-description);
     font-size: 0.85rem;
     font-weight: 300;
     padding: 4px 8px;
