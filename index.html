@@ -665,21 +665,21 @@ section {
       margin: 8px 0;
     }
     .event-announcement-timer {
-      font-size: 20px;
+      font-size: 30px;
       color: var(--color-text-3);
       margin: 4px 0;
     }
     .event-announcement-section {margin: 0; padding: 4px 0;}
     .event-announcement-date {
       font-family: 'Archivo Black', sans-serif;
-      font-size: 240px;
+      font-size: 230px;
       color: var(--color-link-1);
       line-height: 1;
       display: block;
     }
     .event-announcement-month-year {
       font-family: 'Archivo Black', sans-serif;
-      font-size: 50px;
+      font-size: 40px;
       color: var(--color-text-3);
       display: inline-block;
       overflow: hidden;
@@ -689,12 +689,12 @@ section {
     }
     .event-announcement-title {
       font-family: 'Almendra', serif;
-      font-size: 60px;
+      font-size: 80px;
       color: var(--color-title);
       display: block;
     }
     .event-announcement-description {
-      font-size: 14px;
+      font-size: 24px;
       padding: 8px;
       border-top: 1px solid #ddd;
       color: var(--color-description);
@@ -703,7 +703,7 @@ section {
     }
     .event-announcement-location {
       font-family: 'Anton', sans-serif;
-      font-size: 18px;
+      font-size: 58px;
       color: var(--color-text-3);
       display: block;
       margin: 8px 0;
@@ -712,7 +712,7 @@ section {
       margin: 8px auto 16px;
       padding: 8px 16px;
       border: 1px solid #000;
-      font-size: 14px;
+      font-size: 44px;
       font-weight: 600;
       background: transparent;
       cursor: pointer;
@@ -769,64 +769,92 @@ section {
 
     </section>
     <!-- Add more .image-section blocks for more images as needed. -->
-  <style>
-    .slider-wrapper {
+<style>
+    /* --- Muk Slider Styles --- */
+    .muk-slider-container {
       position: relative;
       width: 100%;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    .muk-slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      display: flex;
       scroll-behavior: smooth;
     }
 
-    .slide {
-      min-width: 100%;
-      height: 100vh;
-      scroll-snap-align: start;
-      flex-shrink: 0;
-      opacity: 0;
+    .muk-slide {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
       transition: opacity 1s ease-in-out;
       z-index: 0;
     }
 
-    .slide.active {
+    .muk-slide.active {
       opacity: 1;
       z-index: 1;
       position: relative;
     }
 
-    .slide img {
+    .muk-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
-    @media (max-width: 768px) {
-      .slide img {
-        object-position: center;
-      }
+    /* Enable manual horizontal scroll for touch devices */
+    .muk-slider-scroll {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .muk-scroll-item {
+      flex: 0 0 100%;
+      height: 100%;
+      scroll-snap-align: start;
     }
   </style>
+<!-- Slider Container -->
+  <div class="muk-slider-container">
+    <div class="muk-slide active">
+      <img src="Muktadir_20250719_052001_0000.png" alt="Slide 1" />
+    </div>
+    <div class="muk-slide">
+      <img src="Muktadir_20250720_032950_0000.png" alt="Slide 2" />
+    </div>
+    <div class="muk-slide">
+      <img src="Muktadir_20250720_033026_0000.png" alt="Slide 3" />
+    </div>
 
-  <div class="slider-wrapper" id="slider">
-    <div class="slide active"><img src="Muktadir_20250719_052001_0000.png" alt="Slide 1" /></div>
-    <div class="slide"><img src="Muktadir_20250720_032950_0000.png" alt="Slide 2" /></div>
-    <div class="slide"><img src="Muktadir_20250720_033026_0000.png" alt="Slide 3" /></div>
+    <!-- Scrollable track for manual side scroll -->
+    <div class="muk-slider-scroll">
+      <div class="muk-scroll-item"></div>
+      <div class="muk-scroll-item"></div>
+      <div class="muk-scroll-item"></div>
+    </div>
   </div>
 
+  <!-- JavaScript -->
   <script>
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
+    const mukSlides = document.querySelectorAll('.muk-slide');
+    let mukCurrent = 0;
 
     setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-      slides[current].scrollIntoView({ behavior: "smooth", inline: "start" });
+      mukSlides[mukCurrent].classList.remove('active');
+      mukCurrent = (mukCurrent + 1) % mukSlides.length;
+      mukSlides[mukCurrent].classList.add('active');
     }, 7000);
   </script>
 
