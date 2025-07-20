@@ -769,7 +769,67 @@ section {
 
     </section>
     <!-- Add more .image-section blocks for more images as needed. -->
-    
+  <style>
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      scroll-behavior: smooth;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100vh;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 0;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+      position: relative;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .slide img {
+        object-position: center;
+      }
+    }
+  </style>
+
+  <div class="slider-wrapper" id="slider">
+    <div class="slide active"><img src="Muktadir_20250719_052001_0000.png" alt="Slide 1" /></div>
+    <div class="slide"><img src="Muktadir_20250720_032950_0000.png" alt="Slide 2" /></div>
+    <div class="slide"><img src="Muktadir_20250720_033026_0000.png" alt="Slide 3" /></div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+      slides[current].scrollIntoView({ behavior: "smooth", inline: "start" });
+    }, 7000);
+  </script>
+
   </main>
 
   <!-- Floating mode switcher (desktop only) -->
